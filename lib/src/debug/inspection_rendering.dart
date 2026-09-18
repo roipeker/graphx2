@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorRenderingRuntime _gInspectorRenderingRuntime =
-    _GInspectorRenderingRuntime();
+final _GInspectorRenderingRuntime _gInspectorRenderingRuntime = _GInspectorRenderingRuntime();
 
 /// On-demand rendering explanations and opt-in live activity for DevTools.
 ///
@@ -197,9 +198,7 @@ final class _GInspectorRenderingRuntime {
       if (filters != null) {
         reasons.add(
           _reason(
-            composite!.hasBranchingFilter
-                ? 'filter.branching'
-                : 'filter.linear-chain',
+            composite!.hasBranchingFilter ? 'filter.branching' : 'filter.linear-chain',
             composite.hasBranchingFilter
                 ? 'Branching filters require isolated effect work and may replay an uncached prefix.'
                 : 'The ordered filter chain requires subtree isolation and can use one native linear chain.',
@@ -277,6 +276,8 @@ final class _GInspectorRenderingRuntime {
     };
   }
 
-  Map<String, Object?> _reason(String code, String message) =>
-      <String, Object?>{'code': code, 'message': message};
+  Map<String, Object?> _reason(String code, String message) => <String, Object?>{
+    'code': code,
+    'message': message,
+  };
 }

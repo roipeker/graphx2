@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorPickerRuntime _gInspectorPickerRuntime =
-    _GInspectorPickerRuntime();
+final _GInspectorPickerRuntime _gInspectorPickerRuntime = _GInspectorPickerRuntime();
 
 /// Debug-only scene picking owned outside the retained scene.
 ///
@@ -107,9 +108,7 @@ final class _GInspectorPickerRuntime {
         // A host-intercepted click may already have committed and exited pick
         // mode before an older DevTools client sends its explicit confirm.
         final committed = state.committed?.target;
-        if (committed != null &&
-            !committed.isDisposed &&
-            committed.isAttached) {
+        if (committed != null && !committed.isDisposed && committed.isAttached) {
           return _commitResult(stage, state, committed);
         }
         return _gInspectorRuntime._invalidParams(
@@ -149,8 +148,7 @@ final class _GInspectorPickerRuntime {
     return _gInspectorRuntime._result(<String, Object?>{
       'node': _gInspectorRuntime._nodeSummary(node),
       'path': <Object>[
-        for (var i = path.length - 1; i >= 0; --i)
-          _gInspectorRuntime._nodeSummary(path[i]),
+        for (var i = path.length - 1; i >= 0; --i) _gInspectorRuntime._nodeSummary(path[i]),
       ],
       'state': _stateJson(stage, state),
     });
@@ -187,14 +185,11 @@ final class _GInspectorPickerRuntime {
     final context = stage._flutterContext;
     if (context == null || !context.mounted) return false;
     final target = context.findRenderObject();
-    if (target is! RenderBox || !target.attached || !target.hasSize)
-      return false;
+    if (target is! RenderBox || !target.attached || !target.hasSize) return false;
     final overlay = Overlay.maybeOf(context, rootOverlay: true);
     if (overlay == null) return false;
     final overlayTarget = overlay.context.findRenderObject();
-    if (overlayTarget is! RenderBox ||
-        !overlayTarget.attached ||
-        !overlayTarget.hasSize) {
+    if (overlayTarget is! RenderBox || !overlayTarget.attached || !overlayTarget.hasSize) {
       return false;
     }
 
@@ -232,9 +227,7 @@ final class _GInspectorPickerRuntime {
               event.localPosition.dy,
             );
             final candidate = state.candidate?.target;
-            if (candidate != null &&
-                !candidate.isDisposed &&
-                candidate.isAttached) {
+            if (candidate != null && !candidate.isDisposed && candidate.isAttached) {
               _commit(stage, state, candidate);
             }
           },
@@ -318,8 +311,7 @@ final class _GInspectorPickerRuntime {
   }
 
   void _installPointerFallback(GStage stage, _GInspectorPickState state) {
-    void update(GPointerEvent event) =>
-        _updateCandidate(stage, state, event.x, event.y);
+    void update(GPointerEvent event) => _updateCandidate(stage, state, event.x, event.y);
 
     state
       ..hoverSubscription = stage.pointer.onHover.add(update)
@@ -355,8 +347,7 @@ final class _GInspectorPickerRuntime {
     _removeInteraction(state);
     if (restoreSelection) {
       final previous = state.previousNode?.target;
-      final overlay = _gInspectorRuntime._selection[stage] ??=
-          _GInspectorSelection();
+      final overlay = _gInspectorRuntime._selection[stage] ??= _GInspectorSelection();
       overlay
         ..node = previous == null ? null : WeakReference<GNode>(previous)
         ..enabled = state.previousHighlight && previous != null;
@@ -400,9 +391,7 @@ final class _GInspectorPickerRuntime {
   ) {
     if (!state.enabled || stage.isDisposed || !stage.isMounted) return;
     final candidate = stage.hitTest(x, y);
-    if (identical(state.candidate?.target, candidate) &&
-        state.x == x &&
-        state.y == y) {
+    if (identical(state.candidate?.target, candidate) && state.x == x && state.y == y) {
       return;
     }
     state
@@ -415,8 +404,7 @@ final class _GInspectorPickerRuntime {
   }
 
   void _setOverlay(GStage stage, GNode? node) {
-    final overlay = _gInspectorRuntime._selection[stage] ??=
-        _GInspectorSelection();
+    final overlay = _gInspectorRuntime._selection[stage] ??= _GInspectorSelection();
     overlay
       ..node = node == null ? null : WeakReference<GNode>(node)
       ..enabled = node != null;

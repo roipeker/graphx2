@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained single-glyph font icon node.

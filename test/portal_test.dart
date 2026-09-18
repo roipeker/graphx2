@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
@@ -138,8 +140,7 @@ void main() {
               GPortal<int>.builder(
                 value: 1,
                 width: 160,
-                builder: (context, value) =>
-                    SizedBox(height: value == 1 ? 40 : 76),
+                builder: (context, value) => SizedBox(height: value == 1 ? 40 : 76),
               ),
             );
           }),

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:ui' as ui;
@@ -32,8 +34,7 @@ Future<void> main() async {
       _reportRender('${_label(count)} ${fx.label} cached', count, scene);
       await _reportRebuild('${_label(count)} ${fx.label} rebuild', scene);
 
-      final bytes =
-          scene.target.cache.pixelWidth * scene.target.cache.pixelHeight * 4;
+      final bytes = scene.target.cache.pixelWidth * scene.target.cache.pixelHeight * 4;
       print(
         '  backing ${scene.target.cache.pixelWidth}×${scene.target.cache.pixelHeight} '
         '~${(bytes / (1024 * 1024)).toStringAsFixed(2)} MiB',
@@ -169,9 +170,7 @@ void _printSamples(String label, List<int> samples, {int? nsPer}) {
   samples.sort();
   final p50 = samples[samples.length ~/ 2];
   final p95 = samples.last;
-  final per = nsPer == null
-      ? ''
-      : '  ${(p50 * 1000 / nsPer).toStringAsFixed(1)} ns/leaf';
+  final per = nsPer == null ? '' : '  ${(p50 * 1000 / nsPer).toStringAsFixed(1)} ns/leaf';
   print(
     '${label.padRight(24)} '
     'p50 ${(p50 / 1000).toStringAsFixed(3).padLeft(8)} ms  '

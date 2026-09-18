@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Private retained Float32 storage used by high-count core primitives.

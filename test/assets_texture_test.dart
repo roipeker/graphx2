@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 typedef GPortalBuilder<T> = Widget Function(BuildContext context, T value);
@@ -68,8 +70,7 @@ final class GPortal<T> extends GNode {
 
   GSize get layoutSize => _layoutSize;
 
-  GSignalView0 get onLayoutSizeChanged =>
-      (_onLayoutSizeChanged ??= GSignal0()).view;
+  GSignalView0 get onLayoutSizeChanged => (_onLayoutSizeChanged ??= GSignal0()).view;
 
   bool get pointerEnabled => _pointerEnabled;
   set pointerEnabled(bool value) {

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 class GRenderContext implements _GDisposable {
@@ -10,8 +12,7 @@ class GRenderContext implements _GDisposable {
   ///
   /// Detached offscreen captures have no Stage and therefore cannot expose one.
   /// Canvas-node painters that require Stage state are inherently hosted-only.
-  GStage get stage =>
-      _stage ?? (throw StateError('Render context has no associated Stage.'));
+  GStage get stage => _stage ?? (throw StateError('Render context has no associated Stage.'));
 
   final _opacityPaint = Paint();
   final _transform = Float64List.fromList([
@@ -130,10 +131,7 @@ class GRenderContext implements _GDisposable {
     ui.ImageFilter? imageFilter,
   }) {
     assert(
-      alpha < 1.0 ||
-          _hasColorTransform ||
-          blendMode != ui.BlendMode.srcOver ||
-          imageFilter != null,
+      alpha < 1.0 || _hasColorTransform || blendMode != ui.BlendMode.srcOver || imageFilter != null,
     );
     if (_hasColorTransform) {
       _opacityPaint
@@ -159,8 +157,7 @@ class GRenderContext implements _GDisposable {
     // beyond the supplied layer bounds. GraphX clips only this web fallback
     // case to preserve display-object bounds semantics. Re-test/remove once
     // Impeller web is stable and its restore behavior is verified.
-    final clipForAlphaOffset =
-        kIsWeb && _hasColorTransform && _alphaOffset > 0.0;
+    final clipForAlphaOffset = kIsWeb && _hasColorTransform && _alphaOffset > 0.0;
     if (clipForAlphaOffset) {
       _renderStats?.canvasSaves.increment();
       canvas.save();
@@ -186,9 +183,7 @@ class GRenderContext implements _GDisposable {
 
   ColorFilter get _effectiveColorFilter {
     final cached = _colorFilter;
-    if (cached != null &&
-        _colorFilterVersion == _colorVersion &&
-        _colorFilterAlpha == alpha) {
+    if (cached != null && _colorFilterVersion == _colorVersion && _colorFilterAlpha == alpha) {
       return cached;
     }
 
@@ -364,8 +359,7 @@ class GCanvasRenderer implements _GDisposable {
     if (!node.active || !node._visible) return;
     if (node is GRenderGroup && !_renderGroupVisible(node, context)) return;
     if (_isActiveMaskSource(node)) return;
-    if (_allowRasterCache &&
-        _tryPaintCache(node, context, parentAlpha, stats)) {
+    if (_allowRasterCache && _tryPaintCache(node, context, parentAlpha, stats)) {
       return;
     }
 
@@ -437,9 +431,7 @@ class GCanvasRenderer implements _GDisposable {
     // Same transparent-black issue as inherited AO, but only for an explicit
     // color-matrix filter that can create alpha from transparent input.
     final clipFilterOutput =
-        kIsWeb &&
-        composite.filterAffectsTransparentBlack &&
-        layerBounds != null;
+        kIsWeb && composite.filterAffectsTransparentBlack && layerBounds != null;
     if (clipFilterOutput) {
       stats?.canvasSaves.increment();
       canvas.save();
@@ -542,9 +534,7 @@ class GCanvasRenderer implements _GDisposable {
       final start = branchIndex + 1;
       final bounds = _filterBoundsRect(sourceRect, filters, 0, count);
       final clipped =
-          kIsWeb &&
-          _rangeAffectsTransparentBlack(filters, start, count) &&
-          bounds != null;
+          kIsWeb && _rangeAffectsTransparentBlack(filters, start, count) && bounds != null;
       if (clipped) {
         stats?.canvasSaves.increment();
         context.canvas.save();
@@ -576,10 +566,7 @@ class GCanvasRenderer implements _GDisposable {
       // No branching effect exists in this prefix, so the whole prefix is one
       // linear native chain rather than one saveLayer per filter.
       final bounds = _filterBoundsRect(sourceRect, filters, 0, count);
-      final clipped =
-          kIsWeb &&
-          _rangeAffectsTransparentBlack(filters, 0, count) &&
-          bounds != null;
+      final clipped = kIsWeb && _rangeAffectsTransparentBlack(filters, 0, count) && bounds != null;
       if (clipped) {
         stats?.canvasSaves.increment();
         context.canvas.save();
@@ -877,9 +864,8 @@ class GCanvasRenderer implements _GDisposable {
       ..includePoint(m.a * x2 + m.c * y2 + m.tx, m.b * x2 + m.d * y2 + m.ty);
   }
 
-  ui.Rect? _boundsRect(GBounds bounds) => bounds.isEmpty
-      ? null
-      : ui.Rect.fromLTRB(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
+  ui.Rect? _boundsRect(GBounds bounds) =>
+      bounds.isEmpty ? null : ui.Rect.fromLTRB(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
 
   ui.Rect? _filterBoundsRect(
     ui.Rect? source,
@@ -888,8 +874,7 @@ class GCanvasRenderer implements _GDisposable {
     int end,
   ) {
     if (source == null) return null;
-    final bounds = _filterBounds
-      ..set(source.left, source.top, source.right, source.bottom);
+    final bounds = _filterBounds..set(source.left, source.top, source.right, source.bottom);
     for (var i = start; i < end; ++i) {
       filters[i]._expandBounds(bounds);
     }
@@ -934,9 +919,7 @@ class GCanvasRenderer implements _GDisposable {
     ui.ImageFilter? result;
     for (var i = start; i < end; ++i) {
       final next = _resolveNativeFilter(filters[i]);
-      result = result == null
-          ? next
-          : ui.ImageFilter.compose(outer: next, inner: result);
+      result = result == null ? next : ui.ImageFilter.compose(outer: next, inner: result);
     }
     final resolved = result!;
     if (full) {
@@ -987,8 +970,7 @@ class GCanvasRenderer implements _GDisposable {
       filter is GBevelFilter;
 
   bool _isInnerFilter(GFilter filter) =>
-      (filter is GDropShadowFilter && filter.inner) ||
-      (filter is GGlowFilter && filter.inner);
+      (filter is GDropShadowFilter && filter.inner) || (filter is GGlowFilter && filter.inner);
 
   _CanvasFilterCache _resolveBevelFilter(GBevelFilter filter) {
     final cache = _filterCache[filter] ??= _CanvasFilterCache();
@@ -1081,8 +1063,7 @@ class GCanvasRenderer implements _GDisposable {
   }
 
   ui.Rect _innerWorkBoundsRect(ui.Rect source, GFilter filter) {
-    final bounds = _innerWorkBounds
-      ..set(source.left, source.top, source.right, source.bottom);
+    final bounds = _innerWorkBounds..set(source.left, source.top, source.right, source.bottom);
     if (filter is GDropShadowFilter && filter.inner) {
       _expandOuterBounds(
         bounds,
@@ -1122,9 +1103,7 @@ class GCanvasRenderer implements _GDisposable {
         sigmaY: blurY,
         tileMode: ui.TileMode.decal,
       );
-      result = result == null
-          ? blur
-          : ui.ImageFilter.compose(outer: blur, inner: result);
+      result = result == null ? blur : ui.ImageFilter.compose(outer: blur, inner: result);
     }
     if (offsetX != 0.0 || offsetY != 0.0) {
       final offset = ui.ImageFilter.matrix(
@@ -1148,9 +1127,7 @@ class GCanvasRenderer implements _GDisposable {
         ]),
         filterQuality: ui.FilterQuality.medium,
       );
-      result = result == null
-          ? offset
-          : ui.ImageFilter.compose(outer: offset, inner: result);
+      result = result == null ? offset : ui.ImageFilter.compose(outer: offset, inner: result);
     }
     return result ?? ui.ImageFilter.blur();
   }

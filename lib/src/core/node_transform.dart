@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 mixin GNodeTransform {
@@ -203,8 +205,7 @@ mixin GNodeTransform {
     assert(tx.isFinite);
     assert(ty.isFinite);
 
-    final identity =
-        a == 1.0 && b == 0.0 && c == 0.0 && d == 1.0 && tx == 0.0 && ty == 0.0;
+    final identity = a == 1.0 && b == 0.0 && c == 0.0 && d == 1.0 && tx == 0.0 && ty == 0.0;
     if (!_localMatrixDirty) {
       if (_localTransformIdentity && identity) return;
       final matrix = _localMatrix;

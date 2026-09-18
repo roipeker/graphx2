@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Controls whether a node subtree is drawn directly or isolated first.
@@ -26,8 +28,7 @@ enum GMaskMode {
 abstract interface class GClip {
   void _apply(Canvas canvas, GNode owner);
 
-  factory GClip.rect(double x, double y, double width, double height) =
-      GRectClip;
+  factory GClip.rect(double x, double y, double width, double height) = GRectClip;
 
   factory GClip.roundRect(
     double x,
@@ -102,10 +103,7 @@ final class GInversePathClip implements GClip {
       return;
     }
 
-    if (_x1 != bounds.x1 ||
-        _y1 != bounds.y1 ||
-        _x2 != bounds.x2 ||
-        _y2 != bounds.y2) {
+    if (_x1 != bounds.x1 || _y1 != bounds.y1 || _x2 != bounds.x2 || _y2 != bounds.y2) {
       _x1 = bounds.x1;
       _y1 = bounds.y1;
       _x2 = bounds.x2;
@@ -254,8 +252,7 @@ bool _isActiveMaskSource(GNode source) {
   final targets = state?.maskTargets;
   if (state == null || targets == null) return false;
   targets.removeWhere(
-    (target) =>
-        target.isDisposed || !identical(target._composite?.mask, source),
+    (target) => target.isDisposed || !identical(target._composite?.mask, source),
   );
   if (targets.isNotEmpty) return true;
   state.maskTargets = null;
@@ -300,8 +297,7 @@ final class _GNodeComposite {
       mask != null || blendMode != ui.BlendMode.srcOver || filters != null;
 
   bool get requiresLayer =>
-      mode == GCompositeMode.layer ||
-      (mode == GCompositeMode.auto && autoRequiresLayer);
+      mode == GCompositeMode.layer || (mode == GCompositeMode.auto && autoRequiresLayer);
 
   bool get directConflict => mode == GCompositeMode.direct && autoRequiresLayer;
 

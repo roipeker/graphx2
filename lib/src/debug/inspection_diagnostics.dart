@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorDiagnosticsRuntime _gInspectorDiagnosticsRuntime =
-    _GInspectorDiagnosticsRuntime();
+final _GInspectorDiagnosticsRuntime _gInspectorDiagnosticsRuntime = _GInspectorDiagnosticsRuntime();
 
 /// On-demand explanations for common retained-scene debugging questions.
 ///
@@ -89,17 +90,13 @@ final class _GInspectorDiagnosticsRuntime {
         _addBlocker(
           renderBlockers,
           'render.hidden',
-          identical(current, node)
-              ? 'Node is hidden.'
-              : 'Ancestor ${_label(current)} is hidden.',
+          identical(current, node) ? 'Node is hidden.' : 'Ancestor ${_label(current)} is hidden.',
           current,
         );
         _addBlocker(
           pointerBlockers,
           'pointer.hidden',
-          identical(current, node)
-              ? 'Node is hidden.'
-              : 'Ancestor ${_label(current)} is hidden.',
+          identical(current, node) ? 'Node is hidden.' : 'Ancestor ${_label(current)} is hidden.',
           current,
         );
       }

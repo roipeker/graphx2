@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // Retained scene, rendering, interaction, and Flutter-hosting core for GraphX.
 
 import 'dart:async';

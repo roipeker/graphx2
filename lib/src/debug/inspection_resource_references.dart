@@ -1,7 +1,9 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorResourceReferencesRuntime
-_gInspectorResourceReferencesRuntime = _GInspectorResourceReferencesRuntime();
+final _GInspectorResourceReferencesRuntime _gInspectorResourceReferencesRuntime =
+    _GInspectorResourceReferencesRuntime();
 
 /// Demand-driven resource references for one selected scene node.
 ///
@@ -50,8 +52,7 @@ final class _GInspectorResourceReferencesRuntime {
         'nodeId': _gInspectorRuntime._idForObject(node),
         'nodeType': node.runtimeType.toString(),
         'supported': false,
-        'summary':
-            'No direct texture/backing resource adapter exists for this node type.',
+        'summary': 'No direct texture/backing resource adapter exists for this node type.',
         'referenceKind': 'direct-reference',
         'resources': const <Object>[],
       },

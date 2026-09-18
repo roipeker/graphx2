@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter boundary for one GraphX focus domain.
@@ -23,8 +25,7 @@ final class _GFocusHost extends StatefulWidget {
   State<_GFocusHost> createState() => _GFocusHostState();
 }
 
-final class _GFocusHostState extends State<_GFocusHost>
-    implements _GFocusHostBridge {
+final class _GFocusHostState extends State<_GFocusHost> implements _GFocusHostBridge {
   late final FocusNode _before;
   late final FocusNode _engine;
   late final FocusNode _after;
@@ -36,11 +37,9 @@ final class _GFocusHostState extends State<_GFocusHost>
   @override
   void initState() {
     super.initState();
-    _before = FocusNode(debugLabel: 'GraphXView.before')
-      ..addListener(_handleBeforeChanged);
+    _before = FocusNode(debugLabel: 'GraphXView.before')..addListener(_handleBeforeChanged);
     _engine = FocusNode(debugLabel: 'GraphXView.engine', skipTraversal: true);
-    _after = FocusNode(debugLabel: 'GraphXView.after')
-      ..addListener(_handleAfterChanged);
+    _after = FocusNode(debugLabel: 'GraphXView.after')..addListener(_handleAfterChanged);
     _bindStageFocusHost(widget.stage, this);
   }
 
@@ -53,8 +52,7 @@ final class _GFocusHostState extends State<_GFocusHost>
     }
   }
 
-  bool get _hasTraversableScene =>
-      _gStageFocus[widget.stage]?.hasFocusableNodes ?? false;
+  bool get _hasTraversableScene => _gStageFocus[widget.stage]?.hasFocusableNodes ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +61,7 @@ final class _GFocusHostState extends State<_GFocusHost>
       ..canRequestFocus = traversable
       ..skipTraversal = !traversable;
     _engine
-      ..canRequestFocus =
-          traversable || widget.captureRawKeyboard || widget.autofocus
+      ..canRequestFocus = traversable || widget.captureRawKeyboard || widget.autofocus
       ..skipTraversal = traversable || !widget.captureRawKeyboard;
     _after
       ..canRequestFocus = traversable
@@ -124,11 +121,8 @@ final class _GFocusHostState extends State<_GFocusHost>
     );
     stage.input.keyboard._dispatch(keyEvent);
 
-    final handled =
-        _gStageFocus[stage]?.actions._dispatchKey(keyEvent) ?? false;
-    return handled || widget.captureRawKeyboard
-        ? KeyEventResult.handled
-        : KeyEventResult.ignored;
+    final handled = _gStageFocus[stage]?.actions._dispatchKey(keyEvent) ?? false;
+    return handled || widget.captureRawKeyboard ? KeyEventResult.handled : KeyEventResult.ignored;
   }
 
   void _handleEngineFocusChanged(bool focused) {
@@ -147,9 +141,7 @@ final class _GFocusHostState extends State<_GFocusHost>
 
   void _adoptLogicalFocusIfNeeded() {
     final manager = _gStageFocus[widget.stage];
-    if (manager != null &&
-        manager.focusedNode == null &&
-        manager.hasFocusableNodes) {
+    if (manager != null && manager.focusedNode == null && manager.hasFocusableNodes) {
       manager.next();
     }
   }
@@ -279,8 +271,7 @@ final class _GPortalFocusHostState extends State<_GPortalFocusHost> {
   @override
   void initState() {
     super.initState();
-    _before = FocusNode(debugLabel: 'GPortal.before')
-      ..addListener(_handleBeforeChanged);
+    _before = FocusNode(debugLabel: 'GPortal.before')..addListener(_handleBeforeChanged);
     _host = FocusNode(
       debugLabel: 'GPortal.host',
       skipTraversal: true,
@@ -291,8 +282,7 @@ final class _GPortalFocusHostState extends State<_GPortalFocusHost> {
       skipTraversal: true,
       canRequestFocus: false,
     );
-    _after = FocusNode(debugLabel: 'GPortal.after')
-      ..addListener(_handleAfterChanged);
+    _after = FocusNode(debugLabel: 'GPortal.after')..addListener(_handleAfterChanged);
     _policy = _GPortalTraversalPolicy(
       _scheduleAvailabilitySync,
       before: _before,
@@ -431,9 +421,7 @@ final class _GPortalFocusHostState extends State<_GPortalFocusHost> {
     _availabilityScheduled = true;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _availabilityScheduled = false;
-      if (!mounted ||
-          widget.portal.isDisposed ||
-          widget.portal._stage == null) {
+      if (!mounted || widget.portal.isDisposed || widget.portal._stage == null) {
         return;
       }
       var available = false;

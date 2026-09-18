@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Advanced planar coordinate mapping for retained nodes whose visual
@@ -74,9 +76,7 @@ GNode? _resolvePointerHitNode(
   if (pointer != null && !pointer._enabled) return null;
 
   final ownInterest = pointer?._hasInterest ?? false;
-  if (!ancestorInterested &&
-      !ownInterest &&
-      node._pointerSubtreeInterest == 0) {
+  if (!ancestorInterested && !ownInterest && node._pointerSubtreeInterest == 0) {
     return null;
   }
 
@@ -116,8 +116,7 @@ GNode? _resolvePointerHitNode(
     return null;
   }
 
-  if (canTarget &&
-      _hitTestPointerComposite(node, localX, localY, renderMaskBits, scratch)) {
+  if (canTarget && _hitTestPointerComposite(node, localX, localY, renderMaskBits, scratch)) {
     return node;
   }
   return null;

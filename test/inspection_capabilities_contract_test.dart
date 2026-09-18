@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -68,10 +70,9 @@ void main() {
     ).firstMatch(inspectionSource);
     expect(capabilitiesBlock, isNotNull);
 
-    final advertised = RegExp(r"'([^']+)'")
-        .allMatches(capabilitiesBlock!.group(1)!)
-        .map((match) => match.group(1)!)
-        .toSet();
+    final advertised = RegExp(
+      r"'([^']+)'",
+    ).allMatches(capabilitiesBlock!.group(1)!).map((match) => match.group(1)!).toSet();
     final expected = <String>{
       ..._operationCapabilities.values,
       ..._schemaCapabilities,

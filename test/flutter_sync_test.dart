@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
@@ -151,8 +153,7 @@ final class _Marker extends InheritedWidget {
 
   final int value;
 
-  static _Marker of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_Marker>()!;
+  static _Marker of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<_Marker>()!;
 
   @override
   bool updateShouldNotify(_Marker oldWidget) => value != oldWidget.value;

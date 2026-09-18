@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// One scene node that renders many lightweight [GTexture] instances.
@@ -271,8 +273,7 @@ final class GImageBatch extends GNode {
 
     final offsetX = frame.offsetX * invTextureScale - instance._pivotX;
     final offsetY =
-        (frame.rotated ? frame.offsetY + frame.region.w : frame.offsetY) *
-            invTextureScale -
+        (frame.rotated ? frame.offsetY + frame.region.w : frame.offsetY) * invTextureScale -
         instance._pivotY;
     final scaledCos = cos * scale;
     final scaledSin = sin * scale;
@@ -280,10 +281,8 @@ final class GImageBatch extends GNode {
     final base = instance._index * 4;
     transforms[base] = scos;
     transforms[base + 1] = ssin;
-    transforms[base + 2] =
-        instance._x + scaledCos * offsetX - scaledSin * offsetY;
-    transforms[base + 3] =
-        instance._y + scaledSin * offsetX + scaledCos * offsetY;
+    transforms[base + 2] = instance._x + scaledCos * offsetX - scaledSin * offsetY;
+    transforms[base + 3] = instance._y + scaledSin * offsetX + scaledCos * offsetY;
   }
 
   void _ensureColors() {
@@ -306,8 +305,7 @@ final class GImageBatch extends GNode {
     _colors![instance._index] = (a << 24) | (r << 16) | (g << 8) | b;
   }
 
-  static int _colorByte(double value) =>
-      (value * 255.0).round().clamp(0, 255).toInt();
+  static int _colorByte(double value) => (value * 255.0).round().clamp(0, 255).toInt();
 
   void _ensureCapacity(int required) {
     if (required <= _capacity) return;

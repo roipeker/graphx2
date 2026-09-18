@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained vector drawing commands with the familiar GraphX/Flash grammar.
@@ -558,9 +560,7 @@ final class GGraphics {
       if (stroke == null || !batch.strokePathHasGeometry) continue;
       if (batch.strokePathPaintAsFill) {
         if (batch.strokePath.contains(point)) return true;
-      } else if (batch.strokePathBounds
-          .inflate(stroke.boundsPad)
-          .contains(point)) {
+      } else if (batch.strokePathBounds.inflate(stroke.boundsPad).contains(point)) {
         return true;
       }
     }
@@ -597,9 +597,7 @@ final class GGraphics {
       if (stroke != null) {
         if (stroke.geometry != null && !batch.strokePathHasGeometry) continue;
         _strokePaint
-          ..style = batch.strokePathPaintAsFill
-              ? PaintingStyle.fill
-              : PaintingStyle.stroke
+          ..style = batch.strokePathPaintAsFill ? PaintingStyle.fill : PaintingStyle.stroke
           ..strokeWidth = stroke.width
           ..strokeCap = stroke.cap
           ..strokeJoin = stroke.join
@@ -764,9 +762,7 @@ final class GGraphics {
     }
 
     final gradient = brush as _GGradientGraphicsBrush;
-    final shaderVersion = fill
-        ? batch.fillShaderVersion
-        : batch.strokeShaderVersion;
+    final shaderVersion = fill ? batch.fillShaderVersion : batch.strokeShaderVersion;
     Shader? resolved = fill ? batch.fillShader : batch.strokeShader;
     if (resolved == null || shaderVersion != batch.geometryVersion) {
       resolved = _createGradientShader(gradient, paintBounds);
@@ -796,9 +792,7 @@ final class GGraphics {
 
   Shader _createGradientShader(_GGradientGraphicsBrush style, Rect pathBounds) {
     final bounds = style.gradientBox ?? pathBounds;
-    final transform = style.rotation == 0.0
-        ? null
-        : GradientRotation(style.rotation);
+    final transform = style.rotation == 0.0 ? null : GradientRotation(style.rotation);
 
     final Gradient gradient;
     switch (style.type) {

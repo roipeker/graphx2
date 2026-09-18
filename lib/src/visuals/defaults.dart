@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Sparse defaults for [GIcon] descendants of a [GDefaults] scope.
@@ -15,8 +17,7 @@ final class GIconStyle {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is GIconStyle && other.color == color && other.size == size;
+      identical(this, other) || other is GIconStyle && other.color == color && other.size == size;
 
   @override
   int get hashCode => Object.hash(color, size);

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 /// Supported GraphX extension-author, custom-host, and backend API.
 library;
 

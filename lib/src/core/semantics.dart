@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Platform-neutral semantic role for one retained [GNode].
@@ -231,8 +233,9 @@ final Expando<GNodeSemantics> _gNodeSemantics = Expando<GNodeSemantics>(
 final Expando<_GStageSemantics> _gStageSemantics = Expando<_GStageSemantics>(
   'GStage.semantics',
 );
-final Expando<_GSemanticsHostBridge> _gSemanticsHosts =
-    Expando<_GSemanticsHostBridge>('GStage.semanticsHost');
+final Expando<_GSemanticsHostBridge> _gSemanticsHosts = Expando<_GSemanticsHostBridge>(
+  'GStage.semanticsHost',
+);
 
 GNodeSemantics? _maybeNodeSemantics(GNode node) => _gNodeSemantics[node];
 

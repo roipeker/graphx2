@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -65,8 +67,7 @@ void main() {
   });
 
   test('glow effect bounds include spread and blur', () {
-    final node = _BoxNode()
-      ..filters = [GGlowFilter(blurX: 2, blurY: 1, spread: 3)];
+    final node = _BoxNode()..filters = [GGlowFilter(blurX: 2, blurY: 1, spread: 3)];
     final effect = node.getEffectBounds();
     expect(effect.x1, 1);
     expect(effect.y1, 4);
@@ -111,8 +112,7 @@ void main() {
   });
 
   test('bevel preserves source effect bounds', () {
-    final node = _BoxNode()
-      ..filters = [GBevelFilter(offsetX: 7, offsetY: 5, blurX: 4, blurY: 3)];
+    final node = _BoxNode()..filters = [GBevelFilter(offsetX: 7, offsetY: 5, blurX: 4, blurY: 3)];
     final local = node.localBounds;
     final effect = node.getEffectBounds();
     expect(effect.x1, local.x1);
@@ -190,8 +190,7 @@ void main() {
 
   test('glow uses the same single outer branch as drop shadow', () {
     final root = GRoot();
-    final node = root.addChild(_BoxNode())
-      ..filters = [GGlowFilter(blurX: 4, blurY: 4, spread: 2)];
+    final node = root.addChild(_BoxNode())..filters = [GGlowFilter(blurX: 4, blurY: 4, spread: 2)];
     final stage = GStage(root)..mount();
     stage.stats.enabled = true;
     stage.setViewport(100, 100);
@@ -205,8 +204,7 @@ void main() {
 
   test('soft outline keeps one morphology branch', () {
     final root = GRoot();
-    final node = root.addChild(_BoxNode())
-      ..filters = [GOutlineFilter(width: 3, softness: 1)];
+    final node = root.addChild(_BoxNode())..filters = [GOutlineFilter(width: 3, softness: 1)];
     final stage = GStage(root)..mount();
     stage.stats.enabled = true;
     stage.setViewport(100, 100);

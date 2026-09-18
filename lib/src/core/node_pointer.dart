@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Pointer behavior and signals for one scene node.
@@ -129,9 +131,7 @@ final class GNodePointer implements _GDisposable {
     }
 
     final hover =
-        _cursor != null ||
-        (_enter?.hasListeners ?? false) ||
-        (_exit?.hasListeners ?? false);
+        _cursor != null || (_enter?.hasListeners ?? false) || (_exit?.hasListeners ?? false);
     if (_hasHoverInterest != hover) {
       _hasHoverInterest = hover;
       _node._adjustPointerHoverSubtreeInterest(hover ? 1 : -1);
@@ -267,8 +267,7 @@ final class _GNodePointerRouter implements _GDisposable {
     if (_disposed ||
         _sceneDirtyScheduled ||
         !stage.pointer.isInside ||
-        (stage.root._pointerHoverSubtreeInterest == 0 &&
-            _hoverTarget == null)) {
+        (stage.root._pointerHoverSubtreeInterest == 0 && _hoverTarget == null)) {
       return;
     }
     _sceneDirtyScheduled = true;
@@ -293,8 +292,11 @@ final class _GNodePointerRouter implements _GDisposable {
     _dispatchBubble(target, _GNodePointerSignal.down, event, view);
 
     if (_hasTapInterest(target) && _isTapPointerDown(event)) {
-      (_tapCandidates ??= <int, _GPointerTapCandidate>{})[event.pointer] =
-          _GPointerTapCandidate(target, event.x, event.y);
+      (_tapCandidates ??= <int, _GPointerTapCandidate>{})[event.pointer] = _GPointerTapCandidate(
+        target,
+        event.x,
+        event.y,
+      );
     }
   }
 
@@ -304,9 +306,7 @@ final class _GNodePointerRouter implements _GDisposable {
     final captured = _captured(event.pointer);
     final target = captured ?? _resolvePointerHit(stage, event.x, event.y);
     if (target == null) return;
-    final view = captured == null
-        ? _renderViewFor(event)
-        : _captureViews[event.pointer];
+    final view = captured == null ? _renderViewFor(event) : _captureViews[event.pointer];
     _dispatchBubble(target, _GNodePointerSignal.move, event, view);
   }
 
@@ -320,9 +320,7 @@ final class _GNodePointerRouter implements _GDisposable {
 
   void _handleUp(GPointerEvent event) {
     final captured = _captured(event.pointer);
-    final view = captured == null
-        ? _renderViewFor(event)
-        : _captureViews[event.pointer];
+    final view = captured == null ? _renderViewFor(event) : _captureViews[event.pointer];
     final target = captured ?? _resolvePointerHit(stage, event.x, event.y);
     if (target != null) {
       _dispatchBubble(target, _GNodePointerSignal.up, event, view);
@@ -449,15 +447,13 @@ final class _GNodePointerRouter implements _GDisposable {
     return true;
   }
 
-  GRenderView? _renderViewFor(GPointerEvent event) =>
-      _inputRenderViewAt(stage, event.x, event.y);
+  GRenderView? _renderViewFor(GPointerEvent event) => _inputRenderViewAt(stage, event.x, event.y);
 
   void _reconcileHover([GPointerEvent? event]) {
     if (_disposed) return;
     if (event != null) _lastHoverEvent = event;
     final source = event ?? _lastHoverEvent;
-    final next =
-        stage.pointer.isInside && stage.root._pointerSubtreeInterest != 0
+    final next = stage.pointer.isInside && stage.root._pointerSubtreeInterest != 0
         ? _resolvePointerHit(stage, stage.pointer.x, stage.pointer.y)
         : null;
     final nextView = source == null
@@ -493,21 +489,16 @@ final class _GNodePointerRouter implements _GDisposable {
     var common = 0;
     if (identical(previousView, nextView)) {
       final commonEnd = math.min(oldPath.length, nextPath.length);
-      while (common < commonEnd &&
-          identical(oldPath[common], nextPath[common])) {
+      while (common < commonEnd && identical(oldPath[common], nextPath[common])) {
         common++;
       }
     }
 
-    final exitEvent = previous == null
-        ? null
-        : GNodePointerEvent._(source, previous, previousView);
+    final exitEvent = previous == null ? null : GNodePointerEvent._(source, previous, previousView);
     for (var i = oldPath.length - 1; i >= common; --i) {
       _emitDirect(oldPath[i], _GNodePointerSignal.exit, exitEvent!);
     }
-    final enterEvent = next == null
-        ? null
-        : GNodePointerEvent._(source, next, nextView);
+    final enterEvent = next == null ? null : GNodePointerEvent._(source, next, nextView);
     for (var i = common; i < nextPath.length; ++i) {
       _emitDirect(nextPath[i], _GNodePointerSignal.enter, enterEvent!);
     }

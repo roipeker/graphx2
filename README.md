@@ -38,6 +38,8 @@ flutter analyze
 flutter test
 ```
 
+Code formatting and source style are documented in [STYLE.md](STYLE.md).
+
 Examples, demos, and the GraphX site will live alongside the package so changes can be exercised quickly on web, iOS, Android, and desktop.
 
 See [ROADMAP.md](ROADMAP.md) for what we are working on next.

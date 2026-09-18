@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorCaptureRuntime _gInspectorCaptureRuntime =
-    _GInspectorCaptureRuntime();
+final _GInspectorCaptureRuntime _gInspectorCaptureRuntime = _GInspectorCaptureRuntime();
 
 /// Explicit live visual evidence for tooling.
 ///
@@ -52,9 +53,7 @@ final class _GInspectorCaptureRuntime {
       }
 
       final scaleText = parameters['scale'];
-      final scale = scaleText == null || scaleText.isEmpty
-          ? 1.0
-          : double.tryParse(scaleText);
+      final scale = scaleText == null || scaleText.isEmpty ? 1.0 : double.tryParse(scaleText);
       if (scale == null || !scale.isFinite || scale <= 0.0) {
         return _gInspectorRuntime._invalidParams(
           'scale must be a finite number greater than zero.',
@@ -154,8 +153,7 @@ final class _GInspectorCaptureRuntime {
     final pixelWidth = math.max(1, pixelRight - pixelLeft);
     final pixelHeight = math.max(1, pixelBottom - pixelTop);
     final limitError = _pixelLimitError(pixelWidth, pixelHeight);
-    if (limitError != null)
-      return _gInspectorRuntime._invalidParams(limitError);
+    if (limitError != null) return _gInspectorRuntime._invalidParams(limitError);
 
     final texture = await stage.snapshot(scale: scale);
     ui.Image? cropped;
@@ -218,8 +216,7 @@ final class _GInspectorCaptureRuntime {
     final pixelWidth = math.max(1, (area.w * scale).ceil());
     final pixelHeight = math.max(1, (area.h * scale).ceil());
     final limitError = _pixelLimitError(pixelWidth, pixelHeight);
-    if (limitError != null)
-      return _gInspectorRuntime._invalidParams(limitError);
+    if (limitError != null) return _gInspectorRuntime._invalidParams(limitError);
 
     final texture = await node.snapshot(area: area, scale: scale);
     try {
@@ -319,10 +316,8 @@ final class _GInspectorCaptureRuntime {
 
     final left = math.min(math.min(p0.x, p1.x), math.min(p2.x, p3.x)) - padding;
     final top = math.min(math.min(p0.y, p1.y), math.min(p2.y, p3.y)) - padding;
-    final right =
-        math.max(math.max(p0.x, p1.x), math.max(p2.x, p3.x)) + padding;
-    final bottom =
-        math.max(math.max(p0.y, p1.y), math.max(p2.y, p3.y)) + padding;
+    final right = math.max(math.max(p0.x, p1.x), math.max(p2.x, p3.x)) + padding;
+    final bottom = math.max(math.max(p0.y, p1.y), math.max(p2.y, p3.y)) + padding;
     return ui.Rect.fromLTRB(left, top, right, bottom);
   }
 

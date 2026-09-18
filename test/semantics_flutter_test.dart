@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Hosts Flutter-backed [GPortal] nodes around the GraphX surface.
@@ -44,8 +46,7 @@ final class _GPortalEntry {
 
 final class _GPortalHostState extends State<_GPortalHost> {
   late _GPortalDomain _domain;
-  final Map<GPortal<dynamic>, _GPortalEntry> _entries =
-      <GPortal<dynamic>, _GPortalEntry>{};
+  final Map<GPortal<dynamic>, _GPortalEntry> _entries = <GPortal<dynamic>, _GPortalEntry>{};
 
   int? _deferredRebuildId;
   bool _structureDirty = false;
@@ -86,8 +87,7 @@ final class _GPortalHostState extends State<_GPortalHost> {
     if (!mounted) return;
 
     final phase = SchedulerBinding.instance.schedulerPhase;
-    if (phase == SchedulerPhase.transientCallbacks ||
-        phase == SchedulerPhase.midFrameMicrotasks) {
+    if (phase == SchedulerPhase.transientCallbacks || phase == SchedulerPhase.midFrameMicrotasks) {
       setState(() {});
       return;
     }
@@ -121,12 +121,10 @@ final class _GPortalHostState extends State<_GPortalHost> {
         clipBehavior: Clip.none,
         children: <Widget>[
           for (final portal in portals)
-            if (portal.placement == GPortalPlacement.behind)
-              _buildPortal(portal),
+            if (portal.placement == GPortalPlacement.behind) _buildPortal(portal),
           _GSemanticsHost(stage: widget.stage, child: widget.child),
           for (final portal in portals)
-            if (portal.placement == GPortalPlacement.front)
-              _buildPortal(portal),
+            if (portal.placement == GPortalPlacement.front) _buildPortal(portal),
         ],
       ),
     );

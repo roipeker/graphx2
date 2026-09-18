@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter's [TextStyle], with a GraphX name to make your life easier, Mr developer.

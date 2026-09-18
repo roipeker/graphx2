@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorActivityRuntime _gInspectorActivityRuntime =
-    _GInspectorActivityRuntime();
+final _GInspectorActivityRuntime _gInspectorActivityRuntime = _GInspectorActivityRuntime();
 
 /// Opt-in, bounded temporal evidence for tooling.
 ///
@@ -16,8 +17,9 @@ final class _GInspectorActivityRuntime {
   static const _defaultReadLimit = 200;
   static const _maxReadLimit = 1000;
 
-  final Expando<_GInspectorActivityState> _states =
-      Expando<_GInspectorActivityState>('graphx.inspector.activity');
+  final Expando<_GInspectorActivityState> _states = Expando<_GInspectorActivityState>(
+    'graphx.inspector.activity',
+  );
   bool _registered = false;
 
   void registerStage(GStage stage) {
@@ -178,11 +180,8 @@ final class _GInspectorActivityRuntime {
             'scrollY': event.scrollY,
             'scrollSource': event.scrollSource?.name,
           },
-          'hitTargetId': hitTarget == null
-              ? null
-              : _gInspectorRuntime._idForObject(hitTarget),
-          'hitTargetLabel':
-              hitTarget?.name ?? hitTarget?.runtimeType.toString(),
+          'hitTargetId': hitTarget == null ? null : _gInspectorRuntime._idForObject(hitTarget),
+          'hitTargetLabel': hitTarget?.name ?? hitTarget?.runtimeType.toString(),
           ..._focusJson(focused),
         },
       ),
@@ -204,8 +203,7 @@ final class _GInspectorActivityRuntime {
         type: 'key.${event.type.name}',
         data: <String, Object?>{
           'logicalKey': event.logicalKey.keyId,
-          'logicalKeyLabel':
-              event.logicalKey.debugName ?? event.logicalKey.keyLabel,
+          'logicalKeyLabel': event.logicalKey.debugName ?? event.logicalKey.keyLabel,
           'physicalKey': event.physicalKey.usbHidUsage,
           'physicalKeyLabel': event.physicalKey.debugName,
           'character': event.character,
@@ -216,9 +214,7 @@ final class _GInspectorActivityRuntime {
   }
 
   Map<String, Object?> _focusJson(GNode? focused) => <String, Object?>{
-    'focusedNodeId': focused == null
-        ? null
-        : _gInspectorRuntime._idForObject(focused),
+    'focusedNodeId': focused == null ? null : _gInspectorRuntime._idForObject(focused),
     'focusedNodeLabel': focused?.name ?? focused?.runtimeType.toString(),
   };
 }

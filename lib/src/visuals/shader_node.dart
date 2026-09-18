@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Rectangular programmable visual backed by a [GShaderInstance].
@@ -62,9 +64,7 @@ final class GShaderNode extends GNode {
       ..shader = shader._nativeShader
       ..color = const Color(0xffffffff)
       ..blendMode = BlendMode.srcOver
-      ..colorFilter = context.hasColorTransform
-          ? context._effectiveColorFilter
-          : null;
+      ..colorFilter = context.hasColorTransform ? context._effectiveColorFilter : null;
     context.canvas.drawRect(Rect.fromLTWH(0, 0, _width, _height), _paint);
   }
 

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 final class GMath {
@@ -54,8 +56,7 @@ final class GMath {
   static double hypo(double x, double y) => math.sqrt(x * x + y * y);
 
   static double sqrt(double value) => math.sqrt(value);
-  static double pow(double base, double exponent) =>
-      math.pow(base, exponent).toDouble();
+  static double pow(double base, double exponent) => math.pow(base, exponent).toDouble();
   static double square(double value) => value * value;
   static double cube(double value) => value * value * value;
   static double exp(double value) => math.exp(value);
@@ -74,8 +75,7 @@ final class GMath {
   }
 
   static double lerp(double a, double b, double t) => a + (b - a) * t;
-  static double lerpClamped(double a, double b, double t) =>
-      lerp(a, b, clamp(t));
+  static double lerpClamped(double a, double b, double t) => lerp(a, b, clamp(t));
 
   static double invLerp(double a, double b, double value) {
     final range = b - a;
@@ -185,8 +185,7 @@ class GMatrix2 {
     this.ty = 0.0,
   ]);
 
-  bool get isIdentity =>
-      a == 1.0 && d == 1.0 && b == 0.0 && c == 0.0 && tx == 0.0 && ty == 0.0;
+  bool get isIdentity => a == 1.0 && d == 1.0 && b == 0.0 && c == 0.0 && tx == 0.0 && ty == 0.0;
 
   void identity() {
     a = d = 1.0;

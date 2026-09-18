@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Fast visibility mask shared by render views and retained render groups.
@@ -76,10 +78,8 @@ final class GRenderView {
     _owner?._stage._nodePointerRouter?._markSceneChanged();
   }
 
-  double get scaleX =>
-      math.sqrt(transform.a * transform.a + transform.b * transform.b);
-  double get scaleY =>
-      math.sqrt(transform.c * transform.c + transform.d * transform.d);
+  double get scaleX => math.sqrt(transform.a * transform.a + transform.b * transform.b);
+  double get scaleY => math.sqrt(transform.c * transform.c + transform.d * transform.d);
   double get maxScale => math.max(scaleX, scaleY);
 
   bool containsStagePoint(double x, double y) =>
@@ -219,8 +219,9 @@ final class GStageRenderViews implements _GDisposable {
   }
 }
 
-final Expando<GStageRenderViews> _gRenderViewsByStage =
-    Expando<GStageRenderViews>('graphx.renderViews');
+final Expando<GStageRenderViews> _gRenderViewsByStage = Expando<GStageRenderViews>(
+  'graphx.renderViews',
+);
 
 GStageRenderViews? _renderViewsOf(GStage stage) {
   final views = _gRenderViewsByStage[stage];
@@ -247,8 +248,7 @@ extension GStageRenderViewsExtension on GStage {
 /// bitwise AND and no descendant traversal. Use nested groups for coarse render
 /// layers; ordinary [GNode] instances carry no render-mask storage.
 final class GRenderGroup extends GNode {
-  GRenderGroup({GRenderMask mask = GRenderMask.all, super.name})
-    : _renderMask = mask;
+  GRenderGroup({GRenderMask mask = GRenderMask.all, super.name}) : _renderMask = mask;
 
   GRenderMask _renderMask;
 

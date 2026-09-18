@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 extension GShaderAssets on GAssets {
@@ -8,8 +10,7 @@ extension GShaderAssets on GAssets {
   Future<GShader> shader(String assetPath, {bool cache = true}) {
     return load<GShader>(
       ('shader', assetPath),
-      () async =>
-          GShader._(assetPath, await ui.FragmentProgram.fromAsset(assetPath)),
+      () async => GShader._(assetPath, await ui.FragmentProgram.fromAsset(assetPath)),
       cache: cache,
     );
   }

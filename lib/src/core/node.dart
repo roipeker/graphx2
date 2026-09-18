@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 abstract class _GDisposable {
@@ -14,8 +16,9 @@ mixin GStageUpdatable implements GUpdatable {
   int _updateSlot = -1;
 }
 
-final Expando<_GDetachedRenderLock> _detachedRenderLocks =
-    Expando<_GDetachedRenderLock>('graphx.detachedRenderLock');
+final Expando<_GDetachedRenderLock> _detachedRenderLocks = Expando<_GDetachedRenderLock>(
+  'graphx.detachedRenderLock',
+);
 
 final class _GDetachedRenderLock {
   int depth = 0;
@@ -38,8 +41,7 @@ class GNode with GNodeTransform, GStageUpdatable implements _GDisposable {
   GNode? get parent => _parent;
 
   GStage? _stage;
-  GStage get stage =>
-      _stage ?? (throw StateError('Node is not attached to stage.'));
+  GStage get stage => _stage ?? (throw StateError('Node is not attached to stage.'));
 
   /// Whether this node has crossed the Stage lifecycle attachment boundary.
   ///
@@ -191,8 +193,7 @@ class GNode with GNodeTransform, GStageUpdatable implements _GDisposable {
 
   GBounds get localBounds => getLocalBounds();
 
-  GBounds getBounds(GNode targetSpace, [GBounds? out]) =>
-      _getNodeBounds(this, targetSpace, out);
+  GBounds getBounds(GNode targetSpace, [GBounds? out]) => _getNodeBounds(this, targetSpace, out);
 
   /// Marks this node's intrinsic bounds as changed.
   @protected
@@ -215,8 +216,7 @@ class GNode with GNodeTransform, GStageUpdatable implements _GDisposable {
     final ownCache = _cache;
     if (ownCache != null && ownCache.enabled) ownCache._invalidate();
     final stage = _stage;
-    if (stage == null ||
-        stage._rasterCacheCount > ((ownCache?.enabled ?? false) ? 1 : 0)) {
+    if (stage == null || stage._rasterCacheCount > ((ownCache?.enabled ?? false) ? 1 : 0)) {
       _invalidateCachedAncestors(includeSelf: false);
     }
     stage?.requestPaint();

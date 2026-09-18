@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 // for assert dimension issues.
@@ -257,8 +259,7 @@ final class _GraphXSurface extends LeafRenderObjectWidget {
   }
 }
 
-final class RenderGraphXSurface extends RenderBox
-    implements GStageHost, MouseTrackerAnnotation {
+final class RenderGraphXSurface extends RenderBox implements GStageHost, MouseTrackerAnnotation {
   RenderGraphXSurface(
     GStage stage,
     this.repaintBoundary, [
@@ -311,8 +312,7 @@ final class RenderGraphXSurface extends RenderBox
     }
     return switch (hitTestBehavior) {
       GHitTestBehavior.opaque => true,
-      GHitTestBehavior.content =>
-        _resolveInteractiveHit(stage, position.dx, position.dy) != null,
+      GHitTestBehavior.content => _resolveInteractiveHit(stage, position.dx, position.dy) != null,
     };
   }
 
@@ -457,9 +457,7 @@ final class RenderGraphXSurface extends RenderBox
       timestamp,
     ) {
       _frameCallbackId = null;
-      if (!attached ||
-          !identical(_stage, scheduledStage) ||
-          scheduledStage.isDisposed) {
+      if (!attached || !identical(_stage, scheduledStage) || scheduledStage.isDisposed) {
         return;
       }
       scheduledStage.handleFrame(timestamp);
@@ -474,8 +472,7 @@ final class RenderGraphXSurface extends RenderBox
   }
 
   @override
-  Size computeDryLayout(BoxConstraints constraints) =>
-      _computeSize(constraints);
+  Size computeDryLayout(BoxConstraints constraints) => _computeSize(constraints);
 
   @override
   void performLayout() {
@@ -492,12 +489,8 @@ final class RenderGraphXSurface extends RenderBox
   }
 
   static Size _computeSize(BoxConstraints constraints) {
-    final w = constraints.hasBoundedWidth
-        ? constraints.maxWidth
-        : constraints.minWidth;
-    final h = constraints.hasBoundedHeight
-        ? constraints.maxHeight
-        : constraints.minHeight;
+    final w = constraints.hasBoundedWidth ? constraints.maxWidth : constraints.minWidth;
+    final h = constraints.hasBoundedHeight ? constraints.maxHeight : constraints.minHeight;
     return constraints.constrain(Size(w, h));
   }
 
@@ -538,16 +531,12 @@ final class RenderGraphXSurface extends RenderBox
           'The parent forced the height to zero. Inspect the surrounding '
           'SizedBox, Flex, animation, or custom layout.',
         ),
-      if (constraints.hasBoundedWidth &&
-          constraints.maxWidth > 0.0 &&
-          size.width == 0)
+      if (constraints.hasBoundedWidth && constraints.maxWidth > 0.0 && size.width == 0)
         ErrorHint(
           'A non-zero width was available, but the chosen width was zero.'
           'Usually indicates incorrect RenderGraphXSurface sizing.',
         ),
-      if (constraints.hasBoundedHeight &&
-          constraints.maxHeight > 0.0 &&
-          size.height == 0)
+      if (constraints.hasBoundedHeight && constraints.maxHeight > 0.0 && size.height == 0)
         ErrorHint(
           'A non-zero height was available, but the chosen height was zero.'
           'Usually indicates incorrect RenderGraphXSurface sizing.',

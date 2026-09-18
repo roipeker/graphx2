@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
@@ -8,8 +10,7 @@ void main() {
   ) async {
     final handle = tester.ensureSemantics();
     final root = GRoot();
-    final viewport = root.addChild(GNode(name: 'viewport'))
-      ..clip = GClip.rect(0, 0, 100, 100);
+    final viewport = root.addChild(GNode(name: 'viewport'))..clip = GClip.rect(0, 0, 100, 100);
     final control = viewport.addChild(_SemanticBox())..y = 120;
     control.semantics
       ..label = 'Clipped control'

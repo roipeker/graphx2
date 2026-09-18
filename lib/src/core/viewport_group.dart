@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Container that skips direct child subtrees outside the current render viewport.
@@ -60,9 +62,7 @@ extension _GViewportGroupRenderer on GCanvasRenderer {
 
     // Snapshots/raster-cache captures must contain the complete subtree rather
     // than whatever happens to be visible in the hosted Stage viewport.
-    if (!group.cullingEnabled ||
-        !_allowRasterCache ||
-        _viewportGroupOwnFilter(group)) {
+    if (!group.cullingEnabled || !_allowRasterCache || _viewportGroupOwnFilter(group)) {
       _paintViewportChildrenUnculled(
         children,
         context,
@@ -143,8 +143,7 @@ extension _GViewportGroupRenderer on GCanvasRenderer {
     if (!w.isFinite || !h.isFinite || w <= 0.0 || h <= 0.0) return null;
 
     group._ensureWorldTransform();
-    if (!group._worldMatrix!.invertInto(group._inverseWorldScratch))
-      return null;
+    if (!group._worldMatrix!.invertInto(group._inverseWorldScratch)) return null;
 
     group._stageViewportScratch.setXYWH(0.0, 0.0, w, h);
     group._inverseWorldScratch.transformBoundsInto(

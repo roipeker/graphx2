@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Makes one shared [GRuntime] available to descendant [GraphXView] instances.
@@ -11,9 +13,7 @@ class GRuntimeProvider extends InheritedWidget {
   final GRuntime runtime;
 
   static GRuntime? maybeOf(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<GRuntimeProvider>()
-        ?.runtime;
+    return context.dependOnInheritedWidgetOfExactType<GRuntimeProvider>()?.runtime;
   }
 
   static GRuntime of(BuildContext context) {

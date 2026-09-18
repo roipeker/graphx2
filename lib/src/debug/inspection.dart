@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 // Runtime inspection intentionally lives in core because this library owns the
@@ -18,12 +20,11 @@ final class _GInspectorRuntime {
   final Expando<String> _objectIds = Expando<String>(
     'graphx.inspector.objectId',
   );
-  final Map<String, WeakReference<GStage>> _stageById =
-      <String, WeakReference<GStage>>{};
-  final Map<String, WeakReference<Object>> _objectById =
-      <String, WeakReference<Object>>{};
-  final Expando<_GInspectorSelection> _selection =
-      Expando<_GInspectorSelection>('graphx.inspector.selection');
+  final Map<String, WeakReference<GStage>> _stageById = <String, WeakReference<GStage>>{};
+  final Map<String, WeakReference<Object>> _objectById = <String, WeakReference<Object>>{};
+  final Expando<_GInspectorSelection> _selection = Expando<_GInspectorSelection>(
+    'graphx.inspector.selection',
+  );
 
   int _nextStageId = 1;
   int _nextObjectId = 1;
@@ -491,8 +492,7 @@ final class _GInspectorRuntime {
       'references': <Object>[
         if (composite?.mask case final mask?)
           <String, Object?>{'relation': 'mask', ..._objectSummary(mask)},
-        if (cache != null)
-          <String, Object?>{'relation': 'cache', ..._objectSummary(cache)},
+        if (cache != null) <String, Object?>{'relation': 'cache', ..._objectSummary(cache)},
         if (filters != null)
           for (var i = 0; i < filters.length; ++i)
             <String, Object?>{
@@ -542,9 +542,7 @@ final class _GInspectorRuntime {
         'compositeMode': node.compositeMode.name,
         'blendMode': node.blendMode.name,
         'clip': composite?.clip?.runtimeType.toString(),
-        'maskId': composite?.mask == null
-            ? null
-            : _idForObject(composite!.mask!),
+        'maskId': composite?.mask == null ? null : _idForObject(composite!.mask!),
         'maskMode': composite?.maskMode.name,
         'filters': <Object>[
           if (filters != null)
@@ -635,8 +633,7 @@ final class _GInspectorRuntime {
     return <String, Object?>{
       ..._objectSummary(filter),
       'references': <Object>[
-        if (owner != null)
-          <String, Object?>{'relation': 'owner', ..._objectSummary(owner)},
+        if (owner != null) <String, Object?>{'relation': 'owner', ..._objectSummary(owner)},
       ],
       'ownerId': owner == null ? null : _idForObject(owner),
       'version': filter._version,
@@ -692,10 +689,7 @@ final class _GInspectorRuntime {
     final selection = _selection[stage];
     if (selection == null || !selection.enabled) return;
     final node = selection.node?.target;
-    if (node == null ||
-        node.isDisposed ||
-        !node.isAttached ||
-        !identical(node._stage, stage)) {
+    if (node == null || node.isDisposed || !node.isAttached || !identical(node._stage, stage)) {
       selection
         ..node = null
         ..enabled = false;

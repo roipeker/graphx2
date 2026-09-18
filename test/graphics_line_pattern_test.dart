@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -275,8 +277,7 @@ void main() {
       throwsArgumentError,
     );
     expect(
-      () =>
-          GLinePattern(Path(), advance: 10, pivot: GPoint(double.infinity, 0)),
+      () => GLinePattern(Path(), advance: 10, pivot: GPoint(double.infinity, 0)),
       throwsArgumentError,
     );
     expect(

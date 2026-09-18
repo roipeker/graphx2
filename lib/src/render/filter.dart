@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Post-processes the rendered pixels of one node subtree.
@@ -427,8 +429,7 @@ final class GOutlineFilter extends GFilter {
 /// [padding] expands temporary effect bounds equally on every side for shaders
 /// that sample outside their source rectangle.
 final class GShaderFilter extends GFilter {
-  GShaderFilter(this.shader, {double padding = 0.0})
-    : _padding = _checkedBlur(padding, 'padding');
+  GShaderFilter(this.shader, {double padding = 0.0}) : _padding = _checkedBlur(padding, 'padding');
 
   static bool get isSupported => ui.ImageFilter.isShaderFilterSupported;
 
@@ -479,8 +480,7 @@ final class GShaderFilter extends GFilter {
 /// channel. The supplied list is copied, so later caller mutation is ignored;
 /// assign [matrix] again to update the filter.
 final class GColorMatrixFilter extends GFilter {
-  GColorMatrixFilter([List<double> matrix = identity])
-    : _matrix = _copyColorMatrix(matrix);
+  GColorMatrixFilter([List<double> matrix = identity]) : _matrix = _copyColorMatrix(matrix);
 
   static const List<double> identity = <double>[
     1,

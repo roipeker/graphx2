@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:io';
@@ -138,8 +140,7 @@ void _report(
 
   samples.sort();
   final p50 = samples[samples.length ~/ 2];
-  final p95 =
-      samples[(samples.length * .95).floor().clamp(0, samples.length - 1)];
+  final p95 = samples[(samples.length * .95).floor().clamp(0, samples.length - 1)];
   final nsPerPass = p50 * 1000 / nodePasses;
   final suffix = note == null ? '' : '  $note';
   print(

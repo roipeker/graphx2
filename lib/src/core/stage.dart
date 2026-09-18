@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 abstract interface class GStageHost {
@@ -119,8 +121,7 @@ class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
 
   /// Whether the Stage has a source that intentionally keeps ticking.
   /// One-shot input/requestUpdate work is not considered continuous.
-  bool get hasContinuousUpdates =>
-      _updaterCount > 0 || (_signals?._hasUpdateListeners ?? false);
+  bool get hasContinuousUpdates => _updaterCount > 0 || (_signals?._hasUpdateListeners ?? false);
 
   bool get wantsUpdate => _updateRequested || hasContinuousUpdates;
 
@@ -176,9 +177,7 @@ class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
 
   void setViewport(double w, double h, {double devicePixelRatio = 1.0}) {
     _checkAlive();
-    if (width == w &&
-        height == h &&
-        this.devicePixelRatio == devicePixelRatio) {
+    if (width == w && height == h && this.devicePixelRatio == devicePixelRatio) {
       return;
     }
     _requireNotRendering('change the Stage viewport');
@@ -187,8 +186,7 @@ class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
     _viewportSize.height = height = h;
     this.devicePixelRatio = devicePixelRatio;
 
-    final firstUsableViewport =
-        !_rootAttached && w.isFinite && h.isFinite && w > 0.0 && h > 0.0;
+    final firstUsableViewport = !_rootAttached && w.isFinite && h.isFinite && w > 0.0 && h > 0.0;
 
     if (firstUsableViewport) {
       _rootAttached = true;
@@ -231,9 +229,7 @@ class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
     _environmentBuildScheduled = true;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _environmentBuildScheduled = false;
-      if (_disposed ||
-          !context.mounted ||
-          !(_environment?._needsHostSync ?? false)) {
+      if (_disposed || !context.mounted || !(_environment?._needsHostSync ?? false)) {
         return;
       }
       if (context case final Element element) element.markNeedsBuild();
@@ -294,9 +290,7 @@ class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
     try {
       final stats = _activeStats;
       stats?.frame.record(rawDelta);
-      final dt = !rawDelta.isFinite || rawDelta <= 0.0
-          ? 0.0
-          : rawDelta.clamp(0.0, maxDelta);
+      final dt = !rawDelta.isFinite || rawDelta <= 0.0 ? 0.0 : rawDelta.clamp(0.0, maxDelta);
       delta = dt;
       elapsed += dt;
       frame++;

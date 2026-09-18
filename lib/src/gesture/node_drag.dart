@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flash-style direct pointer following for scene nodes.
@@ -31,8 +33,7 @@ extension GNodeDrag on GNode {
     double? x;
     double? y;
     GRenderView? renderView;
-    if (current != null &&
-        (resolvedPointer == null || current.pointer == resolvedPointer)) {
+    if (current != null && (resolvedPointer == null || current.pointer == resolvedPointer)) {
       x = current.x;
       y = current.y;
       renderView = current._renderView;
@@ -162,8 +163,7 @@ final class _GNodeDragBinding implements _GDisposable {
     var worldY = stageY;
     final renderView = _renderView;
     if (renderView != null) {
-      if (!renderView.enabled ||
-          !renderView.stageToWorldInto(stageX, stageY, _worldPoint)) {
+      if (!renderView.enabled || !renderView.stageToWorldInto(stageX, stageY, _worldPoint)) {
         return;
       }
       worldX = _worldPoint.x;

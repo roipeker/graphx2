@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 

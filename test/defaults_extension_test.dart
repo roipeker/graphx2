@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
@@ -106,8 +108,7 @@ void main() {
 }
 
 final class _ThemeScope extends GDefaults {
-  _ThemeScope({super.textStyle, super.iconStyle, int? uiToken})
-    : _uiToken = uiToken;
+  _ThemeScope({super.textStyle, super.iconStyle, int? uiToken}) : _uiToken = uiToken;
 
   int? _uiToken;
 

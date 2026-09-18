@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 bool _clipContains(GClip clip, double x, double y, GNode owner) {
@@ -13,11 +15,7 @@ bool _clipContains(GClip clip, double x, double y, GNode owner) {
   }
   if (clip is GInversePathClip) {
     final bounds = owner._ensureLocalBounds();
-    if (bounds.isEmpty ||
-        x < bounds.x1 ||
-        x >= bounds.x2 ||
-        y < bounds.y1 ||
-        y >= bounds.y2) {
+    if (bounds.isEmpty || x < bounds.x1 || x >= bounds.x2 || y < bounds.y1 || y >= bounds.y2) {
       return false;
     }
 

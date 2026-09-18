@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Shared GraphX/GraphX runtime state whose lifetime may span many stages.
@@ -5,8 +7,7 @@ part of 'package:graphx/src/graphx_impl.dart';
 /// Keep this intentionally small. Only facilities that are meaningfully shared
 /// across stages belong here.
 final class GRuntime implements _GDisposable {
-  GRuntime({GAssetUrlLoader? urlLoader})
-    : assets = GAssets(urlLoader: urlLoader) {
+  GRuntime({GAssetUrlLoader? urlLoader}) : assets = GAssets(urlLoader: urlLoader) {
     if (!kReleaseMode) {
       _gInspectorResourcesRuntime.ensureRegistered();
       _gInspectorResourceReferencesRuntime.ensureRegistered();

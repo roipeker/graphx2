@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 mixin _GStageUpdate {
@@ -98,11 +100,9 @@ final class GStageSignals implements _GDisposable {
   GSignal<GFlutterSync>? _flutterSync;
   GSignal<BuildContext>? _flutterDependencies;
 
-  GSignal<GEnvironmentChange> get onEnvironment =>
-      (_environment ??= GSignal<GEnvironmentChange>());
+  GSignal<GEnvironmentChange> get onEnvironment => (_environment ??= GSignal<GEnvironmentChange>());
 
-  GSignal<GFlutterSync> get onFlutterSync =>
-      (_flutterSync ??= GSignal<GFlutterSync>());
+  GSignal<GFlutterSync> get onFlutterSync => (_flutterSync ??= GSignal<GFlutterSync>());
 
   GSignal<BuildContext> get onFlutterDependencies =>
       (_flutterDependencies ??= GSignal<BuildContext>());

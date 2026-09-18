@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Single-pointer long-press recognizer.
@@ -39,8 +41,7 @@ final class GLongPress implements _GDisposable {
   late final GSignalSubscription _nodeDisposeSub;
 
   GSignal<GNodePointerEvent>? _longPress;
-  GSignalView<GNodePointerEvent> get onLongPress =>
-      (_longPress ??= GSignal<GNodePointerEvent>());
+  GSignalView<GNodePointerEvent> get onLongPress => (_longPress ??= GSignal<GNodePointerEvent>());
 
   Timer? _timer;
   GNodePointerEvent? _downEvent;

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:ui' as ui;
@@ -193,9 +195,7 @@ final class _BenchScene {
 }
 
 final class _BenchLeaf extends GNode {
-  _BenchLeaf(int index)
-    : _x = (index % 100) * 15.0,
-      _y = (index ~/ 100) * 15.0 {
+  _BenchLeaf(int index) : _x = (index % 100) * 15.0, _y = (index ~/ 100) * 15.0 {
     setPaintSelf(true);
   }
 

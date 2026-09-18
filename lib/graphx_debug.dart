@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 /// GraphX diagnostics, tracing, and tooling API.
 library;
 

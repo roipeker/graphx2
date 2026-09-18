@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -13,8 +15,7 @@ void main() {
     () async {
       final image = await _image();
       final texture = GTexture(image);
-      final batch = GImageBatch()
-        ..add(texture, alpha: 0.5, color: const ui.Color(0xff40c080));
+      final batch = GImageBatch()..add(texture, alpha: 0.5, color: const ui.Color(0xff40c080));
       final root = GRoot()..addChild(batch);
       final stage = GStage(root)
         ..mount()

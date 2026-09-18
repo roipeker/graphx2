@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 extension GRenderContextColorApi on GRenderContext {
@@ -15,9 +17,7 @@ extension GRenderContextColorApi on GRenderContext {
   /// that draw primitive solid colors directly with [Canvas]. The unchanged
   /// opaque sRGB path returns [color] itself and allocates nothing.
   ui.Color resolveColor(ui.Color color) {
-    if (!hasColorTransform &&
-        alpha == 1.0 &&
-        color.colorSpace == ui.ColorSpace.sRGB) {
+    if (!hasColorTransform && alpha == 1.0 && color.colorSpace == ui.ColorSpace.sRGB) {
       return color;
     }
 

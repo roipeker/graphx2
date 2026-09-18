@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -32,8 +34,7 @@ void main() {
   });
 
   test('ordinary color fallback does not add a hard clip save', () {
-    final root = GRoot()
-      ..colorTransform = const GColorTransform(blueOffset: 96);
+    final root = GRoot()..colorTransform = const GColorTransform(blueOffset: 96);
     root.addChild(_FallbackBox());
 
     final stage = GStage(root)..mount();
@@ -78,8 +79,7 @@ void main() {
     expect(bytes, isNotNull);
 
     final data = bytes!;
-    int channel(int x, int y, int channel) =>
-        data.getUint8((y * 32 + x) * 4 + channel);
+    int channel(int x, int y, int channel) => data.getUint8((y * 32 + x) * 4 + channel);
 
     expect(channel(1, 1, 0), 0x17);
     expect(channel(1, 1, 1), 0x35);

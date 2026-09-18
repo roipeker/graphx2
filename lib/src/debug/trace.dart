@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 const _traceEnabledByDefault = !bool.fromEnvironment('dart.vm.product');
@@ -46,11 +48,7 @@ final class GTraceConfig {
   bool get usesAnsi => style == GTraceStyle.ansi;
 
   bool get showsCaller =>
-      showFilename ||
-      showLineNumber ||
-      showColumnNumber ||
-      showClassName ||
-      showMethodName;
+      showFilename || showLineNumber || showColumnNumber || showClassName || showMethodName;
 
   GTraceConfig copyWith({
     bool? enabled,
@@ -404,9 +402,7 @@ final class GTrace {
     final config = _config;
     if (!_traceHasArgument(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9)) return;
 
-    final normalizedCategory = category == null || category.isEmpty
-        ? null
-        : category;
+    final normalizedCategory = category == null || category.isEmpty ? null : category;
     final record = GTraceRecord(
       sequence: ++_sequence,
       elapsed: runtimeElapsed,

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -316,8 +318,7 @@ Future<Uint8List> _pixels(ui.Image image) async {
   return data!.buffer.asUint8List();
 }
 
-int _alphaAt(Uint8List pixels, int width, int x, int y) =>
-    pixels[(y * width + x) * 4 + 3];
+int _alphaAt(Uint8List pixels, int width, int x, int y) => pixels[(y * width + x) * 4 + 3];
 
 int _rgbaAt(Uint8List pixels, int width, int x, int y) {
   final offset = (y * width + x) * 4;

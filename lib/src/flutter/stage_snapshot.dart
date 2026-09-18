@@ -1,7 +1,10 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final Expando<_RenderGStageCapture> _gStageCaptures =
-    Expando<_RenderGStageCapture>('graphx.stageCapture');
+final Expando<_RenderGStageCapture> _gStageCaptures = Expando<_RenderGStageCapture>(
+  'graphx.stageCapture',
+);
 
 /// Flutter-hosted snapshot helpers for a [GStage].
 ///
@@ -37,8 +40,7 @@ final class _GStageCapture extends SingleChildRenderObjectWidget {
   final GStage stage;
 
   @override
-  RenderObject createRenderObject(BuildContext context) =>
-      _RenderGStageCapture(stage);
+  RenderObject createRenderObject(BuildContext context) => _RenderGStageCapture(stage);
 
   @override
   void updateRenderObject(

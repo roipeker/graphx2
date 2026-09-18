@@ -23,3 +23,7 @@ analyzer:
     use_null_aware_elements: ignore
     use_super_parameters: ignore
 include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 100
+  trailing_commas: preserve

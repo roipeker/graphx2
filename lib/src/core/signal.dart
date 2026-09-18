@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 /// GraphX2 Signal
 ///
 /// Lightweight synchronous event primitive used throughout GraphX2.
@@ -155,8 +157,7 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
   bool get isDisposed => _disposed;
 
   @override
-  String toString() =>
-      'Signal<$T>(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
+  String toString() => 'Signal<$T>(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
   @override
   GSignalSubscription add(GSignalCallback<T> callback, {Object? key}) {
@@ -384,9 +385,7 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
 
     final index = entry._index;
 
-    if (index < 0 ||
-        index >= entries.length ||
-        !identical(entries[index], entry)) {
+    if (index < 0 || index >= entries.length || !identical(entries[index], entry)) {
       return;
     }
 
@@ -523,8 +522,7 @@ final class GSignal0 implements GSignalView0, _GDisposable {
   bool get isDisposed => _disposed;
 
   @override
-  String toString() =>
-      'Signal0(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
+  String toString() => 'Signal0(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
   @override
   GSignalSubscription add(GSignalCallback0 callback, {Object? key}) {
@@ -735,9 +733,7 @@ final class GSignal0 implements GSignalView0, _GDisposable {
 
     final index = entry._index;
 
-    if (index < 0 ||
-        index >= entries.length ||
-        !identical(entries[index], entry)) {
+    if (index < 0 || index >= entries.length || !identical(entries[index], entry)) {
       return;
     }
 

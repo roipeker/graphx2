@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:developer' as developer;
@@ -31,8 +33,7 @@ Future<void> main() async {
         .cast<Map>()
         .map((value) => Map<String, dynamic>.from(value))
         .singleWhere(
-          (value) =>
-              (value['root']! as Map)['name'] == 'inspector-activity-root',
+          (value) => (value['root']! as Map)['name'] == 'inspector-activity-root',
         );
     final stageId = stageJson['id']! as String;
 

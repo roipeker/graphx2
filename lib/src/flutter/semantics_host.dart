@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter semantics gateway for the canvas-backed GraphX surface.
@@ -29,8 +31,7 @@ final class _GSemanticsHost extends SingleChildRenderObjectWidget {
   }
 }
 
-final class _RenderGSemanticsHost extends RenderProxyBox
-    implements _GSemanticsHostBridge {
+final class _RenderGSemanticsHost extends RenderProxyBox implements _GSemanticsHostBridge {
   _RenderGSemanticsHost(this._stage, this._textDirection);
 
   GStage _stage;
@@ -163,8 +164,7 @@ final class _RenderGSemanticsHost extends RenderProxyBox
       final parentState = parent == null ? null : _maybeNodeSemantics(parent);
       mergedIntoParent[node] =
           parent != null &&
-          ((parentState?._mergeDescendants ?? false) ||
-              (mergedIntoParent[parent] ?? false));
+          ((parentState?._mergeDescendants ?? false) || (mergedIntoParent[parent] ?? false));
     }
 
     for (var i = included.length - 1; i >= 0; --i) {
@@ -178,9 +178,7 @@ final class _RenderGSemanticsHost extends RenderProxyBox
       final parent = semanticParent[node];
       final transform = _transformToSemanticParent(node, parent);
       final visible =
-          _isEffectivelyVisible(node) &&
-          !_isFullyOutsideRectClip(node) &&
-          transform != null;
+          _isEffectivelyVisible(node) && !_isFullyOutsideRectClip(node) && transform != null;
       config.isHidden = !visible;
 
       _boundsFor(node, _bounds);
@@ -192,8 +190,7 @@ final class _RenderGSemanticsHost extends RenderProxyBox
         ..isMergedIntoParent = mergedIntoParent[node] ?? false;
 
       final childNodes = <SemanticsNode>[
-        for (final child in semanticChildren[node] ?? const <GNode>[])
-          cache[child]!,
+        for (final child in semanticChildren[node] ?? const <GNode>[]) cache[child]!,
       ];
       semanticNode.updateWith(
         config: config,
@@ -298,8 +295,7 @@ final class _RenderGSemanticsHost extends RenderProxyBox
       if (state.supportsAction(GSemanticsActions.decrement)) {
         config.onDecrease = () => _dispatch(node, GSemanticsActions.decrement);
       }
-      if (state.supportsAction(GSemanticsActions.dismiss) ||
-          state.supportsAction(GActions.back)) {
+      if (state.supportsAction(GSemanticsActions.dismiss) || state.supportsAction(GActions.back)) {
         config.onDismiss = () => _dispatch(
           node,
           state.supportsAction(GSemanticsActions.dismiss)
@@ -317,8 +313,7 @@ final class _RenderGSemanticsHost extends RenderProxyBox
       if (!node.focusable) continue;
       active ??= <GNode>{};
       active.add(node);
-      final subscriptions = _focusSubscriptions ??=
-          <GNode, GSignalSubscription>{};
+      final subscriptions = _focusSubscriptions ??= <GNode, GSignalSubscription>{};
       subscriptions.putIfAbsent(
         node,
         () => node.onFocusChanged.add((_) => semanticsChanged()),

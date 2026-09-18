@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Raster snapshot helpers for one GraphX node subtree.
@@ -73,9 +75,7 @@ extension on GCanvasRenderer {
     try {
       final context = _context;
       final sourceStage = node._stage;
-      final detachedLock = sourceStage == null
-          ? node._beginDetachedRenderPass()
-          : null;
+      final detachedLock = sourceStage == null ? node._beginDetachedRenderPass() : null;
       final previousCacheReads = _allowRasterCache;
       _allowRasterCache = false;
       context._setPixelScaleOverride(scale);

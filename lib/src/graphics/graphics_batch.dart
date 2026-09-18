@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Orientation used when stamping a [GLinePattern] along a source path.
@@ -239,9 +241,7 @@ final class _GPatternLineGeometry extends _GLineGeometry {
       final length = metric.length;
       if (length <= 0.0) continue;
 
-      final count = metric.isClosed
-          ? math.max(1, (length / pattern.advance).round())
-          : 0;
+      final count = metric.isClosed ? math.max(1, (length / pattern.advance).round()) : 0;
       final step = metric.isClosed ? length / count : pattern.advance;
       var distance = _positiveModulo(effectivePhase, step);
       final limit = metric.isClosed ? count : 0x7fffffff;
@@ -436,9 +436,7 @@ final class _GGraphicsBatch {
       final derived = Path();
       _strokePathHasGeometry = geometry.build(pathMetrics, derived);
       _strokePath = derived;
-      _strokePathBounds = _strokePathHasGeometry
-          ? derived.getBounds()
-          : Rect.zero;
+      _strokePathBounds = _strokePathHasGeometry ? derived.getBounds() : Rect.zero;
       _strokePathGeometryVersion = geometryVersion;
       _strokePathDecorationVersion = decorationVersion;
     }

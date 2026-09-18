@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:developer' as developer;
@@ -85,8 +87,7 @@ Future<void> main() async {
       <String, dynamic>{'stageId': stageId},
     );
     resourceWatch.stop();
-    final resourceStageIds = (resourceState['stageIds']! as List)
-        .cast<String>();
+    final resourceStageIds = (resourceState['stageIds']! as List).cast<String>();
     _check(
       resourceStageIds.contains(stageId),
       'resource runtime must include stage',

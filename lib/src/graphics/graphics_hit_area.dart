@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Hit area backed directly by the stroked batches of one [GGraphics].
@@ -5,8 +7,7 @@ part of 'package:graphx/src/graphx_impl.dart';
 /// It observes retained batch identity/geometry versions and lazily rebuilds
 /// its own sampled segment cache when those change.
 final class GGraphicsStrokeHitArea implements GHitArea {
-  GGraphicsStrokeHitArea(this.graphics, double width)
-    : _cache = _GStrokeHitCache(width);
+  GGraphicsStrokeHitArea(this.graphics, double width) : _cache = _GStrokeHitCache(width);
 
   final GGraphics graphics;
   final _GStrokeHitCache _cache;
@@ -47,8 +48,7 @@ final class GGraphicsStrokeHitArea implements GHitArea {
     if (source.length != _sourceCount) return true;
     for (var i = 0; i < _batches.length; ++i) {
       final batch = source[_indexes[i]];
-      if (!identical(_batches[i], batch) ||
-          _versions[i] != batch.geometryVersion) {
+      if (!identical(_batches[i], batch) || _versions[i] != batch.geometryVersion) {
         return true;
       }
     }
@@ -83,6 +83,5 @@ extension GGraphicsHitArea on GGraphics {
   ///
   /// The returned hit area owns its lazy flattened cache. Graphics itself
   /// remains interaction-agnostic.
-  GGraphicsStrokeHitArea strokeHitArea(double width) =>
-      GGraphicsStrokeHitArea(this, width);
+  GGraphicsStrokeHitArea strokeHitArea(double width) => GGraphicsStrokeHitArea(this, width);
 }

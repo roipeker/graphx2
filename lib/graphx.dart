@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 /// GraphX 2 public application and engine API.
 library;
 

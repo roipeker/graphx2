@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
@@ -78,8 +80,7 @@ void main() {
     );
     expect(pixels, isNotNull);
 
-    int alphaAt(int x, int y) =>
-        pixels!.getUint8((y * texture.image.width + x) * 4 + 3);
+    int alphaAt(int x, int y) => pixels!.getUint8((y * texture.image.width + x) * 4 + 3);
 
     expect(alphaAt(5, 5), 0);
     expect(alphaAt(15, 5), greaterThan(240));

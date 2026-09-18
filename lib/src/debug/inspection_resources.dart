@@ -1,7 +1,8 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
-final _GInspectorResourcesRuntime _gInspectorResourcesRuntime =
-    _GInspectorResourcesRuntime();
+final _GInspectorResourcesRuntime _gInspectorResourcesRuntime = _GInspectorResourcesRuntime();
 
 /// Demand-driven runtime resource inspection.
 ///
@@ -61,8 +62,7 @@ final class _GInspectorResourcesRuntime {
       return _gInspectorRuntime._result(<String, Object?>{
         'runtimeId': _idForRuntime(runtime),
         'stageIds': <String>[
-          for (final candidate in stages)
-            _gInspectorRuntime._idForStage(candidate),
+          for (final candidate in stages) _gInspectorRuntime._idForStage(candidate),
         ],
         'assets': resources,
         'totals': <String, Object>{
@@ -150,8 +150,7 @@ final class _GInspectorResourcesRuntime {
         'durationMicros': sequence.duration.inMicroseconds,
         'ownsTextures': sequence.ownsTextures,
         'backingIds': <String>[
-          for (final image in _uniqueImages(sequence))
-            _gInspectorRuntime._idForObject(image),
+          for (final image in _uniqueImages(sequence)) _gInspectorRuntime._idForObject(image),
         ],
       },
       Uint8List bytes => <String, Object?>{

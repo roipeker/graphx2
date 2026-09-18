@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained raster-cache controls for one node subtree.
@@ -219,10 +221,7 @@ final class GNodeCache implements _GDisposable {
       watch.stop();
       activeStats!.cache.rasterize.record(watch.elapsedMicroseconds);
     }
-    if (!_enabled ||
-        _disposed ||
-        _node.isDisposed ||
-        version != _contentVersion) {
+    if (!_enabled || _disposed || _node.isDisposed || version != _contentVersion) {
       texture.dispose();
       return;
     }
@@ -286,10 +285,7 @@ extension _GCanvasCacheRenderer on GCanvasRenderer {
 
     final texture = cache._texture;
     final bounds = cache._bounds;
-    if (!cache.isReady ||
-        texture == null ||
-        bounds == null ||
-        texture.isDisposed) {
+    if (!cache.isReady || texture == null || bounds == null || texture.isDisposed) {
       return false;
     }
 

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Pointer-only local geometry override for [GNode.hitArea].
@@ -6,8 +8,7 @@ part of 'package:graphx/src/graphx_impl.dart';
 abstract interface class GHitArea {
   bool contains(double x, double y);
 
-  factory GHitArea.rect(double x, double y, double width, double height) =
-      GRectHitArea;
+  factory GHitArea.rect(double x, double y, double width, double height) = GRectHitArea;
 
   factory GHitArea.circle(double x, double y, double radius) = GCircleHitArea;
 
@@ -27,8 +28,7 @@ final class GRectHitArea implements GHitArea {
   final double height;
 
   @override
-  bool contains(double px, double py) =>
-      px >= x && py >= y && px < x + width && py < y + height;
+  bool contains(double px, double py) => px >= x && py >= y && px < x + width && py < y + height;
 }
 
 final class GCircleHitArea implements GHitArea {
@@ -145,11 +145,7 @@ final class _GStrokeHitCache {
       _distanceSquaredToSegments(_segments, x, y, nearest);
 
   bool contains(double x, double y) {
-    if (_empty ||
-        x < _bounds.x1 ||
-        y < _bounds.y1 ||
-        x > _bounds.x2 ||
-        y > _bounds.y2) {
+    if (_empty || x < _bounds.x1 || y < _bounds.y1 || x > _bounds.x2 || y > _bounds.y2) {
       return false;
     }
     return distanceSquaredTo(x, y) <= _radiusSq;

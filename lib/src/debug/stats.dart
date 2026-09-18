@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 abstract interface class GStatsMetric {
@@ -29,8 +31,7 @@ final class GStatsTimerMetric implements GStatsMetric {
   int lastMicroseconds = 0;
   int maxMicroseconds = 0;
   int totalMicroseconds = 0;
-  double get averageMicroseconds =>
-      count == 0 ? 0.0 : totalMicroseconds / count;
+  double get averageMicroseconds => count == 0 ? 0.0 : totalMicroseconds / count;
   void record(int microseconds) {
     assert(microseconds >= 0);
     lastMicroseconds = microseconds;
@@ -67,8 +68,7 @@ final class GSceneStats {
 /// [fps] is frames / elapsed host time, never an average of instantaneous FPS.
 /// After the first half-second warmup it updates in stable 500 ms windows.
 final class GFrameStats {
-  GFrameStats(GStats owner)
-    : update = owner._register(GStatsTimerMetric('frame.update'));
+  GFrameStats(GStats owner) : update = owner._register(GStatsTimerMetric('frame.update'));
 
   static const _sampleWindowSeconds = .5;
 

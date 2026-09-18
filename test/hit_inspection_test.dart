@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';

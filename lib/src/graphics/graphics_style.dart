@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Gradient families supported by [GGraphics.beginGradientFill].
@@ -123,8 +125,7 @@ final class _GBitmapGraphicsBrush extends _GGraphicsBrush {
   @override
   final BlendMode blendMode;
 
-  FilterQuality get filterQuality =>
-      smooth ? FilterQuality.medium : FilterQuality.none;
+  FilterQuality get filterQuality => smooth ? FilterQuality.medium : FilterQuality.none;
 }
 
 final class _GGraphicsStroke {

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
@@ -212,9 +214,7 @@ final class _LifecycleRoot extends GRoot {
     attachedHeight = stage.height;
 
     stage.signals.onFlutterDependencies.add((context) {
-      markerValue = context
-          .dependOnInheritedWidgetOfExactType<_Marker>()
-          ?.value;
+      markerValue = context.dependOnInheritedWidgetOfExactType<_Marker>()?.value;
     });
     stage.signals.onFlutterSync.add((sync) {
       flutterValue = sync.value;

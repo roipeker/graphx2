@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Stable semantic input identity, independent from the device that produced it.
@@ -113,8 +115,7 @@ final class GActionInput {
   Map<GAction, GSignal<GActionEvent>>? _signals;
   GSignal<GActionEvent>? _any;
 
-  GSignalView<GActionEvent> get onAny =>
-      (_any ??= GSignal<GActionEvent>()).view;
+  GSignalView<GActionEvent> get onAny => (_any ??= GSignal<GActionEvent>()).view;
 
   GSignalView<GActionEvent> on(GAction action) {
     final signals = _signals ??= <GAction, GSignal<GActionEvent>>{};
@@ -272,10 +273,8 @@ final class GNodeFocus {
   }
 
   GSignalView<bool> get onChanged => (_changed ??= GSignal<bool>()).view;
-  GSignalView<bool> get onWithinChanged =>
-      (_withinChanged ??= GSignal<bool>()).view;
-  GSignalView<GActionEvent> get onAction =>
-      (_action ??= GSignal<GActionEvent>()).view;
+  GSignalView<bool> get onWithinChanged => (_withinChanged ??= GSignal<bool>()).view;
+  GSignalView<GActionEvent> get onAction => (_action ??= GSignal<GActionEvent>()).view;
 
   bool get _effectiveFocusable => _focusableOverride ?? _portalAvailable;
 
@@ -357,15 +356,13 @@ extension GNodeFocusApi on GNode {
   GNodeFocus get focus => _ensureNodeFocus(this);
 
   GSignalView<bool> get onFocusChanged => _ensureNodeFocus(this).onChanged;
-  GSignalView<bool> get onFocusWithinChanged =>
-      _ensureNodeFocus(this).onWithinChanged;
+  GSignalView<bool> get onFocusWithinChanged => _ensureNodeFocus(this).onWithinChanged;
   GSignalView<GActionEvent> get onAction => _ensureNodeFocus(this).onAction;
 }
 
 extension GStageFocusApi on GStage {
   GFocusManager get focus {
-    if (isDisposed)
-      throw StateError('Cannot access focus on a disposed Stage.');
+    if (isDisposed) throw StateError('Cannot access focus on a disposed Stage.');
     return _gStageFocus[this] ??= GFocusManager._(this);
   }
 
@@ -670,11 +667,9 @@ final class GFocusManager {
           };
           final overlapsBeam = switch (direction) {
             GFocusDirection.left || GFocusDirection.right =>
-              _candidateBounds.y1 < _sourceBounds.y2 &&
-                  _candidateBounds.y2 > _sourceBounds.y1,
+              _candidateBounds.y1 < _sourceBounds.y2 && _candidateBounds.y2 > _sourceBounds.y1,
             GFocusDirection.up || GFocusDirection.down =>
-              _candidateBounds.x1 < _sourceBounds.x2 &&
-                  _candidateBounds.x2 > _sourceBounds.x1,
+              _candidateBounds.x1 < _sourceBounds.x2 && _candidateBounds.x2 > _sourceBounds.x1,
           };
           var score = primary * primary + secondary * secondary * 4.0;
           if (overlapsBeam) score *= 0.25;
@@ -714,8 +709,7 @@ final class GFocusManager {
         };
         final better = switch (direction) {
           GFocusDirection.left || GFocusDirection.up => primary > bestPrimary,
-          GFocusDirection.right ||
-          GFocusDirection.down => primary < bestPrimary,
+          GFocusDirection.right || GFocusDirection.down => primary < bestPrimary,
         };
         if (better) {
           bestPrimary = primary;
@@ -859,8 +853,7 @@ final class GFocusManager {
   void _requestHostFor(GNode node, bool portalForward) {
     final host = _host;
     if (host == null) return;
-    if (node is GPortal<dynamic> &&
-        _maybeNodeFocus(node)?._portalAvailable == true) {
+    if (node is GPortal<dynamic> && _maybeNodeFocus(node)?._portalAvailable == true) {
       host.enterPortal(node, portalForward);
     } else {
       host.requestEngineFocus();
@@ -884,8 +877,7 @@ final class GFocusManager {
 
   void _repairIfNeeded(GNode changedAncestor) {
     final focused = _focusedNode;
-    if (focused == null || !_isDescendantOrSelf(focused, changedAncestor))
-      return;
+    if (focused == null || !_isDescendantOrSelf(focused, changedAncestor)) return;
     if (!_isEligible(focused, traversal: false)) clear();
   }
 

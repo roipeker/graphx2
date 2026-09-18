@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 /// Per-channel render transform inherited by a node's descendants.
@@ -79,11 +81,9 @@ final class GColorTransform {
       blueMultiplier: parent.blueMultiplier * local.blueMultiplier,
       alphaMultiplier: parent.alphaMultiplier * local.alphaMultiplier,
       redOffset: parent.redMultiplier * local.redOffset + parent.redOffset,
-      greenOffset:
-          parent.greenMultiplier * local.greenOffset + parent.greenOffset,
+      greenOffset: parent.greenMultiplier * local.greenOffset + parent.greenOffset,
       blueOffset: parent.blueMultiplier * local.blueOffset + parent.blueOffset,
-      alphaOffset:
-          parent.alphaMultiplier * local.alphaOffset + parent.alphaOffset,
+      alphaOffset: parent.alphaMultiplier * local.alphaOffset + parent.alphaOffset,
     );
   }
 

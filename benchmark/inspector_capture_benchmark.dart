@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
@@ -43,8 +45,7 @@ Future<void> main() async {
         .cast<Map>()
         .map((value) => Map<String, dynamic>.from(value))
         .singleWhere(
-          (value) =>
-              (value['root']! as Map)['name'] == 'inspector-capture-root',
+          (value) => (value['root']! as Map)['name'] == 'inspector-capture-root',
         );
     final stageId = stageJson['id']! as String;
     _check(stageJson['hosted'] == true, 'capture Stage must be Flutter hosted');

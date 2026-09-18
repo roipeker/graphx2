@@ -1,3 +1,5 @@
+// Copyright (c) 2026 GraphX by roipeker.
+
 part of 'package:graphx/src/graphx_impl.dart';
 
 // ================================
@@ -251,10 +253,8 @@ class GPointerManager implements _GDisposable {
   GSignal<GPointerBoundaryEvent>? _exit;
 
   bool get isInside => _inside;
-  GSignal<GPointerBoundaryEvent> get onEnter =>
-      (_enter ??= GSignal<GPointerBoundaryEvent>());
-  GSignal<GPointerBoundaryEvent> get onExit =>
-      (_exit ??= GSignal<GPointerBoundaryEvent>());
+  GSignal<GPointerBoundaryEvent> get onEnter => (_enter ??= GSignal<GPointerBoundaryEvent>());
+  GSignal<GPointerBoundaryEvent> get onExit => (_exit ??= GSignal<GPointerBoundaryEvent>());
 
   void _dispatchEnter(GPointerBoundaryEvent event) {
     if (_disposed || !_input.enabled || _inside) return;
@@ -420,8 +420,7 @@ class GPointerManager implements _GDisposable {
   /// for example when Stage input is disabled.
   ///
   /// The manager itself is emitted to avoid allocating a reset event object.
-  GSignal<GPointerManager> get onReset =>
-      (_reset ??= GSignal<GPointerManager>());
+  GSignal<GPointerManager> get onReset => (_reset ??= GSignal<GPointerManager>());
 
   GSignal<GPointerPanZoomState> get onPanZoomStart =>
       (_panZoomStart ??= GSignal<GPointerPanZoomState>());
@@ -794,8 +793,7 @@ final class GKeyboardManager implements _GDisposable {
   /// for example when GraphXView loses Flutter focus or Stage input is disabled.
   ///
   /// The manager itself is emitted to avoid allocating a reset event object.
-  GSignal<GKeyboardManager> get onReset =>
-      (_reset ??= GSignal<GKeyboardManager>());
+  GSignal<GKeyboardManager> get onReset => (_reset ??= GSignal<GKeyboardManager>());
 
   Set<GKey> get downKeys => Set.unmodifiable(_downKeys);
 
