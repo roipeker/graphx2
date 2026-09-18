@@ -1,5 +1,5 @@
 name: graphx
-description: Retained-mode 2D rendering, interaction, composition, and Flutter hosting.
+description: Creative 2D scene framework for Flutter.
 version: 2.0.0-dev.1
 publish_to: none
 

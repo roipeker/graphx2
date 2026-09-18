@@ -1,36 +1,36 @@
 # GraphX 2
 
-GraphX is a retained-mode 2D scene, rendering, interaction, accessibility, and
-Flutter-composition engine.
+GraphX is a creative 2D scene framework for Flutter.
 
-This repository is the clean GraphX 2 core. It is currently private/local while
-the public API and release baseline are stabilized.
-
-A normal application imports one library:
+It gives you a direct way to draw, transform, animate, and interact with objects while still living naturally inside a Flutter app.
 
 ```dart
+import 'dart:ui';
+
 import 'package:graphx/graphx.dart';
+
+GraphXView.scene((root) {
+  final ball = root.addChild(GShape(name: 'ball'));
+
+  ball.graphics
+    ..beginFill(const Color(0xffff4d4d))
+    ..drawCircle(0, 0, 40);
+
+  ball
+    ..x = 200
+    ..y = 160;
+
+  ball.pointer.onTap.add((_) {
+    ball.scaleX = ball.scaleY = 1.2;
+  });
+});
 ```
 
-That entrypoint includes the coherent application runtime: scene hierarchy,
-lifecycle, transforms, bounds, graphics, images, text, input, focus, actions,
-semantics, portals, Flutter hosting, compositing, render views, snapshots and
-diagnostics.
+GraphX is built for interactive graphics, playful interfaces, visual tools, games, and the kinds of experiences that are easier to express as a scene than as a widget tree.
 
-The same package also provides two deliberately narrower advanced entrypoints:
+GraphX 2 is under active development. The core is working and tested while the public API, examples, and release experience are being refined.
 
-- `package:graphx/graphx_extension.dart` for custom hosts/backends and plugin
-  authors.
-- `package:graphx/graphx_debug.dart` for tracing and tooling.
-
-Anything under `package:graphx/src/...` is private implementation and not a
-compatibility contract.
-
-Specialized domains such as motion, cameras, maps, physics, audio, SVG/SWF/GXF,
-particles, authoring, and Flutter GPU execution remain outside core unless
-multiple consumers prove a generic primitive belongs here.
-
-Development:
+## Development
 
 ```bash
 flutter pub get
@@ -38,6 +38,6 @@ flutter analyze
 flutter test
 ```
 
-The implementation was distilled from the proven Satechi core. See
-`doc/migration.md` for provenance and `doc/API_AUDIT.md` for the public API
-boundary.
+Examples, demos, and the GraphX site will live alongside the package so changes can be exercised quickly on web, iOS, Android, and desktop.
+
+See [ROADMAP.md](ROADMAP.md) for what we are working on next.
