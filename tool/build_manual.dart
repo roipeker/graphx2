@@ -40,6 +40,11 @@ void main() {
     File('${theme.path}/$name').copySync('${output.path}/$name');
   }
 
+  final manualAssets = Directory('${manual.path}/assets');
+  if (manualAssets.existsSync()) {
+    _copyDirectory(manualAssets, Directory('${output.path}/assets'));
+  }
+
   final nav = StringBuffer();
   var chapter = 0;
   for (final group in toc) {
@@ -86,6 +91,18 @@ void main() {
   stdout.writeln(
     'Built GraphX manual: ${existingPages.length} page(s), $chapter published chapter(s).',
   );
+}
+
+void _copyDirectory(Directory source, Directory destination) {
+  destination.createSync(recursive: true);
+  for (final entity in source.listSync()) {
+    final name = _basename(entity.path);
+    if (entity is Directory) {
+      _copyDirectory(entity, Directory('${destination.path}/$name'));
+    } else if (entity is File) {
+      entity.copySync('${destination.path}/$name');
+    }
+  }
 }
 
 String _firstPage(List<_Group> groups, Directory manual) {

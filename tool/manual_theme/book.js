@@ -88,6 +88,14 @@ function markdown(source) {
       out.push(`<h2 id="${id}">${inline(label)}</h2>`);
       continue;
     }
+    const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (image) {
+      flushParagraph(); flushList();
+      const alt = image[1];
+      const src = image[2];
+      out.push(`<figure><img src="${escapeAttribute(src)}" alt="${escapeAttribute(alt)}" loading="lazy">${alt ? `<figcaption>${inline(alt)}</figcaption>` : ''}</figure>`);
+      continue;
+    }
     if (line.startsWith('> ')) { flushParagraph(); flushList(); out.push(`<blockquote>${inline(line.slice(2))}</blockquote>`); continue; }
     if (line.startsWith('- ')) { flushParagraph(); list.push(line.slice(2)); continue; }
     paragraph.push(line.trim());

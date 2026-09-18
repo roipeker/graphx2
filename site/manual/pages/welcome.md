@@ -11,15 +11,14 @@ GraphXView.scene((root) {
   final ball = root.addChild(GShape(name: 'ball'));
 
   ball.graphics
-      .beginFill(const Color(0xffff4d4d))
+      .beginFill(Colors.red)
       .drawCircle(0, 0, 40)
       .endFill();
 
-  ball.x = 200;
-  ball.y = 160;
+  ball.setPosition(200, 160);
 
   ball.pointer.onTap.add((_) {
-    ball.scaleX = ball.scaleY = 1.2;
+    ball.scale = 1.2;
   });
 });
 ```

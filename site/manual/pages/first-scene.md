@@ -2,7 +2,7 @@
 
 A blank scene is not very exciting, so let's give it something to do.
 
-We will make a small card, put it somewhere on screen, and make it react when you tap it. Nothing fancy yet. The point is to see how little code it takes to get something alive inside GraphX.
+We will draw a small card, place it on screen, and make it react when you tap it. Along the way you will already touch a few of the ideas that make GraphX useful.
 
 ## Start with a place to draw
 
@@ -22,45 +22,61 @@ For now, think of it as an empty scene waiting for something to happen.
 
 ## Add something
 
-A `GShape` is a node that can draw vector graphics.
+Let's start with a shape:
 
 ```dart
 final card = root.addChild(GShape(name: 'card'));
 ```
 
-The important part here is not the name. It is `addChild`.
+A `GShape` is a node with a `graphics` object attached to it.
 
-GraphX scenes are made from nodes connected as a tree. We just added our first node to that tree.
-
-Now give it something to draw:
+You can think of `graphics` as a little pen and a tiny canvas that belong to the shape. Choose how you want to draw, make a shape or a path, then keep drawing from there.
 
 ```dart
 card.graphics
-    .beginFill(const Color(0xff6750a4))
-    .drawRoundRect(-90, -40, 180, 80, 20)
+    .beginFill(Colors.red)
+    .drawRoundRect(0, 0, 180, 80, 20)
     .endFill();
 ```
 
-`graphics` is intentionally fluent, so drawing commands can read like a little sequence.
+The graphics API is fluent on purpose, so a drawing can read as one little sequence. Since this example is sitting inside a Material app, we can also use Flutter's familiar `Colors.red` directly.
 
-We drew the rectangle around `(0, 0)`. That gives the card a useful center, which will become more interesting when we start rotating and scaling things later.
+We are not going to worry about those coordinates yet. There is a whole chapter for that. For now we have a red rounded card.
+
+> `name: 'card'` is optional. A name can be useful as a debug label, and parents can find a direct child later with `getChildByName()`. Leave it out when you do not need one.
+
+## Give it a center
+
+We are going to rotate the card in a moment, and rotating around its center feels more natural.
+
+GraphX can line the pivot up with the center of the shape for us:
+
+```dart
+card.alignPivot(0, 0, preserve: false);
+```
+
+You do not need to understand pivots yet. Think of this as choosing the point the card will turn around. We will come back to it when we explore transforms.
 
 ## Put it somewhere
 
-New nodes begin at the origin of their parent. We can move the card by changing its position:
+Now place the card in the scene:
+
+```dart
+card.setPosition(180, 160);
+```
+
+`setPosition()` is a convenient way to set `x` and `y` together. You can also change them individually whenever that reads better:
 
 ```dart
 card.x = 180;
 card.y = 160;
 ```
 
-That is one of the basic pleasures of a scene model: the object stays there, and you change the properties you care about.
+If you are coming from Flutter, there is something worth noticing here: **there is no `setState()`**. The card is a retained object in the GraphX scene. Change its transform and GraphX knows that the scene needs to be painted again.
 
-No rebuild is needed just to say, "move this over here."
+## Make it interactive
 
-## Make it react
-
-A picture is nicer once it notices you.
+At this point we have something on screen. Let's make it respond to us.
 
 ```dart
 card.pointer.onTap.add((_) {
@@ -68,25 +84,23 @@ card.pointer.onTap.add((_) {
 });
 ```
 
-Tap the card and it turns a little.
+Tap the card and it turns a little around the center we chose earlier.
 
-That tiny interaction already tells us something useful about GraphX: the thing you drew is also the thing you move and the thing that receives input.
+The same object we drew is the object we positioned and the object receiving the pointer event. That direct relationship is a useful part of the GraphX scene model.
 
-## Put it together
-
-The whole scene is still small:
+## The example in one place
 
 ```dart
 GraphXView.scene((root) {
   final card = root.addChild(GShape(name: 'card'));
 
   card.graphics
-      .beginFill(const Color(0xff6750a4))
-      .drawRoundRect(-90, -40, 180, 80, 20)
+      .beginFill(Colors.red)
+      .drawRoundRect(0, 0, 180, 80, 20)
       .endFill();
 
-  card.x = 180;
-  card.y = 160;
+  card.alignPivot(0, 0, preserve: false);
+  card.setPosition(180, 160);
 
   card.pointer.onTap.add((_) {
     card.rotation += 0.15;
@@ -94,16 +108,12 @@ GraphXView.scene((root) {
 });
 ```
 
-That is enough for a first scene.
+We created a node, drew into it, positioned it, and gave it an interaction. Those ideas will keep showing up as scenes become more interesting.
 
-We created one node, drew into it, positioned it, and gave it behavior. Most larger GraphX scenes are built from the same ideas; they just have more nodes and more interesting relationships between them.
+## What just happened?
 
-## One small thing to notice
+There are already a few relationships hiding inside that example.
 
-The card's drawing is centered around its own origin, while `x` and `y` position that origin inside the parent.
+`card` is a child of `root`. Its position belongs to that relationship. Its drawing belongs to the card itself. Its pointer listener belongs to the same card too.
 
-That distinction is going to matter a lot. It is what makes grouping, rotation, scaling, nested scenes, and coordinate conversion feel predictable later.
-
-For now, you only need the intuition: **draw locally, place the object in the scene.**
-
-Next we will look at nodes and children, and why moving one parent can move an entire little world with it.
+We will make those relationships visible in the next chapter by putting several objects under the same parent. That is where the scene tree starts earning its keep.
