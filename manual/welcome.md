@@ -59,6 +59,8 @@ GraphX does not replace Flutter. It lives inside it.
 
 That means you can use Flutter where widgets make sense and GraphX where a scene makes more sense.
 
+One important difference is that GraphX does not run Flutter-style layout inside the scene. You place and transform nodes directly. That tradeoff is important enough to deserve its own short chapter: [Scenes are not layouts](#scenes-are-not-layouts).
+
 ## Where to go next
 
 The next chapters build this up gradually: first the scene tree and transforms, then drawing, images, input, assets, and composition.

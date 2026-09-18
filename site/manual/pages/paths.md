@@ -77,16 +77,16 @@ If Bézier control points do not feel intuitive yet, that is completely fine. Th
 There are helpers when constructing the path point by point would only add noise:
 
 ```dart
-import 'dart:math' as math;
-
 shape.graphics.arc(
   100,
   100,
   60,
   0,
-  math.pi,
+  GMath.pi,
 );
 ```
+
+`dart:math` would work here too. `GMath.pi` is simply convenient when the rest of the code is already using GraphX.
 
 and:
 

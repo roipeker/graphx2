@@ -25,6 +25,8 @@ If `card` is a child of `panel`, then `(180, 160)` means 180 across and 160 down
 
 That parent relationship is why the scene tree from [Nodes and children](#nodes-and-children) matters so much.
 
+For Flutter users, `setPosition()` is closer in spirit to positioning something in a `Stack` or using `Transform.translate` than to normal widget layout. The node already exists; you are changing where its retained scene transform places it.
+
 ## Scale
 
 Scale changes the size of a node without changing the geometry you originally drew.
@@ -34,6 +36,8 @@ card.scale = 1.25;
 ```
 
 A scale of `1` is the original size. `2` is twice as large. `0.5` is half the size.
+
+If you have used Flutter's `Transform.scale`, the idea is the same. In GraphX the scale lives directly on the node instead of being another widget wrapped around it.
 
 `scale` is the convenient uniform form. When the two axes need to be different, use `setScale()` or the individual properties:
 
@@ -52,7 +56,9 @@ Usually uniform scale is easier to reason about. Uneven scale is there when you 
 
 ## Rotation
 
-Rotation is an angle in radians, just like Flutter's `Transform.rotate`. Dart's `math.pi` is handy when you want familiar fractions of a turn.
+Rotation is an angle in radians, just like Flutter's `Transform.rotate`.
+
+Standard Dart math works exactly as you would expect:
 
 ```dart
 import 'dart:math' as math;
@@ -61,6 +67,20 @@ card.rotation = math.pi / 4;
 ```
 
 That turns the card 45 degrees.
+
+GraphX also exposes `GMath`, a small creative-coding math toolbox. When you are already working inside GraphX, the same rotation can avoid the extra import:
+
+```dart
+card.rotation = GMath.quarterPi;
+```
+
+or, when degrees are easier to read:
+
+```dart
+card.rotation = GMath.radians(45);
+```
+
+Both styles are fine. `dart:math` is the standard Dart library; `GMath` adds convenient constants and helpers such as `tau`, `halfPi`, `quarterPi`, angle wrapping, interpolation, `hypo()`, and degree/radian conversion.
 
 For tiny interactions it is also common to add a little rotation at a time:
 
@@ -77,6 +97,8 @@ Here is where pivots become useful.
 Imagine pinning a piece of paper to a wall. The paper rotates around the pin. Move the pin to a corner and the motion changes. Put it in the center and the paper spins around its middle.
 
 A GraphX pivot is that pin.
+
+Flutter's `Transform` has related ideas through `alignment` and `origin`: they influence the point around which a transform is applied. GraphX keeps that registration point directly on the node as `pivotX` and `pivotY`.
 
 By default the pivot is `(0, 0)` in the node's local coordinates.
 
@@ -122,6 +144,25 @@ card.setPosition(180, 160);
 ```
 
 That is the pattern we used in [Your first scene](#your-first-scene).
+
+## When you meet the matrix
+
+Most of the time, `x`, `y`, `scale`, `rotation`, `skew`, and pivot are the nicest way to work.
+
+Underneath them is a 2D affine transform. GraphX exposes that as `GMatrix2` when you need the lower-level representation directly.
+
+If you have used Flutter's:
+
+```dart
+Transform(
+  transform: someMatrix4,
+  child: child,
+)
+```
+
+this is the same broad idea. The matrix encodes how coordinates are translated, scaled, rotated, or skewed. GraphX uses a compact 2D affine matrix because the scene model is 2D.
+
+You can assign a `localMatrix` or use `setLocalMatrixValues()` when importing or streaming matrix data directly. For ordinary authored scenes, the scalar transform properties are usually much easier to read.
 
 ## Transforms travel down the tree
 

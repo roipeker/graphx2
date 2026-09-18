@@ -7,6 +7,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## Start here
 
 - [Welcome to GraphX](welcome.md)
+- [Scenes are not layouts](scenes-not-layouts.md)
 
 ## The scene
 

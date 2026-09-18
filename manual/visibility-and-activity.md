@@ -52,6 +52,8 @@ Now the branch is fully transparent, but the node has not been hidden or deactiv
 
 That matters for input. A transparent interactive node can still receive pointer events because hit testing is controlled by the scene/input state rather than by how many pixels happen to be visible.
 
+Flutter has a similar gotcha with `Opacity(opacity: 0)`: painting something transparently does not automatically make its hit-testing disappear.
+
 If you mean "the user should not be able to interact with this," `visible` or the appropriate input state is clearer than relying on `alpha = 0`.
 
 ## A useful rule of thumb

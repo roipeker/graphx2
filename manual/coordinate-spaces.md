@@ -37,7 +37,9 @@ print(point.y);
 
 `localToGlobal()` starts with a point in the node's local space and follows the parent transforms all the way up.
 
-In GraphX, "global" here means the stage/world coordinate space of the scene. It is not Flutter's screen-global coordinate system.
+The names may already look familiar if you have worked with Flutter render objects: `RenderBox` also has `localToGlobal()` and `globalToLocal()`.
+
+There is one important difference in what "global" means here. In GraphX, "global" is the stage/world coordinate space of the scene. It is not Flutter's screen-global coordinate system.
 
 That distinction matters when GraphX is itself positioned somewhere inside a Flutter layout.
 
