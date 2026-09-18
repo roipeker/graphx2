@@ -76,6 +76,13 @@ body {
 .content figure { margin:36px 0 40px; }
 .content figure img { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:14px; background:#fff; }
 .content figcaption { margin-top:10px; color:#88867f; font-size:12px; text-align:center; }
+.chapter-nav { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:72px 0 0; padding-top:26px; border-top:1px solid var(--line); }
+.chapter-nav-link { display:flex; min-width:0; flex-direction:column; gap:4px; padding:14px 16px; border:1px solid var(--line); border-radius:12px; color:var(--ink) !important; text-decoration:none; background:rgba(255,255,255,.34); transition:border-color 140ms ease, background 140ms ease; }
+.chapter-nav-link:hover { border-color:#cac7bd; background:rgba(255,255,255,.72); }
+.chapter-nav-link.next { align-items:flex-end; text-align:right; }
+.chapter-nav-label { color:#8b8982; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+.chapter-nav-link strong { overflow:hidden; max-width:100%; font-size:14px; line-height:1.35; text-overflow:ellipsis; }
+.chapter-nav-spacer { min-height:1px; }
 .loading { color:var(--muted); }
 .footer { display:flex; justify-content:space-between; width:min(calc(100% - 72px),var(--content)); margin:0 auto; padding:24px 0 42px; border-top:1px solid var(--line); color:#99978f; font-size:12px; }
 .mobile-bar { display:none; }
@@ -90,5 +97,8 @@ body {
   .content { width:min(calc(100% - 40px),var(--content)); padding:42px 0 72px; }
   .content h1 { font-size:41px; }
   .content h2 { margin-top:49px; }
+  .chapter-nav { grid-template-columns:1fr; gap:10px; margin-top:56px; }
+  .chapter-nav-spacer { display:none; }
+  .chapter-nav-link.next { align-items:flex-start; text-align:left; }
   .footer { width:calc(100% - 40px); gap:16px; }
 }

@@ -128,6 +128,31 @@ function chapterKicker(link) {
   return `<div class="chapter-kicker">Chapter ${number} · ${escapeHtml(group)}</div>`;
 }
 
+function chapterNavigation(link) {
+  if (!link) return '';
+  const index = links.indexOf(link);
+  const previous = index > 0 ? links[index - 1] : null;
+  const next = index >= 0 && index < links.length - 1 ? links[index + 1] : null;
+
+  const item = (target, direction) => {
+    if (!target) return '<span class="chapter-nav-spacer"></span>';
+    const isPrevious = direction === 'previous';
+    const label = isPrevious ? 'Previous' : 'Next';
+    const arrow = isPrevious ? '←' : '→';
+    const title = target.textContent.trim();
+    const href = target.getAttribute('href');
+    return `<a class="chapter-nav-link ${direction}" href="${escapeAttribute(href)}">`
+      + `<span class="chapter-nav-label">${isPrevious ? `${arrow} ${label}` : `${label} ${arrow}`}</span>`
+      + `<strong>${escapeHtml(title)}</strong>`
+      + '</a>';
+  };
+
+  return `<nav class="chapter-nav" aria-label="Chapter navigation">`
+    + item(previous, 'previous')
+    + item(next, 'next')
+    + '</nav>';
+}
+
 function bindCopyButtons() {
   document.querySelectorAll('.copy-code').forEach((button) => {
     button.addEventListener('click', async () => {
@@ -144,7 +169,7 @@ async function loadPage(path, link) {
   try {
     const response = await fetch(path);
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-    content.innerHTML = chapterKicker(link) + markdown(await response.text());
+    content.innerHTML = chapterKicker(link) + markdown(await response.text()) + chapterNavigation(link);
     bindCopyButtons();
     document.body.classList.remove('menu-open');
     window.scrollTo({ top: 0, behavior: 'instant' });
