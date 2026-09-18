@@ -16,3 +16,24 @@ dart format lib test benchmark example
 ```
 
 The repository does not reject commits or pushes based on formatting. The shared formatter configuration is the standard.
+
+## IDE setup
+
+Open the repository root in the IDE so Dart can pick up `analysis_options.yaml` and `.editorconfig`. Do not duplicate the 100-column or trailing-comma rules in personal IDE settings.
+
+### VS Code
+
+Use the official Dart extension and, if you like format-on-save, let the Dart formatter handle Dart files:
+
+```json
+"[dart]": {
+  "editor.defaultFormatter": "Dart-Code.dart-code",
+  "editor.formatOnSave": true
+}
+```
+
+### IntelliJ / Android Studio
+
+Enable the Dart/Flutter plugin and use the project's Flutter SDK. Use the Dart formatter for **Reformat Code**, and optionally enable reformat-on-save. The repository settings remain the source of truth; no separate IntelliJ line-width profile is needed.
+
+Formatting is a local development convention. There is no CI check and formatting does not block commits or pushes.
