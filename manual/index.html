@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>GraphX Manual</title>
+  <link rel="stylesheet" href="manual.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#welcome" aria-label="GraphX Manual home">
+        <span class="mark">GX²</span>
+        <span>
+          <strong>GraphX</strong>
+          <small>Manual</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Manual chapters">
+        <p class="nav-group">Start here</p>
+        <a class="nav-link active" href="#welcome" data-page="welcome.md">Welcome to GraphX</a>
+
+        <p class="nav-group">The scene</p>
+        <span class="nav-link pending">Your first scene</span>
+        <span class="nav-link pending">Nodes and children</span>
+        <span class="nav-link pending">Transforms and pivot</span>
+        <span class="nav-link pending">Coordinate spaces</span>
+        <span class="nav-link pending">Bounds</span>
+
+        <p class="nav-group">Drawing</p>
+        <span class="nav-link pending">Shapes and graphics</span>
+        <span class="nav-link pending">Images and textures</span>
+        <span class="nav-link pending">Text</span>
+
+        <p class="nav-group">Interaction</p>
+        <span class="nav-link pending">Pointer input</span>
+        <span class="nav-link pending">Gestures</span>
+        <span class="nav-link pending">Keyboard and focus</span>
+
+        <p class="nav-group">Assets</p>
+        <span class="nav-link pending">The shared asset store</span>
+        <span class="nav-link pending">Local, memory and network</span>
+
+        <p class="nav-group">Composition</p>
+        <span class="nav-link pending">Blending and masks</span>
+        <span class="nav-link pending">Filters and caching</span>
+        <span class="nav-link pending">Portals</span>
+
+        <p class="nav-group">Flutter + GraphX</p>
+        <span class="nav-link pending">GraphXView</span>
+        <span class="nav-link pending">GRuntime</span>
+      </nav>
+
+      <div class="sidebar-footer">GraphX 2 · work in progress</div>
+    </aside>
+
+    <main class="main">
+      <div class="mobile-bar">
+        <span class="mobile-brand">GX² · Manual</span>
+        <button id="menuButton" type="button" aria-label="Open chapters">Chapters</button>
+      </div>
+      <article id="content" class="content" aria-live="polite">
+        <p class="loading">Loading the manual…</p>
+      </article>
+      <footer class="footer">GraphX by roipeker</footer>
+    </main>
+  </div>
+  <script src="manual.js"></script>
+</body>
+</html>
