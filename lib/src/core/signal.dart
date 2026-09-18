@@ -60,58 +60,6 @@ abstract class GSignalSubscription implements _GDisposable {
   }
 }
 
-/// Public read-only view of a typed signal.
-///
-/// Consumers may subscribe and remove their own registrations, but cannot
-/// emit, clear, or dispose the signal.
-abstract interface class GSignalView<T> {
-  bool get hasListeners;
-
-  int get listenerCount;
-
-  GSignalSubscription add(GSignalCallback<T> callback, {Object? key});
-
-  /// Familiar alias for [once].
-  GSignalSubscription addOnce(GSignalCallback<T> callback, {Object? key});
-
-  GSignalSubscription once(GSignalCallback<T> callback, {Object? key});
-
-  /// Removes the first registration whose callback compares equal to
-  /// [callback].
-  bool remove(GSignalCallback<T> callback);
-
-  /// Removes every registration whose key is identical to [key].
-  ///
-  /// Returns the number of registrations removed.
-  int removeKey(Object key);
-
-  bool contains(GSignalCallback<T> callback);
-
-  bool containsKey(Object key);
-}
-
-/// Public read-only view of a zero-argument signal.
-abstract interface class GSignalView0 {
-  bool get hasListeners;
-
-  int get listenerCount;
-
-  GSignalSubscription add(GSignalCallback0 callback, {Object? key});
-
-  /// Familiar alias for [once].
-  GSignalSubscription addOnce(GSignalCallback0 callback, {Object? key});
-
-  GSignalSubscription once(GSignalCallback0 callback, {Object? key});
-
-  bool remove(GSignalCallback0 callback);
-
-  int removeKey(Object key);
-
-  bool contains(GSignalCallback0 callback);
-
-  bool containsKey(Object key);
-}
-
 /// Synchronous typed event signal.
 ///
 /// ## Guarantees
@@ -129,11 +77,11 @@ abstract interface class GSignalView0 {
 /// - Duplicate callbacks and duplicate keys are allowed.
 /// - Optional [onListenerCountChanged] runs after every count mutation
 ///   (including once-listener auto-cancel during [emit]).
-final class GSignal<T> implements GSignalView<T>, _GDisposable {
+final class GSignal<T> implements _GDisposable {
   GSignal({this.onListenerCountChanged});
 
-  /// Invoked after [listenerCount] changes. Used by demand-gated facades
-  /// (e.g. pointer) without wrapping [GSignalView].
+  /// Invoked after [listenerCount] changes. Used by demand-gated systems
+  /// such as pointer input.
   final void Function(int listenerCount)? onListenerCountChanged;
 
   List<_SignalEntry<T>?>? _entries;
@@ -142,15 +90,8 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
   int _dispatchDepth = 0;
   bool _disposed = false;
 
-  /// Returns this signal under its listener-only interface.
-  ///
-  /// This does not allocate a wrapper object.
-  GSignalView<T> get view => this;
-
-  @override
   bool get hasListeners => _listenerCount != 0;
 
-  @override
   int get listenerCount => _listenerCount;
 
   @override
@@ -159,17 +100,14 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
   @override
   String toString() => 'Signal<$T>(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
-  @override
   GSignalSubscription add(GSignalCallback<T> callback, {Object? key}) {
     return _add(callback, once: false, key: key);
   }
 
-  @override
   GSignalSubscription addOnce(GSignalCallback<T> callback, {Object? key}) {
     return once(callback, key: key);
   }
 
-  @override
   GSignalSubscription once(GSignalCallback<T> callback, {Object? key}) {
     return _add(callback, once: true, key: key);
   }
@@ -249,7 +187,6 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
     }
   }
 
-  @override
   bool remove(GSignalCallback<T> callback) {
     final entries = _entries;
     if (entries == null) return false;
@@ -267,7 +204,6 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
     return false;
   }
 
-  @override
   int removeKey(Object key) {
     final entries = _entries;
     if (entries == null) return 0;
@@ -301,7 +237,6 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
     return removed;
   }
 
-  @override
   bool contains(GSignalCallback<T> callback) {
     final entries = _entries;
     if (entries == null) return false;
@@ -317,7 +252,6 @@ final class GSignal<T> implements GSignalView<T>, _GDisposable {
     return false;
   }
 
-  @override
   bool containsKey(Object key) {
     final entries = _entries;
     if (entries == null) return false;
@@ -498,7 +432,7 @@ final class _KeyedSignalEntry<T> extends _SignalEntry<T> {
 ///
 /// This avoids dummy values, `void` payloads, dynamic invocation, and wrapper
 /// closures.
-final class GSignal0 implements GSignalView0, _GDisposable {
+final class GSignal0 implements _GDisposable {
   GSignal0({this.onListenerCountChanged});
 
   /// Invoked after [listenerCount] changes.
@@ -510,12 +444,8 @@ final class GSignal0 implements GSignalView0, _GDisposable {
   int _dispatchDepth = 0;
   bool _disposed = false;
 
-  GSignalView0 get view => this;
-
-  @override
   bool get hasListeners => _listenerCount != 0;
 
-  @override
   int get listenerCount => _listenerCount;
 
   @override
@@ -524,17 +454,14 @@ final class GSignal0 implements GSignalView0, _GDisposable {
   @override
   String toString() => 'Signal0(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
-  @override
   GSignalSubscription add(GSignalCallback0 callback, {Object? key}) {
     return _add(callback, once: false, key: key);
   }
 
-  @override
   GSignalSubscription addOnce(GSignalCallback0 callback, {Object? key}) {
     return once(callback, key: key);
   }
 
-  @override
   GSignalSubscription once(GSignalCallback0 callback, {Object? key}) {
     return _add(callback, once: true, key: key);
   }
@@ -609,7 +536,6 @@ final class GSignal0 implements GSignalView0, _GDisposable {
     }
   }
 
-  @override
   bool remove(GSignalCallback0 callback) {
     final entries = _entries;
     if (entries == null) return false;
@@ -626,7 +552,6 @@ final class GSignal0 implements GSignalView0, _GDisposable {
     return false;
   }
 
-  @override
   int removeKey(Object key) {
     final entries = _entries;
     if (entries == null) return 0;
@@ -657,7 +582,6 @@ final class GSignal0 implements GSignalView0, _GDisposable {
     return removed;
   }
 
-  @override
   bool contains(GSignalCallback0 callback) {
     final entries = _entries;
     if (entries == null) return false;
@@ -673,7 +597,6 @@ final class GSignal0 implements GSignalView0, _GDisposable {
     return false;
   }
 
-  @override
   bool containsKey(Object key) {
     final entries = _entries;
     if (entries == null) return false;

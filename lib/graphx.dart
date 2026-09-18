@@ -148,8 +148,6 @@ export 'src/graphx_impl.dart'
         GSignalCallback,
         GSignalCallback0,
         GSignalSubscription,
-        GSignalView,
-        GSignalView0,
         GSize,
         GSizeFlutterGeometry,
         GStage,

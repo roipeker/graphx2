@@ -69,9 +69,9 @@ final class GAnimatedImage extends GNode {
   GSignal0? _onLoop;
   GSignal0? _onComplete;
 
-  GSignalView<int> get onFrame => (_onFrame ??= GSignal<int>()).view;
-  GSignalView0 get onLoop => (_onLoop ??= GSignal0()).view;
-  GSignalView0 get onComplete => (_onComplete ??= GSignal0()).view;
+  GSignal<int> get onFrame => (_onFrame ??= GSignal<int>());
+  GSignal0 get onLoop => (_onLoop ??= GSignal0());
+  GSignal0 get onComplete => (_onComplete ??= GSignal0());
 
   ui.FilterQuality get filterQuality => _render.filterQuality;
   set filterQuality(ui.FilterQuality value) {

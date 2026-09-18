@@ -41,7 +41,7 @@ final class GLongPress implements _GDisposable {
   late final GSignalSubscription _nodeDisposeSub;
 
   GSignal<GNodePointerEvent>? _longPress;
-  GSignalView<GNodePointerEvent> get onLongPress => (_longPress ??= GSignal<GNodePointerEvent>());
+  GSignal<GNodePointerEvent> get onLongPress => (_longPress ??= GSignal<GNodePointerEvent>());
 
   Timer? _timer;
   GNodePointerEvent? _downEvent;

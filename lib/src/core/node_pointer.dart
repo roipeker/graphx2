@@ -96,19 +96,19 @@ final class GNodePointer implements _GDisposable {
     _node._stage?._nodePointerRouter?._markSceneChanged();
   }
 
-  GSignalView<GNodePointerEvent> get onDown => (_down ??= _signal());
-  GSignalView<GNodePointerEvent> get onMove => (_move ??= _signal());
-  GSignalView<GNodePointerEvent> get onUp => (_up ??= _signal());
-  GSignalView<GNodePointerEvent> get onCancel => (_cancel ??= _signal());
-  GSignalView<GNodePointerEvent> get onEnter => (_enter ??= _signal());
-  GSignalView<GNodePointerEvent> get onExit => (_exit ??= _signal());
-  GSignalView<GNodePointerEvent> get onScroll => (_scroll ??= _signal());
+  GSignal<GNodePointerEvent> get onDown => (_down ??= _signal());
+  GSignal<GNodePointerEvent> get onMove => (_move ??= _signal());
+  GSignal<GNodePointerEvent> get onUp => (_up ??= _signal());
+  GSignal<GNodePointerEvent> get onCancel => (_cancel ??= _signal());
+  GSignal<GNodePointerEvent> get onEnter => (_enter ??= _signal());
+  GSignal<GNodePointerEvent> get onExit => (_exit ??= _signal());
+  GSignal<GNodePointerEvent> get onScroll => (_scroll ??= _signal());
 
   /// Primary tap convenience synthesized from the routed press sequence.
   ///
   /// Recognition is demand-gated, uses a small Stage-space movement slop and
   /// keeps the same target/bubbling semantics as the underlying pointer events.
-  GSignalView<GNodePointerEvent> get onTap => (_tap ??= _signal());
+  GSignal<GNodePointerEvent> get onTap => (_tap ??= _signal());
 
   GSignal<GNodePointerEvent> _signal() => GSignal<GNodePointerEvent>(
     onListenerCountChanged: (_) => _refreshInterest(),

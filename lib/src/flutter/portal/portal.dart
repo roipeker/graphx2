@@ -70,7 +70,7 @@ final class GPortal<T> extends GNode {
 
   GSize get layoutSize => _layoutSize;
 
-  GSignalView0 get onLayoutSizeChanged => (_onLayoutSizeChanged ??= GSignal0()).view;
+  GSignal0 get onLayoutSizeChanged => (_onLayoutSizeChanged ??= GSignal0());
 
   bool get pointerEnabled => _pointerEnabled;
   set pointerEnabled(bool value) {

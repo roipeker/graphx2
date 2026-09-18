@@ -115,11 +115,11 @@ final class GActionInput {
   Map<GAction, GSignal<GActionEvent>>? _signals;
   GSignal<GActionEvent>? _any;
 
-  GSignalView<GActionEvent> get onAny => (_any ??= GSignal<GActionEvent>()).view;
+  GSignal<GActionEvent> get onAny => (_any ??= GSignal<GActionEvent>());
 
-  GSignalView<GActionEvent> on(GAction action) {
+  GSignal<GActionEvent> on(GAction action) {
     final signals = _signals ??= <GAction, GSignal<GActionEvent>>{};
-    return (signals[action] ??= GSignal<GActionEvent>()).view;
+    return (signals[action] ??= GSignal<GActionEvent>());
   }
 
   GActionInput bind(GShortcut shortcut, GAction action) {
@@ -272,9 +272,9 @@ final class GNodeFocus {
     _syncPointerFocus(this);
   }
 
-  GSignalView<bool> get onChanged => (_changed ??= GSignal<bool>()).view;
-  GSignalView<bool> get onWithinChanged => (_withinChanged ??= GSignal<bool>()).view;
-  GSignalView<GActionEvent> get onAction => (_action ??= GSignal<GActionEvent>()).view;
+  GSignal<bool> get onChanged => (_changed ??= GSignal<bool>());
+  GSignal<bool> get onWithinChanged => (_withinChanged ??= GSignal<bool>());
+  GSignal<GActionEvent> get onAction => (_action ??= GSignal<GActionEvent>());
 
   bool get _effectiveFocusable => _focusableOverride ?? _portalAvailable;
 
@@ -355,9 +355,9 @@ extension GNodeFocusApi on GNode {
   /// Advanced focus configuration, allocated only when accessed.
   GNodeFocus get focus => _ensureNodeFocus(this);
 
-  GSignalView<bool> get onFocusChanged => _ensureNodeFocus(this).onChanged;
-  GSignalView<bool> get onFocusWithinChanged => _ensureNodeFocus(this).onWithinChanged;
-  GSignalView<GActionEvent> get onAction => _ensureNodeFocus(this).onAction;
+  GSignal<bool> get onFocusChanged => _ensureNodeFocus(this).onChanged;
+  GSignal<bool> get onFocusWithinChanged => _ensureNodeFocus(this).onWithinChanged;
+  GSignal<GActionEvent> get onAction => _ensureNodeFocus(this).onAction;
 }
 
 extension GStageFocusApi on GStage {

@@ -41,10 +41,10 @@ final class GDrag implements _GDisposable {
   GSignal<GDragEvent>? _end;
   GSignal<GDragEvent>? _cancel;
 
-  GSignalView<GDragEvent> get onStart => (_start ??= GSignal<GDragEvent>());
-  GSignalView<GDragEvent> get onUpdate => (_update ??= GSignal<GDragEvent>());
-  GSignalView<GDragEvent> get onEnd => (_end ??= GSignal<GDragEvent>());
-  GSignalView<GDragEvent> get onCancel => (_cancel ??= GSignal<GDragEvent>());
+  GSignal<GDragEvent> get onStart => (_start ??= GSignal<GDragEvent>());
+  GSignal<GDragEvent> get onUpdate => (_update ??= GSignal<GDragEvent>());
+  GSignal<GDragEvent> get onEnd => (_end ??= GSignal<GDragEvent>());
+  GSignal<GDragEvent> get onCancel => (_cancel ??= GSignal<GDragEvent>());
 
   final GDragEvent _event = GDragEvent._();
 

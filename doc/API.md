@@ -40,6 +40,17 @@ The core should be useful on its own. Drawing, text, images, input, focus, acces
 
 Optional features can live outside the core when they are ready. We do not need to design those package boundaries in advance.
 
+## Signals
+
+GraphX exposes one mutable signal type: `GSignal<T>`, plus `GSignal0` for events without a
+payload. The same object owns subscriptions and synchronous emission; there is no separate
+read-only view or controller type.
+
+When porting packages into the repository, replace `GSignalView<T>` with `GSignal<T>`,
+`GSignalView0` with `GSignal0`, and return the signal directly instead of `.view`. Engine-owned
+signals may also be emitted by application code. That freedom is intentional: signal ownership is
+an API convention, not a capability boundary.
+
 ## Before the first release
 
 - finish the public API pass
