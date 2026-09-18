@@ -11,17 +11,17 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## The scene
 
 - [Your first scene](first-scene.md)
-- Nodes and children
-- Position, scale, rotation, and pivot
-- Coordinate spaces
-- Bounds
-- Visibility and activity
+- [Nodes and children](nodes-and-children.md)
+- [Position, scale, rotation, and pivot](transforms.md)
+- [Coordinate spaces](coordinate-spaces.md)
+- [Bounds](bounds.md)
+- [Visibility and activity](visibility-and-activity.md)
 
 ## Drawing
 
-- Shapes and graphics
-- Fills and strokes
-- Paths
+- [Shapes and graphics](shapes-and-graphics.md)
+- [Fills and strokes](fills-and-strokes.md)
+- [Paths](paths.md)
 - Images and textures
 - Text
 
@@ -53,6 +53,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## Flutter + GraphX
 
 - GraphXView
+- [Building larger scenes](larger-scenes.md)
 - GRuntime
 - Sharing a runtime
 - Flutter widgets inside GraphX

@@ -14,6 +14,7 @@ function inline(text) {
   return escapeHtml(text)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 }
 
@@ -49,6 +50,7 @@ function markdown(source) {
   const out = [];
   let paragraph = [];
   let list = [];
+  let listTag = 'ul';
   let code = [];
   let language = '';
   let inCode = false;
@@ -60,7 +62,7 @@ function markdown(source) {
   };
   const flushList = () => {
     if (!list.length) return;
-    out.push(`<ul>${list.map((item) => `<li>${inline(item)}</li>`).join('')}</ul>`);
+    out.push(`<${listTag}>${list.map((item) => `<li>${inline(item)}</li>`).join('')}</${listTag}>`);
     list = [];
   };
 
@@ -97,7 +99,21 @@ function markdown(source) {
       continue;
     }
     if (line.startsWith('> ')) { flushParagraph(); flushList(); out.push(`<blockquote>${inline(line.slice(2))}</blockquote>`); continue; }
-    if (line.startsWith('- ')) { flushParagraph(); list.push(line.slice(2)); continue; }
+    if (line.startsWith('- ')) {
+      flushParagraph();
+      if (list.length && listTag !== 'ul') flushList();
+      listTag = 'ul';
+      list.push(line.slice(2));
+      continue;
+    }
+    const ordered = line.match(/^\d+\. (.+)$/);
+    if (ordered) {
+      flushParagraph();
+      if (list.length && listTag !== 'ol') flushList();
+      listTag = 'ol';
+      list.push(ordered[1]);
+      continue;
+    }
     paragraph.push(line.trim());
   }
 
@@ -142,6 +158,16 @@ function select(link) {
   history.replaceState(null, '', link.getAttribute('href'));
   loadPage(link.dataset.page, link);
 }
+
+
+content.addEventListener('click', (event) => {
+  const anchor = event.target.closest('a[href^="#"]');
+  if (!anchor) return;
+  const link = links.find((item) => item.getAttribute('href') === anchor.getAttribute('href'));
+  if (!link) return;
+  event.preventDefault();
+  select(link);
+});
 
 menuButton.addEventListener('click', () => document.body.classList.toggle('menu-open'));
 links.forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); select(link); }));

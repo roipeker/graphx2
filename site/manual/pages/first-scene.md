@@ -41,7 +41,7 @@ card.graphics
 
 The graphics API is fluent on purpose, so a drawing can read as one little sequence. Since this example is sitting inside a Material app, we can also use Flutter's familiar `Colors.red` directly.
 
-We are not going to worry about those coordinates yet. There is a whole chapter for that. For now we have a red rounded card.
+We are not going to worry about those coordinates yet. [Coordinate spaces](#coordinate-spaces) gets its own chapter. For now we have a red rounded card.
 
 > `name: 'card'` is optional. A name can be useful as a debug label, and parents can find a direct child later with `getChildByName()`. Leave it out when you do not need one.
 
@@ -55,7 +55,7 @@ GraphX can line the pivot up with the center of the shape for us:
 card.alignPivot(0, 0, preserve: false);
 ```
 
-You do not need to understand pivots yet. Think of this as choosing the point the card will turn around. We will come back to it when we explore transforms.
+You do not need to understand pivots yet. Think of this as choosing the point the card will turn around. We will come back to it in [Position, scale, rotation, and pivot](#position-scale-rotation-and-pivot).
 
 ## Put it somewhere
 
@@ -116,4 +116,4 @@ There are already a few relationships hiding inside that example.
 
 `card` is a child of `root`. Its position belongs to that relationship. Its drawing belongs to the card itself. Its pointer listener belongs to the same card too.
 
-We will make those relationships visible in the next chapter by putting several objects under the same parent. That is where the scene tree starts earning its keep.
+We will make those relationships visible in [Nodes and children](#nodes-and-children) by putting several objects under the same parent. That is where the scene tree starts earning its keep.
