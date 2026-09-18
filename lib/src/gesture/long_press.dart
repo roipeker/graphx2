@@ -1,11 +1,11 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Single-pointer long-press recognizer.
 ///
 /// The press is rejected when the pointer moves more than [slop] Stage-space
 /// pixels before [delay] elapses. It disposes automatically with [node];
 /// explicit [dispose] remains useful when ending recognition earlier.
-final class GLongPress implements Disposable {
+final class GLongPress implements _GDisposable {
   GLongPress(
     this.node, {
     this.delay = const Duration(milliseconds: 500),

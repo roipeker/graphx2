@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Stable semantic input identity, independent from the device that produced it.
 final class GAction {
@@ -215,7 +215,7 @@ enum GFocusDirection { left, right, up, down }
 
 /// What happens when traversal reaches the logical edge of a GraphX scene.
 enum GFocusEdgeBehavior {
-  /// Delegate beyond GraphxView to the surrounding Flutter traversal policy.
+  /// Delegate beyond GraphXView to the surrounding Flutter traversal policy.
   parent,
 
   /// Keep focus at the current edge.

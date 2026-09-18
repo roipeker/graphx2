@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained vector drawing commands with the familiar GraphX/Flash grammar.
 ///

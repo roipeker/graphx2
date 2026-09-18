@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 mixin GNodeTransform {
   double _x = 0.0;

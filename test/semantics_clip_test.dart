@@ -8,7 +8,7 @@ void main() {
   ) async {
     final handle = tester.ensureSemantics();
     final root = GRoot();
-    final viewport = root.addChild(GNode('viewport'))
+    final viewport = root.addChild(GNode(name: 'viewport'))
       ..clip = GClip.rect(0, 0, 100, 100);
     final control = viewport.addChild(_SemanticBox())..y = 120;
     control.semantics
@@ -40,7 +40,7 @@ Widget _host(GRoot root) {
     home: SizedBox(
       width: 240,
       height: 240,
-      child: GraphxView(root: () => root),
+      child: GraphXView(root: () => root),
     ),
   );
 }

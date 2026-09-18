@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 const _renderSamples = 9;
 const _rebuildSamples = 5;
@@ -12,7 +13,7 @@ const _warmups = 3;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI RASTER CACHE SUITE');
+  print('GRAPHX RASTER CACHE SUITE');
   print(
     'Run profile: flutter run -d macos --profile benchmark/cache_benchmark.dart',
   );
@@ -56,7 +57,7 @@ enum _Fx {
 
 _BenchScene _buildScene(int count, _Fx fx) {
   final root = GRoot();
-  final target = root.addChild(GNode('cached'));
+  final target = root.addChild(GNode(name: 'cached'));
   late _BenchLeaf mutable;
   for (var i = 0; i < count; ++i) {
     final leaf = target.addChild(_BenchLeaf(i));

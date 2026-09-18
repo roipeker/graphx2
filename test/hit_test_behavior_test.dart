@@ -20,9 +20,9 @@ void main() {
                 behavior: HitTestBehavior.opaque,
                 onTap: () => taps++,
               ),
-              GraphxView.scene(
+              GraphXView.scene(
                 (_) {},
-                config: const GraphxConfig(
+                config: const GraphXConfig(
                   hitTestBehavior: GHitTestBehavior.content,
                 ),
               ),
@@ -54,9 +54,9 @@ void main() {
                 behavior: HitTestBehavior.opaque,
                 onTap: () => taps++,
               ),
-              GraphxView.scene(
+              GraphXView.scene(
                 (_) {},
-                config: const GraphxConfig(
+                config: const GraphXConfig(
                   hitTestBehavior: GHitTestBehavior.opaque,
                 ),
               ),

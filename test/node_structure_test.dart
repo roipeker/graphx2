@@ -5,8 +5,8 @@ void main() {
   group('GNode structure', () {
     test('child accessors avoid allocating children snapshots', () {
       final parent = GNode();
-      final a = parent.addChild(GNode('a'));
-      final b = parent.addChild(GNode('b'));
+      final a = parent.addChild(GNode(name: 'a'));
+      final b = parent.addChild(GNode(name: 'b'));
 
       expect(parent.numChildren, 2);
       expect(parent.getChildAt(0), same(a));
@@ -45,8 +45,8 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(100, 100);
-      final a = root.addChild(GNode('a'));
-      final b = root.addChild(GNode('b'));
+      final a = root.addChild(GNode(name: 'a'));
+      final b = root.addChild(GNode(name: 'b'));
       final child = a.addChild(_LifecycleNode('child'));
 
       expect(child.attachedCount, 1);
@@ -141,8 +141,8 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(100, 100);
-      final parent = root.addChild(GNode('parent'));
-      final child = parent.addChild(GNode('child'));
+      final parent = root.addChild(GNode(name: 'parent'));
+      final child = parent.addChild(GNode(name: 'child'));
       final events = <String>[];
 
       child.signals.onDetached.add(() {
@@ -231,7 +231,7 @@ void main() {
 }
 
 final class _LifecycleNode extends GNode {
-  _LifecycleNode([super.name]);
+  _LifecycleNode([String? name]) : super(name: name);
 
   int attachedCount = 0;
   int detachedCount = 0;

@@ -245,9 +245,9 @@ Future<void> _pump(WidgetTester tester, void Function(_Root root) build) async {
         child: SizedBox(
           width: 200,
           height: 160,
-          child: GraphxView(
+          child: GraphXView(
             root: () => _Root(build),
-            config: const GraphxConfig(
+            config: const GraphXConfig(
               hitTestBehavior: GHitTestBehavior.content,
             ),
           ),

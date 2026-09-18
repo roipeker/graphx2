@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 extension GNodeCoordinateSpace on GNode {
   /// Converts a point from this node's local coordinates into [target]'s local

@@ -1,6 +1,6 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-/// Makes one shared [GRuntime] available to descendant [GraphxView] instances.
+/// Makes one shared [GRuntime] available to descendant [GraphXView] instances.
 class GRuntimeProvider extends InheritedWidget {
   const GRuntimeProvider({
     super.key,

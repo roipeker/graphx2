@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 extension GShaderAssets on GAssets {
   /// Loads and caches a build-time fragment program asset.

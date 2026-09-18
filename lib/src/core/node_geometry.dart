@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Allocation-aware access to a node's own untransformed geometry.
 ///

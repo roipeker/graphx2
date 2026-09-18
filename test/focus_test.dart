@@ -6,7 +6,7 @@ void main() {
     test('uses scene order and keeps advanced state optional', () {
       final root = GRoot();
       final a = root.addChild(_BoxNode('a')..focusable = true);
-      final group = root.addChild(GNode('group'));
+      final group = root.addChild(GNode(name: 'group'));
       final b = group.addChild(_BoxNode('b')..focusable = true);
       final c = root.addChild(_BoxNode('c')..focusable = true);
       final stage = _mount(root);
@@ -35,7 +35,7 @@ void main() {
 
     test('repairs focus when node or ancestry becomes ineligible', () {
       final root = GRoot();
-      final group = root.addChild(GNode('group'));
+      final group = root.addChild(GNode(name: 'group'));
       final child = group.addChild(_BoxNode('child')..focusable = true);
       final stage = _mount(root);
 
@@ -64,8 +64,8 @@ void main() {
       'preserves focus and repairs focus-within across same-stage reparent',
       () {
         final root = GRoot();
-        final left = root.addChild(GNode('left'));
-        final right = root.addChild(GNode('right'));
+        final left = root.addChild(GNode(name: 'left'));
+        final right = root.addChild(GNode(name: 'right'));
         final child = left.addChild(_BoxNode('child')..focusable = true);
         final stage = _mount(root);
         final leftWithin = <bool>[];
@@ -93,7 +93,7 @@ void main() {
 
     test('emits focus and focus-within changes only on changed paths', () {
       final root = GRoot();
-      final parent = root.addChild(GNode('parent'));
+      final parent = root.addChild(GNode(name: 'parent'));
       final a = parent.addChild(_BoxNode('a')..focusable = true);
       final b = parent.addChild(_BoxNode('b')..focusable = true);
       final outside = root.addChild(_BoxNode('outside')..focusable = true);
@@ -119,7 +119,7 @@ void main() {
 
     test('routes semantic actions from focused node through ancestors', () {
       final root = GRoot();
-      final parent = root.addChild(GNode('parent'));
+      final parent = root.addChild(GNode(name: 'parent'));
       final child = parent.addChild(_BoxNode('child')..focusable = true);
       final stage = _mount(root);
       const save = GAction('save');
@@ -224,7 +224,7 @@ GStage _mount(GRoot root) {
 }
 
 final class _BoxNode extends GNode {
-  _BoxNode(String name) : super(name);
+  _BoxNode(String name) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.setXYWH(0, 0, 20, 20);

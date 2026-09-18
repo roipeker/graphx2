@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 // Runtime inspection intentionally lives in core because this library owns the
 // authoritative private scene state. The wire protocol is debug/profile-only;

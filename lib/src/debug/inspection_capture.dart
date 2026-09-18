@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 final _GInspectorCaptureRuntime _gInspectorCaptureRuntime =
     _GInspectorCaptureRuntime();
@@ -6,7 +6,7 @@ final _GInspectorCaptureRuntime _gInspectorCaptureRuntime =
 /// Explicit live visual evidence for tooling.
 ///
 /// Context capture reuses [GStage.snapshot], so it represents the final
-/// GraphxView composition including rasterizable Flutter portals. Isolated node
+/// GraphXView composition including rasterizable Flutter portals. Isolated node
 /// capture reuses [GNodeSnapshot.snapshot] and renders only that node subtree.
 /// No capture state or readback work exists until a client invokes the service
 /// extension.

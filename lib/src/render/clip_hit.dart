@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 bool _clipContains(GClip clip, double x, double y, GNode owner) {
   if (clip is GRectClip) {

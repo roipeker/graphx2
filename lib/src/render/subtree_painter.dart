@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Reusable Canvas renderer for painting an existing GraphX subtree inside an
 /// active [GRenderContext].
@@ -10,7 +10,7 @@ part of 'package:graphx/graphx.dart';
 /// Packages that take explicit ownership of subtree ordering/transforms (for
 /// example projected 2.5D planes) can retain one painter and reuse it for every
 /// frame rather than duplicating GraphX's Canvas renderer.
-final class GCanvasSubtreePainter implements Disposable {
+final class GCanvasSubtreePainter implements _GDisposable {
   final GCanvasRenderer _renderer = GCanvasRenderer();
   bool _disposed = false;
 

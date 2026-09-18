@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Pointer behavior and signals for one scene node.
 ///
@@ -6,7 +6,7 @@ part of 'package:graphx/graphx.dart';
 /// whether descendants may become independent pointer targets. Both default to
 /// true; actual hit-test participation remains demand-driven by pointer signals
 /// and [cursor].
-final class GNodePointer implements Disposable {
+final class GNodePointer implements _GDisposable {
   GNodePointer._(this._node);
 
   final GNode _node;
@@ -234,7 +234,7 @@ final class GNodePointerEvent {
 
 enum _GNodePointerSignal { down, move, up, cancel, enter, exit, scroll, tap }
 
-final class _GNodePointerRouter implements Disposable {
+final class _GNodePointerRouter implements _GDisposable {
   _GNodePointerRouter(this.stage) {
     final pointer = stage.pointer;
     _subscriptions = <GSignalSubscription>[

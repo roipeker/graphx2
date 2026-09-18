@@ -1,40 +1,40 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 // for assert dimension issues.
 const kGxDebugWarnIfZeroSize = true;
 
-typedef GraphxRootFactory = GRoot Function();
+typedef GraphXRootFactory = GRoot Function();
 
-class GraphxView extends StatefulWidget {
-  const GraphxView({
+class GraphXView extends StatefulWidget {
+  const GraphXView({
     super.key,
     required this.root,
     this.controller,
     this.value,
-    this.config = GraphxConfig.defaults,
+    this.config = GraphXConfig.defaults,
   });
 
-  GraphxView.scene(
-    GraphxSceneBuilder build, {
+  GraphXView.scene(
+    GraphXSceneBuilder build, {
     super.key,
     this.controller,
     this.value,
-    this.config = GraphxConfig.sceneDefaults,
+    this.config = GraphXConfig.sceneDefaults,
   }) : root = (() => GCallbackRoot(build));
 
-  final GraphxRootFactory root;
-  final GraphxController? controller;
-  final GraphxConfig config;
+  final GraphXRootFactory root;
+  final GraphXController? controller;
+  final GraphXConfig config;
   final Object? value;
 
   @override
-  State<GraphxView> createState() => _GraphxViewState();
+  State<GraphXView> createState() => _GraphXViewState();
 }
 
-class _GraphxViewState extends State<GraphxView> {
+class _GraphXViewState extends State<GraphXView> {
   late GRoot _root;
   late GStage _stage;
-  GraphxController? _controller;
+  GraphXController? _controller;
   GRuntime? _sharedRuntime;
   bool _initialized = false;
   bool _pendingRestart = false;
@@ -61,9 +61,9 @@ class _GraphxViewState extends State<GraphxView> {
     final root = widget.root();
     final stage = GStage(
       root,
-      widget.config.maxDelta,
-      widget.config.inputEnabled,
-      sharedRuntime,
+      maxDelta: widget.config.maxDelta,
+      inputEnabled: widget.config.inputEnabled,
+      runtime: sharedRuntime,
     );
     try {
       stage.mount();
@@ -128,7 +128,7 @@ class _GraphxViewState extends State<GraphxView> {
   }
 
   @override
-  void didUpdateWidget(covariant GraphxView oldWidget) {
+  void didUpdateWidget(covariant GraphXView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     final oldConfig = oldWidget.config;
@@ -158,10 +158,10 @@ class _GraphxViewState extends State<GraphxView> {
     super.reassemble();
     if (!_initialized) return;
     switch (widget.config.reloadMode) {
-      case GraphxReloadMode.retain:
+      case GraphXReloadMode.retain:
         _stage.reassemble();
         _markFlutterSync(dependenciesChanged: true);
-      case GraphxReloadMode.restart:
+      case GraphXReloadMode.restart:
         _pendingRestart = true;
     }
   }
@@ -176,7 +176,7 @@ class _GraphxViewState extends State<GraphxView> {
     }
     final surface = LayoutBuilder(
       builder: (context, constraints) {
-        final size = RenderGraphxSurface._computeSize(constraints);
+        final size = RenderGraphXSurface._computeSize(constraints);
         final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
         _stage._setFlutterContext(context);
         _stage.setViewport(
@@ -188,7 +188,7 @@ class _GraphxViewState extends State<GraphxView> {
         if (_stage._rootAttached) _flushFlutterSync();
         return _GPortalHost(
           stage: _stage,
-          child: _GraphxSurface(
+          child: _GraphXSurface(
             stage: _stage,
             repaintBoundary: widget.config.repaintBoundary,
             pointerEnabled: widget.config.pointer,
@@ -217,8 +217,8 @@ class _GraphxViewState extends State<GraphxView> {
   }
 }
 
-final class _GraphxSurface extends LeafRenderObjectWidget {
-  const _GraphxSurface({
+final class _GraphXSurface extends LeafRenderObjectWidget {
+  const _GraphXSurface({
     required this.stage,
     required this.repaintBoundary,
     required this.devicePixelRatio,
@@ -233,8 +233,8 @@ final class _GraphxSurface extends LeafRenderObjectWidget {
   final GHitTestBehavior hitTestBehavior;
 
   @override
-  RenderGraphxSurface createRenderObject(BuildContext context) {
-    return RenderGraphxSurface(
+  RenderGraphXSurface createRenderObject(BuildContext context) {
+    return RenderGraphXSurface(
       stage,
       repaintBoundary,
       devicePixelRatio,
@@ -246,7 +246,7 @@ final class _GraphxSurface extends LeafRenderObjectWidget {
   @override
   void updateRenderObject(
     BuildContext context,
-    covariant RenderGraphxSurface renderObject,
+    covariant RenderGraphXSurface renderObject,
   ) {
     renderObject
       ..stage = stage
@@ -257,9 +257,9 @@ final class _GraphxSurface extends LeafRenderObjectWidget {
   }
 }
 
-final class RenderGraphxSurface extends RenderBox
+final class RenderGraphXSurface extends RenderBox
     implements GStageHost, MouseTrackerAnnotation {
-  RenderGraphxSurface(
+  RenderGraphXSurface(
     GStage stage,
     this.repaintBoundary, [
     double devicePixelRatio = 1.0,
@@ -511,20 +511,20 @@ final class RenderGraphxSurface extends RenderBox
     if (_lastWarnedConstraints == constraints) return;
     _lastWarnedConstraints = constraints;
     final warning = FlutterError.fromParts([
-      ErrorSummary('GraphxView was laid out with a zero-sized viewport.'),
+      ErrorSummary('GraphXView was laid out with a zero-sized viewport.'),
       ErrorDescription(
-        'The resulting Graphx viewport is ${size.width.toStringAsFixed(1)} x ${size.height.toStringAsFixed(1)}.',
+        'The resulting GraphX viewport is ${size.width.toStringAsFixed(1)} x ${size.height.toStringAsFixed(1)}.',
       ),
       DiagnosticsProperty('Received constraints', constraints),
       if (!constraints.hasBoundedWidth)
         ErrorHint(
-          'The width is unbounded. Give GraphxView an explicit width, '
+          'The width is unbounded. Give GraphXView an explicit width, '
           'place it in Expanded, or ensure its parent constraints the '
           'horizontal axis.',
         ),
       if (!constraints.hasBoundedHeight)
         ErrorHint(
-          'The height is unbounded. Give GraphxView an explicit height, '
+          'The height is unbounded. Give GraphXView an explicit height, '
           'place it in Expanded, or ensure its parent constraints the '
           'vertical axis.',
         ),
@@ -543,24 +543,24 @@ final class RenderGraphxSurface extends RenderBox
           size.width == 0)
         ErrorHint(
           'A non-zero width was available, but the chosen width was zero.'
-          'Usually indicates incorrect RenderGraphxSurface sizing.',
+          'Usually indicates incorrect RenderGraphXSurface sizing.',
         ),
       if (constraints.hasBoundedHeight &&
           constraints.maxHeight > 0.0 &&
           size.height == 0)
         ErrorHint(
           'A non-zero height was available, but the chosen height was zero.'
-          'Usually indicates incorrect RenderGraphxSurface sizing.',
+          'Usually indicates incorrect RenderGraphXSurface sizing.',
         ),
       ErrorHint(
         'Common fixes:\n'
-        ' Expanded( child: GraphxView(...))\n'
-        ' SizedBox( width: ..., height: ..., child: GraphxView(...))\n'
-        ' AspectRatio( aspectRatio: ..., child: GraphxView(...))',
+        ' Expanded( child: GraphXView(...))\n'
+        ' SizedBox( width: ..., height: ..., child: GraphXView(...))\n'
+        ' AspectRatio( aspectRatio: ..., child: GraphXView(...))',
       ),
       if (debugCreator != null)
         DiagnosticsProperty(
-          'The relevant GraphxView was created by',
+          'The relevant GraphXView was created by',
           debugCreator!,
           style: DiagnosticsTreeStyle.errorProperty,
         ),

@@ -4,9 +4,9 @@ import 'package:graphx/graphx.dart';
 
 void main() {
   testWidgets(
-    'GraphxView dispatches inherited dependencies once per dependency change',
+    'GraphXView dispatches inherited dependencies once per dependency change',
     (tester) async {
-      final controller = GraphxController<_DependencyRoot>();
+      final controller = GraphXController<_DependencyRoot>();
       const viewKey = ValueKey<String>('graphx');
 
       Widget host({
@@ -22,7 +22,7 @@ void main() {
             child: SizedBox(
               width: 160,
               height: 100,
-              child: GraphxView(
+              child: GraphXView(
                 key: viewKey,
                 root: _DependencyRoot.new,
                 controller: controller,
@@ -62,7 +62,7 @@ void main() {
   );
 
   testWidgets(
-    'GraphxView.scene can subscribe to inherited dependencies without rebuilding',
+    'GraphXView.scene can subscribe to inherited dependencies without rebuilding',
     (tester) async {
       const viewKey = ValueKey<String>('scene');
       var builderCalls = 0;
@@ -78,7 +78,7 @@ void main() {
           child: SizedBox(
             width: 160,
             height: 100,
-            child: GraphxView.scene(key: viewKey, (root) {
+            child: GraphXView.scene(key: viewKey, (root) {
               builderCalls++;
               root.stage.signals.onFlutterDependencies.add((context) {
                 dependencyCalls++;

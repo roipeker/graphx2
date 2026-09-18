@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 GBounds _getNodeBounds(GNode node, GNode targetSpace, [GBounds? out]) {
   final result = out ?? GBounds.empty();

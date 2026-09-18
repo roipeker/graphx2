@@ -25,10 +25,10 @@
 /// • mutation guarantees
 ///
 /// See `benchmark/signal/signal_bench.dart`.
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-typedef SignalCallback<T> = void Function(T value);
-typedef SignalCallback0 = void Function();
+typedef GSignalCallback<T> = void Function(T value);
+typedef GSignalCallback0 = void Function();
 
 /// Minimal common disposal contract for GraphX2 utilities.
 ///
@@ -41,7 +41,7 @@ typedef SignalCallback0 = void Function();
 /// Handle for one exact signal registration.
 ///
 /// Cancellation is idempotent and O(1).
-abstract class GSignalSubscription implements Disposable {
+abstract class GSignalSubscription implements _GDisposable {
   bool get isActive;
 
   bool _disposed = false;
@@ -67,23 +67,23 @@ abstract interface class GSignalView<T> {
 
   int get listenerCount;
 
-  GSignalSubscription add(SignalCallback<T> callback, {Object? key});
+  GSignalSubscription add(GSignalCallback<T> callback, {Object? key});
 
   /// Familiar alias for [once].
-  GSignalSubscription addOnce(SignalCallback<T> callback, {Object? key});
+  GSignalSubscription addOnce(GSignalCallback<T> callback, {Object? key});
 
-  GSignalSubscription once(SignalCallback<T> callback, {Object? key});
+  GSignalSubscription once(GSignalCallback<T> callback, {Object? key});
 
   /// Removes the first registration whose callback compares equal to
   /// [callback].
-  bool remove(SignalCallback<T> callback);
+  bool remove(GSignalCallback<T> callback);
 
   /// Removes every registration whose key is identical to [key].
   ///
   /// Returns the number of registrations removed.
   int removeKey(Object key);
 
-  bool contains(SignalCallback<T> callback);
+  bool contains(GSignalCallback<T> callback);
 
   bool containsKey(Object key);
 }
@@ -94,18 +94,18 @@ abstract interface class GSignalView0 {
 
   int get listenerCount;
 
-  GSignalSubscription add(SignalCallback0 callback, {Object? key});
+  GSignalSubscription add(GSignalCallback0 callback, {Object? key});
 
   /// Familiar alias for [once].
-  GSignalSubscription addOnce(SignalCallback0 callback, {Object? key});
+  GSignalSubscription addOnce(GSignalCallback0 callback, {Object? key});
 
-  GSignalSubscription once(SignalCallback0 callback, {Object? key});
+  GSignalSubscription once(GSignalCallback0 callback, {Object? key});
 
-  bool remove(SignalCallback0 callback);
+  bool remove(GSignalCallback0 callback);
 
   int removeKey(Object key);
 
-  bool contains(SignalCallback0 callback);
+  bool contains(GSignalCallback0 callback);
 
   bool containsKey(Object key);
 }
@@ -127,7 +127,7 @@ abstract interface class GSignalView0 {
 /// - Duplicate callbacks and duplicate keys are allowed.
 /// - Optional [onListenerCountChanged] runs after every count mutation
 ///   (including once-listener auto-cancel during [emit]).
-final class GSignal<T> implements GSignalView<T>, Disposable {
+final class GSignal<T> implements GSignalView<T>, _GDisposable {
   GSignal({this.onListenerCountChanged});
 
   /// Invoked after [listenerCount] changes. Used by demand-gated facades
@@ -159,22 +159,22 @@ final class GSignal<T> implements GSignalView<T>, Disposable {
       'Signal<$T>(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
   @override
-  GSignalSubscription add(SignalCallback<T> callback, {Object? key}) {
+  GSignalSubscription add(GSignalCallback<T> callback, {Object? key}) {
     return _add(callback, once: false, key: key);
   }
 
   @override
-  GSignalSubscription addOnce(SignalCallback<T> callback, {Object? key}) {
+  GSignalSubscription addOnce(GSignalCallback<T> callback, {Object? key}) {
     return once(callback, key: key);
   }
 
   @override
-  GSignalSubscription once(SignalCallback<T> callback, {Object? key}) {
+  GSignalSubscription once(GSignalCallback<T> callback, {Object? key}) {
     return _add(callback, once: true, key: key);
   }
 
   _SignalEntry<T> _add(
-    SignalCallback<T> callback, {
+    GSignalCallback<T> callback, {
     required bool once,
     required Object? key,
   }) {
@@ -249,7 +249,7 @@ final class GSignal<T> implements GSignalView<T>, Disposable {
   }
 
   @override
-  bool remove(SignalCallback<T> callback) {
+  bool remove(GSignalCallback<T> callback) {
     final entries = _entries;
     if (entries == null) return false;
 
@@ -301,7 +301,7 @@ final class GSignal<T> implements GSignalView<T>, Disposable {
   }
 
   @override
-  bool contains(SignalCallback<T> callback) {
+  bool contains(GSignalCallback<T> callback) {
     final entries = _entries;
     if (entries == null) return false;
 
@@ -444,13 +444,13 @@ final class GSignal<T> implements GSignalView<T>, Disposable {
 base class _SignalEntry<T> extends GSignalSubscription {
   _SignalEntry({
     required GSignal<T> this._owner,
-    required SignalCallback<T> this._callback,
+    required GSignalCallback<T> this._callback,
     required this._index,
     required this._once,
   });
 
   GSignal<T>? _owner;
-  SignalCallback<T>? _callback;
+  GSignalCallback<T>? _callback;
 
   int _index;
   final bool _once;
@@ -499,7 +499,7 @@ final class _KeyedSignalEntry<T> extends _SignalEntry<T> {
 ///
 /// This avoids dummy values, `void` payloads, dynamic invocation, and wrapper
 /// closures.
-final class GSignal0 implements GSignalView0, Disposable {
+final class GSignal0 implements GSignalView0, _GDisposable {
   GSignal0({this.onListenerCountChanged});
 
   /// Invoked after [listenerCount] changes.
@@ -527,22 +527,22 @@ final class GSignal0 implements GSignalView0, Disposable {
       'Signal0(listeners: $_listenerCount${_disposed ? ', disposed' : ''})';
 
   @override
-  GSignalSubscription add(SignalCallback0 callback, {Object? key}) {
+  GSignalSubscription add(GSignalCallback0 callback, {Object? key}) {
     return _add(callback, once: false, key: key);
   }
 
   @override
-  GSignalSubscription addOnce(SignalCallback0 callback, {Object? key}) {
+  GSignalSubscription addOnce(GSignalCallback0 callback, {Object? key}) {
     return once(callback, key: key);
   }
 
   @override
-  GSignalSubscription once(SignalCallback0 callback, {Object? key}) {
+  GSignalSubscription once(GSignalCallback0 callback, {Object? key}) {
     return _add(callback, once: true, key: key);
   }
 
   _SignalEntry0 _add(
-    SignalCallback0 callback, {
+    GSignalCallback0 callback, {
     required bool once,
     required Object? key,
   }) {
@@ -612,7 +612,7 @@ final class GSignal0 implements GSignalView0, Disposable {
   }
 
   @override
-  bool remove(SignalCallback0 callback) {
+  bool remove(GSignalCallback0 callback) {
     final entries = _entries;
     if (entries == null) return false;
 
@@ -660,7 +660,7 @@ final class GSignal0 implements GSignalView0, Disposable {
   }
 
   @override
-  bool contains(SignalCallback0 callback) {
+  bool contains(GSignalCallback0 callback) {
     final entries = _entries;
     if (entries == null) return false;
 
@@ -796,13 +796,13 @@ final class GSignal0 implements GSignalView0, Disposable {
 base class _SignalEntry0 extends GSignalSubscription {
   _SignalEntry0({
     required GSignal0 this._owner,
-    required SignalCallback0 this._callback,
+    required GSignalCallback0 this._callback,
     required this._index,
     required this._once,
   });
 
   GSignal0? _owner;
-  SignalCallback0? _callback;
+  GSignalCallback0? _callback;
 
   int _index;
   final bool _once;

@@ -6,7 +6,7 @@ import 'package:graphx/graphx.dart';
 
 void main() {
   testWidgets(
-    'GraphxView exposes retained semantics and routes accessibility actions',
+    'GraphXView exposes retained semantics and routes accessibility actions',
     (tester) async {
       final handle = tester.ensureSemantics();
       final root = GRoot();
@@ -181,7 +181,7 @@ void main() {
   ) async {
     final handle = tester.ensureSemantics();
     final root = GRoot();
-    final group = root.addChild(GNode('group'));
+    final group = root.addChild(GNode(name: 'group'));
     group.semantics
       ..label = 'Group'
       ..mergeDescendants = true;
@@ -251,13 +251,13 @@ Widget _host(GRoot root) {
     home: SizedBox(
       width: 400,
       height: 400,
-      child: GraphxView(root: () => root),
+      child: GraphXView(root: () => root),
     ),
   );
 }
 
 final class _SemanticBox extends GNode {
-  _SemanticBox(String name) : super(name);
+  _SemanticBox(String name) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.setXYWH(0, 0, 20, 20);

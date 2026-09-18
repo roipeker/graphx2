@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 abstract interface class GStageHost {
   void scheduleTick();
@@ -8,13 +8,13 @@ abstract interface class GStageHost {
   void updateCursor(GCursor cursor);
 }
 
-class GStage with _GStageUpdate, _GStageStats implements Disposable {
+class GStage with _GStageUpdate, _GStageStats implements _GDisposable {
   GStage(
-    this.root, [
+    this.root, {
     double maxDelta = 1 / 15.0,
     bool inputEnabled = true,
     GRuntime? runtime,
-  ]) : _maxDelta = _validateMaxDelta(maxDelta),
+  }) : _maxDelta = _validateMaxDelta(maxDelta),
        _runtime = runtime ?? GRuntime(),
        _ownsRuntime = runtime == null {
     input = GInput._(this, enabled: inputEnabled);

@@ -4,30 +4,30 @@ import 'package:graphx/graphx.dart';
 void main() {
   group('Math', () {
     test('degree and radian helpers cover the old conversion utilities', () {
-      expect(Math.radians(180), closeTo(Math.pi, 1e-12));
-      expect(Math.degrees(Math.pi), closeTo(180, 1e-12));
+      expect(GMath.radians(180), closeTo(GMath.pi, 1e-12));
+      expect(GMath.degrees(GMath.pi), closeTo(180, 1e-12));
     });
 
     test('wrap normalizes positive and negative values', () {
-      expect(Math.wrap(370, 360), closeTo(10, 1e-12));
-      expect(Math.wrap(-10, 360), closeTo(350, 1e-12));
-      expect(Math.wrap(-360, 360), 0);
+      expect(GMath.wrap(370, 360), closeTo(10, 1e-12));
+      expect(GMath.wrap(-10, 360), closeTo(350, 1e-12));
+      expect(GMath.wrap(-360, 360), 0);
     });
 
     test('cyclic lerp takes the shortest wrapped path', () {
-      expect(Math.lerpCyclic(350, 10, 0.5, 360), closeTo(0, 1e-12));
-      expect(Math.lerpCyclic(10, 350, 0.5, 360), closeTo(0, 1e-12));
+      expect(GMath.lerpCyclic(350, 10, 0.5, 360), closeTo(0, 1e-12));
+      expect(GMath.lerpCyclic(10, 350, 0.5, 360), closeTo(0, 1e-12));
     });
 
     test('cyclic lerp normalizes out-of-range endpoints', () {
-      expect(Math.lerpCyclic(710, 370, 0.5, 360), closeTo(0, 1e-12));
-      expect(Math.lerpCyclic(-10, 10, 0.5, 360), closeTo(0, 1e-12));
+      expect(GMath.lerpCyclic(710, 370, 0.5, 360), closeTo(0, 1e-12));
+      expect(GMath.lerpCyclic(-10, 10, 0.5, 360), closeTo(0, 1e-12));
     });
 
     test('inverse lerp remains intentionally unclamped', () {
-      expect(Math.invLerp(10, 20, 5), closeTo(-0.5, 1e-12));
-      expect(Math.invLerp(10, 20, 25), closeTo(1.5, 1e-12));
-      expect(Math.invLerp(10, 10, 100), 0);
+      expect(GMath.invLerp(10, 20, 5), closeTo(-0.5, 1e-12));
+      expect(GMath.invLerp(10, 20, 25), closeTo(1.5, 1e-12));
+      expect(GMath.invLerp(10, 10, 100), 0);
     });
   });
 

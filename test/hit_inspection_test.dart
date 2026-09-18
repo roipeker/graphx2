@@ -201,8 +201,8 @@ void main() {
     'name is optional metadata and direct child lookup is deterministic',
     () {
       final parent = GNode();
-      final first = parent.addChild(GNode('item'));
-      parent.addChild(GNode('item'));
+      final first = parent.addChild(GNode(name: 'item'));
+      parent.addChild(GNode(name: 'item'));
       expect(parent.name, isNull);
       expect(parent.getChildByName('item'), same(first));
       expect(parent.getChildByName('missing'), isNull);

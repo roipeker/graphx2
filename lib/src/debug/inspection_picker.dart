@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 final _GInspectorPickerRuntime _gInspectorPickerRuntime =
     _GInspectorPickerRuntime();
@@ -6,7 +6,7 @@ final _GInspectorPickerRuntime _gInspectorPickerRuntime =
 /// Debug-only scene picking owned outside the retained scene.
 ///
 /// The preferred path inserts a temporary Flutter [OverlayEntry] exactly over
-/// the hosted GraphxView. That entry owns pointer input while inspection is
+/// the hosted GraphXView. That entry owns pointer input while inspection is
 /// armed, so a selection click never enters GraphX's normal pointer/gesture
 /// pipeline. If the host has no Overlay ancestor, the runtime falls back to the
 /// older observe-only Stage pointer path and DevTools can still confirm the
@@ -292,7 +292,7 @@ final class _GInspectorPickerRuntime {
             ),
             const SizedBox(width: 7),
             const Text(
-              'SATECHI INSPECT',
+              'GRAPHX INSPECT',
               style: TextStyle(
                 color: Color(0xffc7ff2e),
                 fontSize: 10,

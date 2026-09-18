@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 void main() {
   group('GStage update phases', () {

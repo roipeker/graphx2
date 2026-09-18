@@ -1,6 +1,8 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 class GRoot extends GNode {
+  GRoot({super.name});
+
   GSignal<double> get onUpdate => stage.signals.onUpdate;
 
   GSignal<GSize> get onResize => stage.signals.onResize;

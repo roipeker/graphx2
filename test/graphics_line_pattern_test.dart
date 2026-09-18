@@ -172,7 +172,7 @@ void main() {
     final pattern = GLinePattern(
       Path()..addRect(const Rect.fromLTWH(-1, -8, 2, 8)),
       advance: 20,
-      rotation: Math.halfPi,
+      rotation: GMath.halfPi,
       filled: true,
     );
     final shape = GShape();

@@ -1,8 +1,8 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Common renderable image-data contract used by texture loaders and display
 /// objects. Concrete implementations remain intentionally small.
-sealed class GTextureData implements Disposable {
+sealed class GTextureData implements _GDisposable {
   double get width;
   double get height;
   bool get isAnimated;

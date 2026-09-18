@@ -1,14 +1,14 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 final Expando<_RenderGStageCapture> _gStageCaptures =
     Expando<_RenderGStageCapture>('graphx.stageCapture');
 
 /// Flutter-hosted snapshot helpers for a [GStage].
 ///
-/// Captures the final GraphxView composition: behind portals, GraphX content,
-/// and front portals. [area] uses stage/GraphxView-local logical coordinates.
+/// Captures the final GraphXView composition: behind portals, GraphX content,
+/// and front portals. [area] uses stage/GraphXView-local logical coordinates.
 extension GStageSnapshot on GStage {
-  /// Captures the final GraphxView composition into an owned [GTexture].
+  /// Captures the final GraphXView composition into an owned [GTexture].
   ///
   /// [area] selects stage-local source pixels. [transform], when supplied,
   /// maps stage coordinates into snapshot coordinates; useful for compensating
@@ -24,7 +24,7 @@ extension GStageSnapshot on GStage {
     final capture = _gStageCaptures[this];
     if (capture == null || !capture.attached) {
       throw StateError(
-        'GStage.snapshot() requires this stage to be attached to GraphxView.',
+        'GStage.snapshot() requires this stage to be attached to GraphXView.',
       );
     }
     return capture.capture(area, transform, scale);
@@ -95,7 +95,7 @@ final class _RenderGStageCapture extends RenderProxyBox {
       }
       if (!captureLayer.supportsRasterization()) {
         throw StateError(
-          'GraphxView contains non-rasterizable layers (for example a platform '
+          'GraphXView contains non-rasterizable layers (for example a platform '
           'view) and cannot be snapshotted.',
         );
       }
@@ -193,7 +193,7 @@ final class _RenderGStageCapture extends RenderProxyBox {
     final width = size.width;
     final height = size.height;
     if (width <= 0.0 || height <= 0.0) {
-      throw StateError('GraphxView must complete layout before snapshot().');
+      throw StateError('GraphXView must complete layout before snapshot().');
     }
     if (area == null) return GRect(0.0, 0.0, width, height);
     if (!area.x.isFinite ||
@@ -210,7 +210,7 @@ final class _RenderGStageCapture extends RenderProxyBox {
     final right = math.min(width, area.x + area.w);
     final bottom = math.min(height, area.y + area.h);
     if (right <= left || bottom <= top) {
-      throw ArgumentError.value(area, 'area', 'Does not intersect GraphxView.');
+      throw ArgumentError.value(area, 'area', 'Does not intersect GraphXView.');
     }
     return GRect(left, top, right - left, bottom - top);
   }

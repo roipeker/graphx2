@@ -22,7 +22,7 @@ void main() {
         child: SizedBox(
           width: 240,
           height: 120,
-          child: GraphxView(key: key, root: () => root),
+          child: GraphXView(key: key, root: () => root),
         ),
       ),
     );

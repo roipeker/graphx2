@@ -92,8 +92,8 @@ void main() {
     expect(scene.nodeCount, 1);
 
     stage.setViewport(100, 100);
-    final parent = root.addChild(GNode('parent'));
-    final child = parent.addChild(GNode('child'));
+    final parent = root.addChild(GNode(name: 'parent'));
+    final child = parent.addChild(GNode(name: 'child'));
     expect(scene.nodeCount, 3);
 
     parent.removeChild(child);

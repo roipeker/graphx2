@@ -21,7 +21,7 @@ Future<void> main() async {
         child: SizedBox(
           width: 160,
           height: 90,
-          child: GraphxView(root: _buildRoot),
+          child: GraphXView(root: _buildRoot),
         ),
       ),
     ),
@@ -112,13 +112,13 @@ Future<void> main() async {
     await service?.dispose();
   }
 
-  print('SATECHI_BENCHMARK_COMPLETE');
+  print('GRAPHX_BENCHMARK_COMPLETE');
   exit(0);
 }
 
 GRoot _buildRoot() {
   final root = GRoot()..name = 'inspector-capture-root';
-  final target = root.addChild(GShape('capture-target'));
+  final target = root.addChild(GShape(name: 'capture-target'));
   target
     ..setPosition(40, 20)
     ..graphics.beginFill(const Color(0xff66ccff))

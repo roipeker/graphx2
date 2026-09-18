@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flash-style direct pointer following for scene nodes.
 ///
@@ -67,7 +67,7 @@ extension GNodeDrag on GNode {
   bool get isDragging => _pointer?._dragBinding?.isActive ?? false;
 }
 
-final class _GNodeDragBinding implements Disposable {
+final class _GNodeDragBinding implements _GDisposable {
   _GNodeDragBinding(this.node);
 
   final GNode node;

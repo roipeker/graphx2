@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Format-agnostic collection of named texture views.
 ///
@@ -7,7 +7,7 @@ part of 'package:graphx/graphx.dart';
 /// metadata. The atlas supports multiple backing pages and can derive simple
 /// timed [GTextureSequence] values without introducing packer-specific
 /// conventions.
-final class GTextureAtlas implements Disposable {
+final class GTextureAtlas implements _GDisposable {
   GTextureAtlas({
     Iterable<GTexture> pages = const <GTexture>[],
     Map<String, GTexture> textures = const <String, GTexture>{},

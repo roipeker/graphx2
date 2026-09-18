@@ -8,8 +8,8 @@ void main() {
     (tester) async {
       final handle = tester.ensureSemantics();
       final root = GRoot();
-      final left = root.addChild(GNode('left'))..setPosition(20, 30);
-      final right = root.addChild(GNode('right'))..setPosition(160, 70);
+      final left = root.addChild(GNode(name: 'left'))..setPosition(20, 30);
+      final right = root.addChild(GNode(name: 'right'))..setPosition(160, 70);
       final control = left.addChild(_BoxNode('control'))..setPosition(10, 15);
       control.semantics
         ..label = 'Retained control'
@@ -20,7 +20,7 @@ void main() {
           home: SizedBox(
             width: 400,
             height: 300,
-            child: GraphxView(root: () => root),
+            child: GraphXView(root: () => root),
           ),
         ),
       );
@@ -58,7 +58,7 @@ void main() {
 }
 
 final class _BoxNode extends GNode {
-  _BoxNode(String name) : super(name);
+  _BoxNode(String name) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.setXYWH(0, 0, 40, 24);

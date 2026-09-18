@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 abstract final class _GEnvironmentAspect {
   static const textScaler = 1 << 0;

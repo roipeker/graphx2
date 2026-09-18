@@ -72,7 +72,7 @@ void main() {
   test('arbitrary subtree reparent invalidates package defaults consumers', () {
     final red = _ThemeScope(uiToken: 1);
     final blue = _ThemeScope(uiToken: 2);
-    final branch = GNode('branch');
+    final branch = GNode(name: 'branch');
     final consumer = branch.addChild(_DefaultsConsumer());
 
     red.addChild(branch);

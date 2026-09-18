@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Fast visibility mask shared by render views and retained render groups.
 ///
@@ -118,7 +118,7 @@ final class GRenderView {
 ///
 /// Creating this facade is the opt-in boundary. Ordinary stages allocate no
 /// list and continue through the existing identity render path.
-final class GStageRenderViews implements Disposable {
+final class GStageRenderViews implements _GDisposable {
   GStageRenderViews._(this._stage) {
     _disposeSub = _stage.signals.onDispose.add(dispose, key: this);
   }
@@ -247,9 +247,8 @@ extension GStageRenderViewsExtension on GStage {
 /// bitwise AND and no descendant traversal. Use nested groups for coarse render
 /// layers; ordinary [GNode] instances carry no render-mask storage.
 final class GRenderGroup extends GNode {
-  GRenderGroup({GRenderMask mask = GRenderMask.all, String? name})
-    : _renderMask = mask,
-      super(name);
+  GRenderGroup({GRenderMask mask = GRenderMask.all, super.name})
+    : _renderMask = mask;
 
   GRenderMask _renderMask;
 

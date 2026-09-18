@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 mixin _GStageUpdate {
   final _updaters = <GStageUpdatable?>[];
@@ -82,7 +82,7 @@ mixin _GStageStats {
   }
 }
 
-final class GStageSignals implements Disposable {
+final class GStageSignals implements _GDisposable {
   GStageSignals._({required this.updateListenersChanged});
 
   final Function(int) updateListenersChanged;

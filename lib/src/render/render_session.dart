@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Reusable offscreen rendering surface for one logical output size.
 ///
@@ -9,7 +9,7 @@ part of 'package:graphx/graphx.dart';
 /// [scale] is backing-image pixels per logical GraphX unit. The rendered
 /// texture always covers [width] × [height] logical units. [originX]/[originY]
 /// select which node-local coordinate maps to the output's top-left corner.
-final class GRenderSession implements Disposable {
+final class GRenderSession implements _GDisposable {
   GRenderSession({
     required double width,
     required double height,

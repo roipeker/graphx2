@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter's [TextStyle], with a GraphX name to make your life easier, Mr developer.
 typedef GTextStyle = TextStyle;

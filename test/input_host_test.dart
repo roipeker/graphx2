@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 void main() {
   test('external host pointer ingress uses the canonical input pipeline', () {

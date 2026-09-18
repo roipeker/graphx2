@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained raster-cache controls for one node subtree.
 ///
@@ -7,7 +7,7 @@ part of 'package:graphx/graphx.dart';
 /// node is hosted. Detached preparation uses a neutral 1x automatic scale until
 /// the node is attached. Set [scale] to a positive value to pin the backing
 /// resolution explicitly.
-final class GNodeCache implements Disposable {
+final class GNodeCache implements _GDisposable {
   GNodeCache._(this._node);
 
   static const _autoMaxPixels = 4 * 1024 * 1024;

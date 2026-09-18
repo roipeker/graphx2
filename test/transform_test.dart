@@ -50,7 +50,7 @@ void main() {
     test('node-space delta conversion applies rotation scale and skew', () {
       final root = GRoot();
       final source = root.addChild(GNode())
-        ..rotation = Math.halfPi
+        ..rotation = GMath.halfPi
         ..setScale(2, 3);
       final target = root.addChild(GNode())..setScale(4, 6);
       final stage = GStage(root)

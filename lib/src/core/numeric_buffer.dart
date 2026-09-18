@@ -1,4 +1,4 @@
-part of '../../graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Private retained Float32 storage used by high-count core primitives.
 /// Growth is explicit; callers own geometric growth policy.

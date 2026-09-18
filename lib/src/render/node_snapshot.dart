@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Raster snapshot helpers for one GraphX node subtree.
 extension GNodeSnapshot on GNode {

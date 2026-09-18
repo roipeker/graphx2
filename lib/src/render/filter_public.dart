@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Public filter ownership/introspection needed by plugin packages.
 extension GFilterOwnership on GFilter {

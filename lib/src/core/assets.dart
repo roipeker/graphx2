@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 typedef GAssetLoader<T extends Object> = Future<T> Function();
 
@@ -17,7 +17,7 @@ final class _GAssetEntry {
 }
 
 /// Shared asset store/cache for GraphX runtimes and format packages.
-final class GAssets implements Disposable {
+final class GAssets implements _GDisposable {
   GAssets({GAssetUrlLoader? urlLoader}) : _urlLoader = urlLoader;
 
   final Map<Object, _GAssetEntry> _entries = <Object, _GAssetEntry>{};
@@ -470,7 +470,7 @@ final class GAssets implements Disposable {
   }
 
   static void _disposeValue(Object value) {
-    if (value is Disposable && !value.isDisposed) value.dispose();
+    if (value is _GDisposable && !value.isDisposed) value.dispose();
   }
 
   @override

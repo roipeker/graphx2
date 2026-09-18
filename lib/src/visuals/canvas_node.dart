@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 typedef GCanvasPainter = void Function(GRenderContext context);
 

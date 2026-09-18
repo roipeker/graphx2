@@ -15,7 +15,7 @@ void main() {
         home: SizedBox(
           width: 400,
           height: 300,
-          child: GraphxView.scene((root) {
+          child: GraphXView.scene((root) {
             final group = root.addChild(
               GNode()
                 ..x = 30
@@ -74,7 +74,7 @@ void main() {
         home: SizedBox(
           width: 400,
           height: 300,
-          child: GraphxView.scene((root) {
+          child: GraphXView.scene((root) {
             portal = root.addChild(
               GPortal(
                   child: const SizedBox(key: childKey, width: 137, height: 43),
@@ -105,7 +105,7 @@ void main() {
         home: SizedBox(
           width: 400,
           height: 300,
-          child: GraphxView.scene((root) {
+          child: GraphXView.scene((root) {
             portal = root.addChild(
               GPortal(
                 width: 180,
@@ -133,7 +133,7 @@ void main() {
         home: SizedBox(
           width: 400,
           height: 300,
-          child: GraphxView.scene((root) {
+          child: GraphXView.scene((root) {
             portal = root.addChild(
               GPortal<int>.builder(
                 value: 1,
@@ -173,7 +173,7 @@ void main() {
             home: SizedBox(
               width: 400,
               height: 300,
-              child: GraphxView.scene(
+              child: GraphXView.scene(
                 (root) {
                   portal = root.addChild(
                     GPortal(
@@ -187,7 +187,7 @@ void main() {
                       ..y = 50,
                   );
                 },
-                config: GraphxConfig.sceneDefaults.copyWith(
+                config: GraphXConfig.sceneDefaults.copyWith(
                   hitTestBehavior: GHitTestBehavior.content,
                 ),
               ),
@@ -221,7 +221,7 @@ void main() {
         home: SizedBox(
           width: 400,
           height: 300,
-          child: GraphxView.scene(
+          child: GraphXView.scene(
             (root) {
               portal = root.addChild(
                 GPortal(
@@ -237,7 +237,7 @@ void main() {
                   ..y = 20,
               );
             },
-            config: GraphxConfig.sceneDefaults.copyWith(
+            config: GraphXConfig.sceneDefaults.copyWith(
               hitTestBehavior: GHitTestBehavior.content,
             ),
           ),

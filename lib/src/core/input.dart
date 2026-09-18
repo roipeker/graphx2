@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 // ================================
 //   POINTER
@@ -20,7 +20,7 @@ enum GPointerDeviceKind {
 enum GPointerScrollSource { wheel, continuous }
 
 /// This event is used for GraphX stage signal exit/enter.
-/// when pointer enters/leaves into the GraphxView area.
+/// when pointer enters/leaves into the GraphXView area.
 final class GPointerBoundaryEvent {
   const GPointerBoundaryEvent({
     required this.type,
@@ -240,7 +240,7 @@ final class GPointerPanZoomState {
   }
 }
 
-class GPointerManager implements Disposable {
+class GPointerManager implements _GDisposable {
   GPointerManager._(this._input);
 
   //==========================================
@@ -766,7 +766,7 @@ final class GKeyEvent {
 
 typedef GKey = LogicalKeyboardKey;
 
-final class GKeyboardManager implements Disposable {
+final class GKeyboardManager implements _GDisposable {
   GKeyboardManager._(this._input);
 
   final GInput _input;
@@ -791,7 +791,7 @@ final class GKeyboardManager implements Disposable {
   GSignal<GKeyEvent> get onUp => (_up ??= GSignal<GKeyEvent>());
 
   /// Emitted after held-key state is cleared without ordinary key-up events,
-  /// for example when GraphxView loses Flutter focus or Stage input is disabled.
+  /// for example when GraphXView loses Flutter focus or Stage input is disabled.
   ///
   /// The manager itself is emitted to avoid allocating a reset event object.
   GSignal<GKeyboardManager> get onReset =>
@@ -858,7 +858,7 @@ final class GKeyboardManager implements Disposable {
   }
 }
 
-final class GInput implements Disposable {
+final class GInput implements _GDisposable {
   final GStage _stage;
   late final GPointerManager pointer;
   late final GKeyboardManager keyboard;

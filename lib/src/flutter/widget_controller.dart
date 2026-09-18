@@ -1,6 +1,6 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-class GraphxController<T extends GRoot> {
+class GraphXController<T extends GRoot> {
   T? _root;
 
   bool get isAttached => _root != null;
@@ -11,7 +11,7 @@ class GraphxController<T extends GRoot> {
 
   void _attachRoot(GRoot root) {
     if (root is! T) {
-      throw StateError('GraphxController<$T> cannot bind ${root.runtimeType}.');
+      throw StateError('GraphXController<$T> cannot bind ${root.runtimeType}.');
     }
     _root = root;
   }
@@ -38,7 +38,7 @@ final class GFlutterSync<T> {
     final value = this.value;
     if (value is J) return value;
     throw StateError(
-      'GraphxView supplied ${value.runtimeType}, but $J was requested.',
+      'GraphXView supplied ${value.runtimeType}, but $J was requested.',
     );
   }
 }

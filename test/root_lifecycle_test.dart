@@ -116,9 +116,9 @@ void main() {
   });
 
   testWidgets(
-    'GraphxView syncs inherited widgets and value after root attachment',
+    'GraphXView syncs inherited widgets and value after root attachment',
     (tester) async {
-      final controller = GraphxController<_LifecycleRoot>();
+      final controller = GraphXController<_LifecycleRoot>();
 
       Widget build(int marker, String value) => Directionality(
         textDirection: TextDirection.ltr,
@@ -129,7 +129,7 @@ void main() {
             child: SizedBox(
               width: 320,
               height: 240,
-              child: GraphxView(
+              child: GraphXView(
                 root: _LifecycleRoot.new,
                 controller: controller,
                 value: value,
@@ -160,7 +160,7 @@ void main() {
     },
   );
 
-  testWidgets('GraphxView.scene starts with a usable viewport', (tester) async {
+  testWidgets('GraphXView.scene starts with a usable viewport', (tester) async {
     var calls = 0;
     var width = 0.0;
     var height = 0.0;
@@ -173,7 +173,7 @@ void main() {
           child: SizedBox(
             width: 280,
             height: 180,
-            child: GraphxView.scene((root) {
+            child: GraphXView.scene((root) {
               calls++;
               width = root.stage.width;
               height = root.stage.height;

@@ -10,9 +10,9 @@ void main() {
       stage.mount();
       stage.setViewport(400, 300);
 
-      final a = root.addChild(GNode('a'))..x = 10;
-      final b = root.addChild(GNode('b'))..x = 100;
-      final child = a.addChild(GNode('child'))..x = 5;
+      final a = root.addChild(GNode(name: 'a'))..x = 10;
+      final b = root.addChild(GNode(name: 'b'))..x = 100;
+      final child = a.addChild(GNode(name: 'child'))..x = 5;
       child.addChild(_Box(20, 10)).x = 2;
       final grandchild = child.addChild(_Box(4, 4))..x = 30;
 

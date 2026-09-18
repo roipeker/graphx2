@@ -1,16 +1,16 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-enum GraphxReloadMode { retain, restart }
+enum GraphXReloadMode { retain, restart }
 
-/// Defines how an input-enabled GraphxView participates in Flutter hit testing.
+/// Defines how an input-enabled GraphXView participates in Flutter hit testing.
 ///
-/// [opaque] claims the full GraphxView viewport.
+/// [opaque] claims the full GraphXView viewport.
 /// [content] claims only positions that resolve to an interactive GraphX node.
 enum GHitTestBehavior { opaque, content }
 
-final class GraphxConfig {
-  const GraphxConfig({
-    this.reloadMode = GraphxReloadMode.retain,
+final class GraphXConfig {
+  const GraphXConfig({
+    this.reloadMode = GraphXReloadMode.retain,
     this.repaintBoundary = true,
     this.maxDelta = 1.0 / 15.0,
     this.pointer = true,
@@ -20,14 +20,14 @@ final class GraphxConfig {
   });
 
   // recommended for class based roots
-  static const defaults = GraphxConfig();
+  static const defaults = GraphXConfig();
 
   // recommended for callback scenes
-  static const sceneDefaults = GraphxConfig(
-    reloadMode: GraphxReloadMode.restart,
+  static const sceneDefaults = GraphXConfig(
+    reloadMode: GraphXReloadMode.restart,
   );
 
-  final GraphxReloadMode reloadMode;
+  final GraphXReloadMode reloadMode;
   final bool repaintBoundary;
   final double maxDelta;
 
@@ -36,13 +36,13 @@ final class GraphxConfig {
   final bool keyboard;
 
   // request Flutter focus when surface is attached.
-  // should remain `false` for GraphxView usage in lists, forms, dialogs
+  // should remain `false` for GraphXView usage in lists, forms, dialogs
   final bool autofocus;
 
   bool get inputEnabled => pointer || keyboard;
 
-  GraphxConfig copyWith({
-    GraphxReloadMode? reloadMode,
+  GraphXConfig copyWith({
+    GraphXReloadMode? reloadMode,
     bool? repaintBoundary,
     double? maxDelta,
     bool? pointer,
@@ -50,7 +50,7 @@ final class GraphxConfig {
     bool? keyboard,
     bool? autofocus,
   }) {
-    return GraphxConfig(
+    return GraphXConfig(
       reloadMode: reloadMode ?? this.reloadMode,
       repaintBoundary: repaintBoundary ?? this.repaintBoundary,
       maxDelta: maxDelta ?? this.maxDelta,

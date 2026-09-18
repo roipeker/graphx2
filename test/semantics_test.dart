@@ -4,7 +4,7 @@ import 'package:graphx/graphx.dart';
 void main() {
   group('semantics', () {
     test('semantic state is lazy and annotation stays opt-in', () {
-      final node = GNode('node');
+      final node = GNode(name: 'node');
 
       expect(node.hasSemantics, isFalse);
       final semantics = node.semantics;
@@ -35,7 +35,7 @@ void main() {
     });
 
     test('merge and exclude descendant policies are mutually exclusive', () {
-      final semantics = GNode('node').semantics;
+      final semantics = GNode(name: 'node').semantics;
 
       semantics.mergeDescendants = true;
       expect(semantics.mergeDescendants, isTrue);
@@ -55,7 +55,7 @@ void main() {
       () {
         final root = GRoot();
         final focused = root.addChild(_BoxNode('focused')..focusable = true);
-        final parent = root.addChild(GNode('parent'));
+        final parent = root.addChild(GNode(name: 'parent'));
         final target = parent.addChild(_BoxNode('target'));
         final stage = _mount(root);
         final route = <String>[];
@@ -118,7 +118,7 @@ GStage _mount(GRoot root) {
 }
 
 final class _BoxNode extends GNode {
-  _BoxNode(String name) : super(name);
+  _BoxNode(String name) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.setXYWH(0, 0, 20, 20);

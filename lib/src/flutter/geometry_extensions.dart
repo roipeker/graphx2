@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter/dart:ui interop for GraphX geometry primitives.
 extension GPointFlutterGeometry on GPoint {

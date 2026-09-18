@@ -78,9 +78,9 @@ Future<void> _pump(WidgetTester tester, void Function(_Root root) build) async {
         child: SizedBox(
           width: 160,
           height: 120,
-          child: GraphxView(
+          child: GraphXView(
             root: () => _Root(build),
-            config: const GraphxConfig(
+            config: const GraphXConfig(
               hitTestBehavior: GHitTestBehavior.content,
             ),
           ),

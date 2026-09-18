@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Container that skips direct child subtrees outside the current render viewport.
 ///
@@ -13,7 +13,7 @@ part of 'package:graphx/graphx.dart';
 /// rectangle without walking descendants to derive their effect bounds. Keep it
 /// large enough to contain every rendered descendant, including child effects.
 final class GViewportGroup extends GNode {
-  GViewportGroup([this.cullBounds, String? name]) : super(name);
+  GViewportGroup({this.cullBounds, super.name});
 
   /// Optional conservative local extent used as a fast culling hint.
   ///

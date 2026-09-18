@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Rectangular programmable visual backed by a [GShaderInstance].
 ///
@@ -10,10 +10,9 @@ final class GShaderNode extends GNode {
     this.shader, {
     double width = 0.0,
     double height = 0.0,
-    String? name,
+    super.name,
   }) : _width = width,
-       _height = height,
-       super(name) {
+       _height = height {
     if (width < 0 || height < 0 || !width.isFinite || !height.isFinite) {
       throw ArgumentError('Shader node size must be finite and non-negative.');
     }

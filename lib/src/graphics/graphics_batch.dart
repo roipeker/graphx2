@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Orientation used when stamping a [GLinePattern] along a source path.
 enum GLinePatternAlignment {

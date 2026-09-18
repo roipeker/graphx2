@@ -1,6 +1,6 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-class GRenderContext implements Disposable {
+class GRenderContext implements _GDisposable {
   late Canvas canvas;
   GStage? _stage;
   GRenderStats? _renderStats;
@@ -315,7 +315,7 @@ class GRenderContext implements Disposable {
   bool get isDisposed => _disposed;
 }
 
-class GCanvasRenderer implements Disposable {
+class GCanvasRenderer implements _GDisposable {
   final GRenderContext _context = GRenderContext();
   final Paint _layerPaint = Paint();
   final Paint _maskPaint = Paint();

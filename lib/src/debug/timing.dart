@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Monotonic clock shared by runtime diagnostics.
 final Stopwatch _runtimeClock = Stopwatch()..start();

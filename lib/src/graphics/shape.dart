@@ -1,8 +1,8 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Retained vector visual backed by [GGraphics].
 final class GShape extends GNode {
-  GShape([super.name]) {
+  GShape({super.name}) {
     graphics = GGraphics._(_onGraphicsGeometryChanged, _onGraphicsPaintChanged);
     setPaintSelf(true);
   }

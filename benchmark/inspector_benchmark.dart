@@ -15,7 +15,7 @@ const int _nodeCount = 100000;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI INSPECTOR RPC + SCALE');
+  print('GRAPHX INSPECTOR RPC + SCALE');
   print('$_nodeCount retained nodes · real VM-service extension calls');
 
   final root = GRoot()..name = 'inspector-scale-root';
@@ -25,12 +25,12 @@ Future<void> main() async {
   probe.filters = <GFilter>[GBlurFilter(blurX: 3, blurY: 5)];
   probe.cache;
 
-  final holder = GNode('holder');
+  final holder = GNode(name: 'holder');
   root
     ..addChild(probe)
     ..addChild(holder);
   for (var i = 2; i < _nodeCount; ++i) {
-    root.addChild(GNode('node-$i'));
+    root.addChild(GNode(name: 'node-$i'));
   }
 
   final stage = GStage(root)
@@ -248,7 +248,7 @@ Future<void> main() async {
     stage.dispose();
   }
 
-  print('SATECHI_BENCHMARK_COMPLETE');
+  print('GRAPHX_BENCHMARK_COMPLETE');
   exit(0);
 }
 
@@ -273,7 +273,7 @@ void _check(bool condition, String message) {
 }
 
 final class _ProbeNode extends GNode {
-  _ProbeNode([super.name]);
+  _ProbeNode([String? name]) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.set(0, 0, 10, 10);

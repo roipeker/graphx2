@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 const _width = 1280.0;
 const _height = 720.0;
@@ -34,7 +35,7 @@ void _paintAccent(GRenderContext context) {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI EXTERNAL HOST BRIDGE SUITE');
+  print('GRAPHX EXTERNAL HOST BRIDGE SUITE');
   print('isolates host→GNode transform sync and retained render cost');
   print('all values are p50 / p95; lower is better');
   print('direct Canvas is a lower-bound custom-render baseline, not Flame FCS');
@@ -44,7 +45,7 @@ Future<void> main() async {
     await _run(count);
   }
 
-  print('SATECHI_BENCHMARK_COMPLETE');
+  print('GRAPHX_BENCHMARK_COMPLETE');
   exit(0);
 }
 
@@ -235,7 +236,7 @@ final class _SimpleGraphXVisuals implements _GraphXVisuals {
 final class _RichGraphXVisuals implements _GraphXVisuals {
   _RichGraphXVisuals(int count) {
     for (var i = 0; i < count; ++i) {
-      final group = root.addChild(GNode('visual-$i'));
+      final group = root.addChild(GNode(name: 'visual-$i'));
       group.addChild(GCanvasNode(_paintBody));
       group.addChild(GCanvasNode(_paintAccent)..x = 4);
       group.addChild(GCanvasNode(_paintAccent)..x = -4);

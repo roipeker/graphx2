@@ -11,7 +11,7 @@ void main() {
   test(
     'render session renders detached trees into a fixed logical surface',
     () async {
-      final root = GNode('detached')
+      final root = GNode(name: 'detached')
         ..x = 500
         ..y = 300;
       root.addChild(GShape()).graphics
@@ -115,7 +115,7 @@ void main() {
     'stage can drive an unhosted simulation rendered by a session',
     () async {
       final root = _SimulationRoot();
-      final stage = GStage(root, 1.0, false)
+      final stage = GStage(root, maxDelta: 1.0, inputEnabled: false)
         ..mount()
         ..setViewport(64, 48, devicePixelRatio: 2);
 
@@ -165,8 +165,8 @@ void main() {
   test(
     'detached render lock prevents moving a rendered node to another tree',
     () async {
-      final destination = GNode('destination');
-      final root = GNode('source');
+      final destination = GNode(name: 'destination');
+      final root = GNode(name: 'source');
       final node = root.addChild(_RenderReparentingNode(destination));
       final session = GRenderSession(width: 16, height: 16);
 

@@ -1,12 +1,12 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-typedef GraphxSceneBuilder = void Function(GRoot root);
+typedef GraphXSceneBuilder = void Function(GRoot root);
 
 /// Small root facade for callback prototype scenes.
 final class GCallbackRoot extends GRoot {
   GCallbackRoot(this.builder);
 
-  final GraphxSceneBuilder builder;
+  final GraphXSceneBuilder builder;
 
   @override
   void attached() {

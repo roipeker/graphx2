@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 const _ringCount = 64;
 const _sides = 10;
@@ -22,7 +23,7 @@ const _dt = 1 / 60;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI ANIMATED GRAPHICS SUITE');
+  print('GRAPHX ANIMATED GRAPHICS SUITE');
   print(
     '64 retained vector rings · iPhone-sized viewport · DPR 3 raster probe',
   );
@@ -38,7 +39,7 @@ Future<void> main() async {
   await _measure('packed line batch', batched);
   batched.dispose();
 
-  print('SATECHI_BENCHMARK_COMPLETE');
+  print('GRAPHX_BENCHMARK_COMPLETE');
   exit(0);
 }
 
@@ -138,7 +139,7 @@ abstract interface class _Scenario {
 final class _RetainedRings implements _Scenario {
   _RetainedRings() {
     for (var i = 0; i < _ringCount; ++i) {
-      final ring = root.addChild(GShape('ring-$i'));
+      final ring = root.addChild(GShape(name: 'ring-$i'));
       ring.graphics
         ..lineStyle(
           i.isEven ? 1.2 : .8,

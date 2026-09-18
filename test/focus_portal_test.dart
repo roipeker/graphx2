@@ -11,7 +11,7 @@ void main() {
       final portalFirst = FocusNode(debugLabel: 'portal-first');
       final portalSecond = FocusNode(debugLabel: 'portal-second');
       final outerAfter = FocusNode(debugLabel: 'outer-after');
-      final controller = GraphxController<_PortalFocusRoot>();
+      final controller = GraphXController<_PortalFocusRoot>();
 
       await tester.pumpWidget(
         MaterialApp(
@@ -22,7 +22,7 @@ void main() {
                 SizedBox(
                   width: 320,
                   height: 220,
-                  child: GraphxView(
+                  child: GraphXView(
                     controller: controller,
                     root: () => _PortalFocusRoot(portalFirst, portalSecond),
                   ),
@@ -94,14 +94,14 @@ void main() {
     (tester) async {
       final portalFirst = FocusNode(debugLabel: 'portal-button-first');
       final portalSecond = FocusNode(debugLabel: 'portal-button-second');
-      final controller = GraphxController<_PortalButtonFocusRoot>();
+      final controller = GraphXController<_PortalButtonFocusRoot>();
 
       await tester.pumpWidget(
         MaterialApp(
           home: SizedBox(
             width: 420,
             height: 240,
-            child: GraphxView(
+            child: GraphXView(
               controller: controller,
               root: () => _PortalButtonFocusRoot(portalFirst, portalSecond),
             ),
@@ -163,14 +163,14 @@ void main() {
   ) async {
     final portalFirst = FocusNode(debugLabel: 'portal-first');
     final portalSecond = FocusNode(debugLabel: 'portal-second');
-    final controller = GraphxController<_PortalFocusRoot>();
+    final controller = GraphXController<_PortalFocusRoot>();
 
     await tester.pumpWidget(
       MaterialApp(
         home: SizedBox(
           width: 320,
           height: 220,
-          child: GraphxView(
+          child: GraphXView(
             controller: controller,
             root: () => _PortalFocusRoot(portalFirst, portalSecond),
           ),
@@ -203,21 +203,21 @@ void main() {
     portalSecond.dispose();
   });
 
-  testWidgets('GraphxView autofocus adopts first logical GraphX focus', (
+  testWidgets('GraphXView autofocus adopts first logical GraphX focus', (
     tester,
   ) async {
     final portalFirst = FocusNode(debugLabel: 'portal-first');
     final portalSecond = FocusNode(debugLabel: 'portal-second');
-    final controller = GraphxController<_PortalFocusRoot>();
+    final controller = GraphXController<_PortalFocusRoot>();
 
     await tester.pumpWidget(
       MaterialApp(
         home: SizedBox(
           width: 320,
           height: 220,
-          child: GraphxView(
+          child: GraphXView(
             controller: controller,
-            config: const GraphxConfig(autofocus: true),
+            config: const GraphXConfig(autofocus: true),
             root: () => _PortalFocusRoot(portalFirst, portalSecond),
           ),
         ),
@@ -325,7 +325,7 @@ final class _PortalButtonFocusRoot extends GRoot {
 }
 
 final class _FocusBox extends GNode {
-  _FocusBox(String name) : super(name);
+  _FocusBox(String name) : super(name: name);
 
   @override
   void computeSelfBounds(GBounds out) => out.setXYWH(0, 0, 40, 40);

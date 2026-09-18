@@ -6,3 +6,7 @@
 - Preserved the retained scene, rendering, input, focus, semantics, portal, Flutter-hosting, compositing, diagnostics, tests, and benchmarks baseline.
 - Removed Dart-workspace coupling and internalized the numeric buffer used by image batching.
 - Kept the project local-only while the public API and release baseline are stabilized.
+- Defined explicit application, extension-author, and debug entrypoints instead of exposing every implementation declaration.
+- Standardized GraphX brand casing across public types.
+- Made GNode identity metadata named (`GNode(name: ...)`) and applied the same rule to node subclasses.
+- Made GStage configuration named while keeping its root as the positional payload.

@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Scene node that plays and renders a [GTextureSequence].
 final class GAnimatedImage extends GNode {

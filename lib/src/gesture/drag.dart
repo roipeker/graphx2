@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Single-pointer drag recognizer.
 ///
@@ -9,7 +9,7 @@ part of 'package:graphx/graphx.dart';
 ///
 /// [GDragEvent] instances are reused during dispatch. Copy values that must be
 /// retained after a callback returns.
-final class GDrag implements Disposable {
+final class GDrag implements _GDisposable {
   GDrag(this.node, {this.slop = _kGestureSlop}) {
     if (node.isDisposed) {
       throw StateError('Cannot attach GDrag to a disposed node.');

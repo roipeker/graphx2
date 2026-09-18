@@ -1,6 +1,6 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-abstract class Disposable {
+abstract class _GDisposable {
   bool get isDisposed;
   void dispose();
 }
@@ -22,8 +22,8 @@ final class _GDetachedRenderLock {
 }
 
 @pragma('track-creation-locations')
-class GNode with GNodeTransform, GStageUpdatable implements Disposable {
-  GNode([this.name]);
+class GNode with GNodeTransform, GStageUpdatable implements _GDisposable {
+  GNode({this.name});
 
   String? name;
 
@@ -629,7 +629,7 @@ class GNode with GNodeTransform, GStageUpdatable implements Disposable {
   void detached() {}
 }
 
-final class GNodeSignals implements Disposable {
+final class GNodeSignals implements _GDisposable {
   GSignal0? _attached;
   GSignal0? _detached;
   GSignal0? _dispose;

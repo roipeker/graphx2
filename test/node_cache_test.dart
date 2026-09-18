@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,7 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(320, 240, devicePixelRatio: 2);
-      final group = root.addChild(GNode('cached'));
+      final group = root.addChild(GNode(name: 'cached'));
       final shape = group.addChild(GShape());
       shape.graphics
         ..beginFill(const ui.Color(0xffffffff))
@@ -47,7 +48,7 @@ void main() {
   );
 
   test('fixed-scale cache can be prepared before Stage attachment', () async {
-    final group = GNode('detached-cached');
+    final group = GNode(name: 'detached-cached');
     group.addChild(GShape()).graphics
       ..beginFill(const ui.Color(0xff59d9d0))
       ..drawRect(0, 0, 40, 30)
@@ -92,7 +93,7 @@ void main() {
   test(
     'detached automatic cache starts at 1x and promotes after attachment',
     () async {
-      final group = GNode('detached-auto')
+      final group = GNode(name: 'detached-auto')
         ..scaleX = 1.5
         ..scaleY = 1.5;
       group.addChild(GShape()).graphics
@@ -132,7 +133,7 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(320, 240);
-      final group = root.addChild(GNode('cached'));
+      final group = root.addChild(GNode(name: 'cached'));
       final shape = group.addChild(GShape());
       shape.graphics
         ..beginFill(const ui.Color(0xffffffff))
@@ -171,8 +172,8 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(320, 240);
-      final outer = root.addChild(GNode('outer'));
-      final inner = outer.addChild(GNode('inner'));
+      final outer = root.addChild(GNode(name: 'outer'));
+      final inner = outer.addChild(GNode(name: 'inner'));
       final shape = inner.addChild(GShape());
       shape.graphics
         ..beginFill(const ui.Color(0xff59d9d0))
@@ -212,7 +213,7 @@ void main() {
       final stage = GStage(root)
         ..mount()
         ..setViewport(320, 240, devicePixelRatio: 2);
-      final group = root.addChild(GNode('cached'))
+      final group = root.addChild(GNode(name: 'cached'))
         ..scaleX = 1.5
         ..scaleY = 1.5;
       group.addChild(GShape()).graphics
@@ -237,7 +238,7 @@ void main() {
     final stage = GStage(root)
       ..mount()
       ..setViewport(320, 240);
-    final group = root.addChild(GNode('filtered'));
+    final group = root.addChild(GNode(name: 'filtered'));
     group.addChild(GShape()).graphics
       ..beginFill(const ui.Color(0xffffffff))
       ..drawRect(0, 0, 40, 30)
@@ -274,7 +275,7 @@ void main() {
           ..drawRect(0, 0, 64, 64)
           ..endFill();
 
-        final target = root.addChild(GNode('blend'))..blendMode = blend;
+        final target = root.addChild(GNode(name: 'blend'))..blendMode = blend;
         target.addChild(GShape()).graphics
           ..beginFill(const ui.Color(0xffd65a78))
           ..drawRect(8, 8, 48, 48)

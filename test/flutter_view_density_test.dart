@@ -3,13 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
 
 void main() {
-  testWidgets('GraphxView tracks the owning FlutterView density', (
+  testWidgets('GraphXView tracks the owning FlutterView density', (
     tester,
   ) async {
     addTearDown(tester.view.resetDevicePixelRatio);
     tester.view.devicePixelRatio = 2.0;
 
-    final controller = GraphxController<GRoot>();
+    final controller = GraphXController<GRoot>();
 
     await tester.pumpWidget(
       Directionality(
@@ -19,7 +19,7 @@ void main() {
           child: SizedBox(
             width: 320,
             height: 240,
-            child: GraphxView(root: GRoot.new, controller: controller),
+            child: GraphXView(root: GRoot.new, controller: controller),
           ),
         ),
       ),

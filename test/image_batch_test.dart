@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -96,7 +97,7 @@ void main() {
     expect(bounds.x2, closeTo(15, 1e-9));
     expect(bounds.y2, closeTo(11, 1e-9));
 
-    instance.setTransform(x: 5, y: 7, rotation: Math.halfPi, scale: 2);
+    instance.setTransform(x: 5, y: 7, rotation: GMath.halfPi, scale: 2);
     bounds = batch.localBounds;
     expect(bounds.x1, closeTo(-3, 1e-8));
     expect(bounds.y1, closeTo(7, 1e-8));

@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Gradient families supported by [GGraphics.beginGradientFill].
 enum GGradientType { linear, radial, sweep }

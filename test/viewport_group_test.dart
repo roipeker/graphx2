@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -85,7 +86,7 @@ void main() {
       final root = GRoot();
       final world = root.addChild(GViewportGroup());
       final sector = world.addChild(
-        GViewportGroup(GRect(0, 0, 100, 100), 'sector'),
+        GViewportGroup(cullBounds: GRect(0, 0, 100, 100), name: 'sector'),
       )..setPosition(500, 0);
       final child = sector.addChild(_BoundsCountingNode());
 

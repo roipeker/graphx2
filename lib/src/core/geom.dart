@@ -1,6 +1,6 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
-final class Math {
+final class GMath {
   static const e = math.e;
   static const pi = math.pi;
   static const tau = math.pi * 2.0;

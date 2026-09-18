@@ -1,7 +1,7 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Public ingress used by external Stage hosts to feed physical input into
-/// GraphX without depending on Flutter's [GraphxView] implementation.
+/// GraphX without depending on Flutter's [GraphXView] implementation.
 ///
 /// These methods intentionally live on [GInput] so hosts do not allocate or
 /// retain a parallel adapter object. Pointer coordinates are Stage-local.
@@ -9,7 +9,7 @@ extension GInputHostDispatch on GInput {
   /// Dispatches a pointer event produced by the owning host.
   ///
   /// Down/move/up/cancel/hover and scroll all use the same canonical pointer
-  /// pipeline as [GraphxView].
+  /// pipeline as [GraphXView].
   void dispatchPointer(GPointerEvent event) {
     pointer._dispatch(event);
   }
@@ -66,7 +66,7 @@ extension GInputHostDispatch on GInput {
   }
 
   /// Dispatches a raw key event and applies the Stage's semantic shortcut
-  /// bindings through the same path used by [GraphxView].
+  /// bindings through the same path used by [GraphXView].
   ///
   /// Returns whether a semantic action handled the key. Hosts can use the
   /// result to decide whether the physical event should continue propagating.

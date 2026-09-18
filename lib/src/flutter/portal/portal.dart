@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 typedef GPortalBuilder<T> = Widget Function(BuildContext context, T value);
 

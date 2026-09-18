@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Controls whether a node subtree is drawn directly or isolated first.
 enum GCompositeMode {

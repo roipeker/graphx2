@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Low-level Canvas shader accepted by [GGraphics.beginPaintShaderFill].
 typedef GPaintShader = ui.Shader;
@@ -25,7 +25,7 @@ final class GShader {
 ///
 /// Instances own the native FragmentShader and may be shared by multiple
 /// renderables when shared uniform state is intentional.
-final class GShaderInstance implements Disposable {
+final class GShaderInstance implements _GDisposable {
   GShaderInstance._(this.shader, this._native, Map<String, int> samplers)
     : _samplerIndices = samplers.isEmpty
           ? const <String, int>{}

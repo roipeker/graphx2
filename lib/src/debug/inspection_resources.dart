@@ -1,4 +1,4 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 final _GInspectorResourcesRuntime _gInspectorResourcesRuntime =
     _GInspectorResourcesRuntime();
@@ -120,7 +120,7 @@ final class _GInspectorResourcesRuntime {
       'kind': _kind(value),
       'type': value.runtimeType.toString(),
       'objectId': _gInspectorRuntime._idForObject(value),
-      'disposed': value is Disposable ? value.isDisposed : null,
+      'disposed': value is _GDisposable ? value.isDisposed : null,
       'estimatedBytes': _estimatedBytes(value),
     };
 
@@ -166,7 +166,7 @@ final class _GInspectorResourcesRuntime {
     GTexture() => 'texture',
     GTextureSequence() => 'texture-sequence',
     Uint8List() => 'bytes',
-    Disposable() => 'disposable',
+    _GDisposable() => 'disposable',
     _ => 'object',
   };
 

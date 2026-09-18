@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
+import 'package:graphx/graphx_debug.dart';
 
 const _samples = 9;
 const _warmups = 3;
@@ -12,7 +14,7 @@ double _sink = 0.0;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI FILTER SUITE');
+  print('GRAPHX FILTER SUITE');
   print(
     'Run profile: flutter run -d macos --profile benchmark/filter_benchmark.dart',
   );
@@ -156,12 +158,12 @@ _BenchScene _buildScene({
 }) {
   assert(count > 0 && groups > 0 && count % groups == 0);
   final root = GRoot();
-  final outer = root.addChild(GNode('bench-outer'));
+  final outer = root.addChild(GNode(name: 'bench-outer'));
   if (outerFilters != null) outer.filters = outerFilters;
 
   final leavesPerGroup = count ~/ groups;
   for (var g = 0; g < groups; ++g) {
-    final group = outer.addChild(GNode('group-$g'));
+    final group = outer.addChild(GNode(name: 'group-$g'));
     if (filteredGroups) group.filters = [GBlurFilter(blurX: 1.4, blurY: 1.4)];
     final start = g * leavesPerGroup;
     final end = start + leavesPerGroup;

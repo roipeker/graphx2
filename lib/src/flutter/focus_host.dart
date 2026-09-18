@@ -1,8 +1,8 @@
-part of 'package:graphx/graphx.dart';
+part of 'package:graphx/src/graphx_impl.dart';
 
 /// Flutter boundary for one GraphX focus domain.
 ///
-/// The outer Flutter tree sees GraphxView as one traversal segment. Two tiny
+/// The outer Flutter tree sees GraphXView as one traversal segment. Two tiny
 /// sentinels preserve traversal direction when entering/leaving that segment;
 /// the scene itself keeps one real Flutter focus node regardless of how many
 /// GraphX nodes are focusable.
@@ -36,10 +36,10 @@ final class _GFocusHostState extends State<_GFocusHost>
   @override
   void initState() {
     super.initState();
-    _before = FocusNode(debugLabel: 'GraphxView.before')
+    _before = FocusNode(debugLabel: 'GraphXView.before')
       ..addListener(_handleBeforeChanged);
-    _engine = FocusNode(debugLabel: 'GraphxView.engine', skipTraversal: true);
-    _after = FocusNode(debugLabel: 'GraphxView.after')
+    _engine = FocusNode(debugLabel: 'GraphXView.engine', skipTraversal: true);
+    _after = FocusNode(debugLabel: 'GraphXView.after')
       ..addListener(_handleAfterChanged);
     _bindStageFocusHost(widget.stage, this);
   }

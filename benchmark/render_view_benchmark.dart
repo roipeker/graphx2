@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 import 'package:graphx/graphx.dart';
+import 'package:graphx/graphx_extension.dart';
 
 const _nodes = 20000;
 const _samples = 15;
@@ -13,7 +14,7 @@ const _warmups = 5;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('SATECHI RENDER VIEW SUITE');
+  print('GRAPHX RENDER VIEW SUITE');
   print('20K retained nodes · profile mode · PictureRecorder render traversal');
   print('');
 
@@ -69,13 +70,13 @@ void main() {
   _report('mask all groups', grouped, nodePasses: _nodes);
   grouped.dispose();
 
-  print('SATECHI_BENCHMARK_COMPLETE');
+  print('GRAPHX_BENCHMARK_COMPLETE');
   exit(0);
 }
 
 _BenchScene _buildFlatScene(int count) {
   final root = GRoot();
-  final parent = root.addChild(GNode('flat'));
+  final parent = root.addChild(GNode(name: 'flat'));
   for (var i = 0; i < count; ++i) {
     parent.addChild(GNode());
   }

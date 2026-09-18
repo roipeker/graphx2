@@ -13,7 +13,7 @@ Future<void> main() async {
 
   final root = GRoot();
   final nodes = List<GNode>.generate(_nodeCount, (index) {
-    final node = GNode('n$index');
+    final node = GNode(name: 'n$index');
     root.addChild(node);
     return node;
   }, growable: false);
