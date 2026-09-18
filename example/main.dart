@@ -13,13 +13,11 @@ class _GraphXExample extends StatelessWidget {
     return Scaffold(
       body: GraphXView.scene((root) {
         final shape = root.addChild(GShape(name: 'card'));
-        shape.graphics
-          ..beginFill(const Color(0xff6750a4))
-          ..drawRoundRect(-90, -40, 180, 80, 20)
-          ..endFill();
-        shape
-          ..x = 180
-          ..y = 160;
+        shape.graphics.beginFill(const Color(0xff6750a4));
+        shape.graphics.drawRoundRect(-90, -40, 180, 80, 20);
+        shape.graphics.endFill();
+        shape.x = 180;
+        shape.y = 160;
       }),
     );
   }

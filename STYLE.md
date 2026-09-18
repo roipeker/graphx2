@@ -9,6 +9,12 @@ GraphX uses the standard Dart formatter. Formatting should look the same in VS C
 - Keep format-disabled regions small.
 - Dart source files start with the GraphX copyright line (`// Copyright (c) 2026 GraphX by roipeker.`).
 
+## Object access
+
+Do not use Dart cascade notation (`..` or `?..`). Keep the receiver visible on each assignment or call, even when several consecutive statements target the same object. This applies to source, tests, examples, benchmarks, and documentation.
+
+Collection spread (`...`) is not cascade notation and remains appropriate.
+
 Before committing code, normal formatting is simply:
 
 ```bash

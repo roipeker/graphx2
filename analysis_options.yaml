@@ -9,6 +9,7 @@ analyzer:
     - linux/**
   errors:
     avoid_print: ignore
+    # Legacy cascades remain; STYLE.md prohibits adding new ones.
     avoid_single_cascade_in_expression_statements: ignore
     curly_braces_in_flow_control_structures: ignore
     implicit_call_tearoffs: ignore

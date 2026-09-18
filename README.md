@@ -12,13 +12,11 @@ import 'package:graphx/graphx.dart';
 GraphXView.scene((root) {
   final ball = root.addChild(GShape(name: 'ball'));
 
-  ball.graphics
-    ..beginFill(const Color(0xffff4d4d))
-    ..drawCircle(0, 0, 40);
+  ball.graphics.beginFill(const Color(0xffff4d4d));
+  ball.graphics.drawCircle(0, 0, 40);
 
-  ball
-    ..x = 200
-    ..y = 160;
+  ball.x = 200;
+  ball.y = 160;
 
   ball.pointer.onTap.add((_) {
     ball.scaleX = ball.scaleY = 1.2;
