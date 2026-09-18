@@ -32,6 +32,8 @@ void main() {
           .toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
+  final version = _buildVersion(manual, theme, existingPages);
+
   for (final page in existingPages) {
     page.copySync('${pages.path}/${_basename(page.path)}');
   }
@@ -56,7 +58,7 @@ void main() {
         chapter++;
         nav.writeln(
           '<a class="nav-link${chapter == 1 ? ' active' : ''}" '
-          'href="#${_slug(item.title)}" data-page="pages/${_escapeAttribute(file)}" '
+          'href="#${_slug(item.title)}" data-page="pages/${_escapeAttribute(file)}?v=$version" '
           'data-chapter="$chapter" data-group="${_escapeAttribute(group.title)}">'
           '${_escape(item.title)}</a>',
         );
@@ -70,7 +72,8 @@ void main() {
   File('${output.path}/index.html').writeAsStringSync(
     template
         .replaceFirst('{{NAV}}', nav.toString())
-        .replaceFirst('{{FIRST_PAGE}}', _firstPage(toc, manual)),
+        .replaceFirst('{{FIRST_PAGE}}', _firstPage(toc, manual, version))
+        .replaceAll('{{ASSET_VERSION}}', version),
   );
 
   File('${site.path}/index.html').writeAsStringSync('''<!doctype html>
@@ -93,6 +96,27 @@ void main() {
   );
 }
 
+String _buildVersion(Directory manual, Directory theme, List<File> pages) {
+  var hash = 0x811c9dc5;
+
+  void add(String value) {
+    for (final byte in utf8.encode(value)) {
+      hash ^= byte;
+      hash = (hash * 0x01000193) & 0xffffffff;
+    }
+  }
+
+  add(File('${manual.path}/README.md').readAsStringSync());
+  for (final page in pages) {
+    add(_basename(page.path));
+    add(page.readAsStringSync());
+  }
+  for (final name in ['index.html', 'book.css', 'book.js']) {
+    add(File('${theme.path}/$name').readAsStringSync());
+  }
+  return hash.toRadixString(16).padLeft(8, '0');
+}
+
 void _copyDirectory(Directory source, Directory destination) {
   destination.createSync(recursive: true);
   for (final entity in source.listSync()) {
@@ -105,11 +129,13 @@ void _copyDirectory(Directory source, Directory destination) {
   }
 }
 
-String _firstPage(List<_Group> groups, Directory manual) {
+String _firstPage(List<_Group> groups, Directory manual, String version) {
   for (final group in groups) {
     for (final item in group.items) {
       final file = item.file ?? '${_slug(item.title)}.md';
-      if (File('${manual.path}/$file').existsSync()) return 'pages/${_escapeAttribute(file)}';
+      if (File('${manual.path}/$file').existsSync()) {
+        return 'pages/${_escapeAttribute(file)}?v=$version';
+      }
     }
   }
   throw StateError('The manual has no published chapters.');
