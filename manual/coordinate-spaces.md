@@ -45,10 +45,17 @@ That distinction matters when GraphX is itself positioned somewhere inside a Flu
 
 ## Global back to local
 
-The opposite conversion is just as useful:
+The opposite conversion is just as useful.
+
+A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space:
 
 ```dart
-final local = button.globalToLocal(stageX, stageY);
+final pointer = root.stage.pointer;
+
+final local = button.globalToLocal(
+  pointer.x,
+  pointer.y,
+);
 
 if (local != null) {
   print(local.x);
@@ -56,7 +63,9 @@ if (local != null) {
 }
 ```
 
-Now a point expressed in stage coordinates is translated back into `button`'s local space.
+Now the pointer position, which started in stage coordinates, is translated into `button`'s local space.
+
+That lets you ask questions such as: **where is the pointer relative to this object?** A point at `(0, 0)` would be exactly on the button's own origin; `(20, 10)` would be 20 across and 10 down in the button's local coordinate system.
 
 The result can be `null` when the transform cannot be inverted — for example, if a scale collapses an axis completely.
 
