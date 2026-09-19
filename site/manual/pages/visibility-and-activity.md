@@ -20,7 +20,27 @@ The node is still in the scene tree. Its parent has not changed, its children ar
 panel.visible = true;
 ```
 
+This becomes especially useful when the hidden thing is not just one node but an entire branch.
+
+A scene hierarchy can get fairly deep. A panel may contain text, icons, effects, controls, and more nested groups below it. If that whole branch is temporarily off screen, setting the parent to `visible = false` lets GraphX skip rendering and pointer hit testing for the branch without tearing the hierarchy apart.
+
+That can avoid a lot of unnecessary per-frame work, and it is usually much simpler than removing a subtree and adding it back again just because it needs to disappear for a while.
+
 Use `visible` when the thing still exists; you simply do not want it presented or interacted with right now.
+
+## Visible, but not interactive
+
+Sometimes you still want the branch on screen, but you do not want it participating in pointer hit testing.
+
+That is a different switch:
+
+```dart
+panel.pointer.enabled = false;
+```
+
+The node can still render normally; its pointer participation is disabled.
+
+We will explore pointer control properly in the input chapters. For now, it is enough to know that you do not need to hide something just to make it ignore the pointer.
 
 ## Make it inactive
 
@@ -38,6 +58,8 @@ panel.active = true;
 
 This is useful for scene objects that are temporarily out of play rather than merely hidden.
 
+If the mention of an update callback feels a little early, that is fine. GraphX has a frame-update model for things that need to change over time, and we will come back to it later. The useful distinction here is simply that `active` reaches further than `visible`.
+
 One subtle point: child update callbacks are registered independently. Making a parent inactive hides its rendered/input branch, but it does not silently rewrite every child's `active` property for you.
 
 ## Transparent is still there
@@ -54,7 +76,9 @@ That matters for input. A transparent interactive node can still receive pointer
 
 Flutter has a similar gotcha with `Opacity(opacity: 0)`: painting something transparently does not automatically make its hit-testing disappear.
 
-If you mean "the user should not be able to interact with this," `visible` or the appropriate input state is clearer than relying on `alpha = 0`.
+There is another alpha detail we will deliberately postpone. Normal inherited alpha and applying opacity to a whole composited subtree are not always visually equivalent, especially when children overlap. GraphX can isolate a branch into a layer when true group-style compositing is required, which also has a rendering cost. That difference is much easier to understand with a picture, so we will revisit it properly in the compositing chapters.
+
+If you mean "the user should not be able to interact with this," `visible` or `pointer.enabled = false` is clearer than relying on `alpha = 0`.
 
 ## A useful rule of thumb
 
