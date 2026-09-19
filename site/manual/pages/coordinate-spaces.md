@@ -47,14 +47,14 @@ That distinction matters when GraphX is itself positioned somewhere inside a Flu
 
 The opposite conversion is just as useful.
 
-A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space:
+A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space. GraphX also exposes the more explicit aliases `stageX` and `stageY` when naming the coordinate space makes the code easier to read:
 
 ```dart
 final pointer = root.stage.pointer;
 
 final local = button.globalToLocal(
-  pointer.x,
-  pointer.y,
+  pointer.stageX,
+  pointer.stageY,
 );
 
 if (local != null) {
@@ -62,6 +62,8 @@ if (local != null) {
   print(local.y);
 }
 ```
+
+`pointer.stageX` and `pointer.stageY` are aliases for the shorter `pointer.x` and `pointer.y`. Use whichever version makes the surrounding code clearer.
 
 Now the pointer position, which started in stage coordinates, is translated into `button`'s local space.
 
@@ -128,6 +130,42 @@ node.localToGlobalInto(10, 20, point);
 The result is the same without allocating a new `GPoint` each time.
 
 Use the convenient version first. Reach for the `Into` version when the code is hot enough for the difference to matter.
+
+## Why `GPoint` instead of Flutter's `Offset`?
+
+Flutter already has `Offset`, so it is reasonable to wonder why GraphX has another two-number point type.
+
+The important difference is that `Offset` is an immutable value. `GPoint` is a small mutable geometry object owned by GraphX.
+
+That lets hot APIs reuse one point instead of creating a new object every time:
+
+```dart
+final point = GPoint();
+
+for (final node in nodes) {
+  node.localToGlobalInto(0, 0, point);
+  // use point, then reuse it for the next node
+}
+```
+
+For ordinary code, the allocating convenience methods are usually nicer. The mutable form matters when transforms, input, animation, or geometry run thousands of times per frame.
+
+GraphX does not make you choose between its geometry and Flutter's. The public bridge works in both directions:
+
+```dart
+final Offset flutterPoint = point.offset;
+final GPoint graphxPoint = flutterPoint.gpoint;
+```
+
+And when you want to reuse an existing `GPoint`:
+
+```dart
+flutterPoint.copyInto(point);
+```
+
+The same idea exists for `GSize`/`Size`, `GRect`/`Rect`, and `GBounds`/`Rect`.
+
+So `GPoint` is not there because Flutter's `Offset` is inadequate. It exists because a retained graphics engine benefits from mutable, allocation-aware scratch geometry while still interoperating cleanly with Flutter values.
 
 ## A useful way to think about it
 

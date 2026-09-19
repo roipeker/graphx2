@@ -6,6 +6,33 @@ import 'package:graphx/graphx.dart';
 import 'package:graphx/graphx_extension.dart';
 
 void main() {
+  test('pointer events expose explicit stage coordinate aliases', () {
+    const event = GPointerEvent(
+      type: GPointerEventType.move,
+      pointer: 1,
+      kind: GPointerDeviceKind.mouse,
+      x: 12,
+      y: 18,
+      deltaX: 2,
+      deltaY: 3,
+      buttons: 0,
+      timestamp: Duration.zero,
+    );
+    const boundary = GPointerBoundaryEvent(
+      type: GPointerBoundaryEventType.enter,
+      pointer: 1,
+      kind: GPointerDeviceKind.mouse,
+      x: 20,
+      y: 24,
+      timestamp: Duration.zero,
+    );
+
+    expect(event.stageX, event.x);
+    expect(event.stageY, event.y);
+    expect(boundary.stageX, boundary.x);
+    expect(boundary.stageY, boundary.y);
+  });
+
   test('external host pointer ingress uses the canonical input pipeline', () {
     final stage = GStage(GRoot())
       ..mount()
@@ -32,6 +59,10 @@ void main() {
 
     expect(stage.pointer.x, 40);
     expect(stage.pointer.y, 55);
+    expect(stage.pointer.stageX, 40);
+    expect(stage.pointer.stageY, 55);
+    expect(stage.pointer.pointer(7)?.stageX, 40);
+    expect(stage.pointer.pointer(7)?.stageY, 55);
     expect(stage.pointer.isDown, isTrue);
     expect(stage.pointer.pointer(7)?.down, isTrue);
     expect(types, [GPointerEventType.down]);
@@ -101,6 +132,8 @@ void main() {
     stage.input.beginPointerPanZoom(pointerId: 3, x: 100, y: 90);
     expect(stage.pointer.panZoom.active, isTrue);
     expect(stage.pointer.panZoom.pointer, 3);
+    expect(stage.pointer.panZoom.stageX, 100);
+    expect(stage.pointer.panZoom.stageY, 90);
 
     stage.input.updatePointerPanZoom(
       pointerId: 3,

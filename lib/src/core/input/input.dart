@@ -40,6 +40,12 @@ final class GPointerBoundaryEvent {
   final double x;
   final double y;
 
+  /// Stage-space alias for [x].
+  double get stageX => x;
+
+  /// Stage-space alias for [y].
+  double get stageY => y;
+
   final Duration timestamp;
 
   @override
@@ -79,6 +85,12 @@ final class GPointerEvent {
 
   final double x;
   final double y;
+
+  /// Stage-space alias for [x].
+  double get stageX => x;
+
+  /// Stage-space alias for [y].
+  double get stageY => y;
 
   final double deltaX;
   final double deltaY;
@@ -163,6 +175,12 @@ final class GPointerState {
   double x = 0.0;
   double y = 0.0;
 
+  /// Stage-space alias for [x].
+  double get stageX => x;
+
+  /// Stage-space alias for [y].
+  double get stageY => y;
+
   // Accumulated between Stage ticks.
   double deltaX = 0.0;
   double deltaY = 0.0;
@@ -184,6 +202,12 @@ final class GPointerPanZoomState {
 
   double x = 0.0;
   double y = 0.0;
+
+  /// Stage-space alias for [x].
+  double get stageX => x;
+
+  /// Stage-space alias for [y].
+  double get stageY => y;
 
   double panX = 0.0;
   double panY = 0.0;
@@ -327,6 +351,12 @@ class GPointerManager implements _GDisposable {
   double get x => _x;
 
   double get y => _y;
+
+  /// Stage-space alias for [x].
+  double get stageX => x;
+
+  /// Stage-space alias for [y].
+  double get stageY => y;
 
   double get deltaX => _deltaX;
 

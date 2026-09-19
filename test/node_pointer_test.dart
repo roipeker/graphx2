@@ -27,6 +27,25 @@ void main() {
     root.stage.pointer.onPanZoomEnd;
   });
 
+  testWidgets('node pointer event exposes explicit stage aliases', (tester) async {
+    GNodePointerEvent? received;
+    await _pump(tester, (root) {
+      final box = root.addChild(_HitBox(80, 50));
+      box.setPosition(20, 20);
+      box.pointer.onDown.add((event) => received = event);
+    });
+
+    await tester.tapAt(const Offset(40, 40));
+    await tester.pump();
+
+    final event = received;
+    expect(event, isNotNull);
+    expect(event!.stageX, event.x);
+    expect(event.stageY, event.y);
+    expect(event.stageX, 40);
+    expect(event.stageY, 40);
+  });
+
   testWidgets('bubbles leaf target and supports composite children=false', (
     tester,
   ) async {

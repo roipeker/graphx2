@@ -66,3 +66,5 @@ One important difference is that GraphX does not run Flutter-style layout inside
 The next chapters build this up gradually: first the scene tree and transforms, then drawing, images, input, assets, and composition.
 
 You do not need to understand the renderer or the internal runtime to start using GraphX. The public API is the part that matters here.
+
+As the manual introduces small GraphX-specific helpers such as `GMath`, `GPoint`, or the debug `trace()` API, it will also explain why they exist instead of treating them as arbitrary replacements for Dart or Flutter APIs. Usually the answer is convenience, retained-scene ergonomics, or avoiding unnecessary work in hot graphics code.
