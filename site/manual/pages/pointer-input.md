@@ -169,6 +169,58 @@ Scrolling also stays explicit, and trackpad pan/zoom has dedicated stage signals
 
 The result is one GraphX pointer model across Flutter's supported input devices, while still preserving the device information when your interaction actually cares about it.
 
+## Trackpad pan, zoom, and rotation have their own signals
+
+Flutter reports trackpad gestures with `PointerPanZoomStartEvent`, `PointerPanZoomUpdateEvent`, and `PointerPanZoomEndEvent`. GraphX keeps that richer gesture intact on the stage pointer manager:
+
+```dart
+final pointer = root.stage.pointer;
+
+pointer.onPanZoomStart.add((gesture) {
+  print('gesture started at ${gesture.x}, ${gesture.y}');
+});
+
+pointer.onPanZoomEnd.add((gesture) {
+  print('gesture ended');
+});
+```
+
+`GPointerPanZoomState` carries translation, scale, and rotation for the same gesture. `panX` / `panY`, `scale`, and `rotation` are cumulative from the gesture start, which makes them convenient for applying an absolute transform from a saved baseline:
+
+```dart
+final world = root.addChild(GNode());
+final pointer = root.stage.pointer;
+
+var startX = 0.0;
+var startY = 0.0;
+var startScale = 1.0;
+var startRotation = 0.0;
+
+pointer.onPanZoomStart.add((gesture) {
+  startX = world.x;
+  startY = world.y;
+  startScale = world.scale;
+  startRotation = world.rotation;
+});
+
+pointer.onPanZoomUpdate.add((gesture) {
+  world.setPosition(
+    startX + gesture.panX,
+    startY + gesture.panY,
+  );
+  world.scale = startScale * gesture.scale;
+  world.rotation = startRotation + gesture.rotation;
+});
+```
+
+That is enough for a small map, editor surface, or visual playground: two-finger pan moves the retained world, pinch scales it, and trackpad rotation rotates it.
+
+The transform above uses `world`'s own pivot as the zoom/rotation origin. A camera that keeps the exact point under the fingers stationary needs one more coordinate-space step; we will handle that when render views/cameras get their own chapter.
+
+The state also exposes `panDeltaX/Y`, `scaleDelta`, and `rotationDelta`. Those are accumulated for the current GraphX frame and reset at frame teardown. They are useful when consuming input once per frame; the cumulative gesture values above are clearer when mutating directly from each `onPanZoomUpdate` signal.
+
+The pan/zoom state object itself is reused. Copy values rather than storing the object if they must survive beyond the callback.
+
 ## Hit testing follows the scene
 
 GraphX resolves node input against the retained hierarchy, not against a separate rectangle tree.

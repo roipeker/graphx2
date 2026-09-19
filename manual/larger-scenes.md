@@ -71,40 +71,13 @@ For Flutter developers, that can make `GraphXView.scene(...)` an interesting alt
 
 A `GRoot` subclass becomes useful when the scene has enough state and recurring behavior that named methods and overrides make the code easier to organize.
 
-## Lifecycle belongs to nodes
+## A root adds root-specific hooks
 
-`attached()` and `detached()` are not special root-only hooks. They belong to `GNode`.
+The node attachment model is covered in [Lifecycle and the stage](#lifecycle-and-the-stage): every `GNode` can override `attached()` and `detached()`, and `stage` is guaranteed there.
 
-Any node can respond when it crosses the stage attachment boundary:
+`GRoot` adds the host-facing hooks that only make sense at the scene boundary. It receives `resize(width, height)` for viewport changes, `environmentChanged()` for consumed Flutter environment changes, and `reassemble()` when a retained scene survives Flutter hot reload.
 
-```dart
-class Player extends GNode {
-  @override
-  void attached() {
-    // The node now belongs to an attached stage.
-  }
-
-  @override
-  void detached() {
-    // The node is leaving that stage.
-  }
-}
-```
-
-If you used the original GraphX, this is the same broad idea as the old added-to-stage / removed-from-stage lifecycle, expressed with the shorter `attached()` and `detached()` hooks in GraphX².
-
-`GRoot` adds a few root-specific hooks on top of that node lifecycle. In particular, it can respond to viewport changes:
-
-```dart
-@override
-void resize(double width, double height) {
-  // Reposition anything that depends on the viewport.
-}
-```
-
-and to host-environment changes through `environmentChanged()`. It also receives `reassemble()` when the retained scene is kept through Flutter hot reload.
-
-We will cover lifecycle and frame updates properly later. The useful distinction here is that a class-based scene can express those moments as overrides instead of wiring every behavior through callbacks.
+That gives a class-based root natural override points while callback scenes can consume the corresponding stage signals.
 
 ## Callback scenes have signals
 

@@ -17,6 +17,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Coordinate spaces](coordinate-spaces.md)
 - [Bounds](bounds.md)
 - [Visibility and activity](visibility-and-activity.md)
+- [Lifecycle and the stage](lifecycle-and-stage.md)
 
 ## Drawing
 

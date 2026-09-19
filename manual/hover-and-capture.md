@@ -110,6 +110,20 @@ icon.hitArea = GHitArea.rect(
 
 That hit area is local to the node and does not change rendering or canonical visual bounds. Normal node transforms carry it through the scene.
 
+It can also extend **outside** the node's visual bounds. GraphX tests the custom interaction geometry directly; it does not first clamp the point to the node's rendered bounding box.
+
+That is a meaningful difference from normal Flutter `RenderBox` hit testing. Flutter's box hit test first asks whether the pointer is inside the render box's laid-out `size` before testing the box or its children. `HitTestBehavior.translucent` can make otherwise empty space *inside that box* participate; it does not make the box larger. If a Flutter control needs a larger tap target, the common solution is therefore to make the laid-out widget larger too—padding, a `SizedBox`, constraints, or another hit-test-aware wrapper—even when the visible artwork stays small.
+
+GraphX can keep those concerns separate:
+
+```text
+visual bounds:     16 × 16
+pointer hit area:  44 × 44
+visual bounds:      still 16 × 16
+```
+
+That separation is especially handy in a free-form scene because the hit-test math can describe exactly the interaction region you want, including space beyond the artwork. Ancestor clips still apply: a hit area cannot escape a branch that is explicitly clipped away.
+
 Circles and Dart `Path` geometry are available too:
 
 ```dart
