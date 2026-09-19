@@ -194,3 +194,5 @@ The equations are small, but the result has personality.
 Change `stiffness` and the object feels heavier or more eager. Change damping and it becomes bouncy or restrained.
 
 That feedback loop—change a number, immediately *feel* the result—is one of the nicest ways to learn motion math.
+
+> **Go deeper:** [Nature of Code — Oscillation](https://natureofcode.com/oscillation/) carries this into angular motion, waves, pendulums, and spring forces with runnable visual examples.

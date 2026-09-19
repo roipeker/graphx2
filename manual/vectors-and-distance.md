@@ -193,3 +193,5 @@ angle ⇄ direction vector
 ```
 
 Once that feels natural, steering, orbiting, aiming, normals, and path tangents stop looking like separate tricks. They are variations on the same 2D geometry.
+
+> **Go deeper:** Daniel Shiffman's free [Nature of Code — Vectors](https://natureofcode.com/vectors/) chapter is an excellent creative-coding continuation: interactive examples turn magnitude, normalization, velocity, and acceleration into things you can actually watch move.

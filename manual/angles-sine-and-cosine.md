@@ -234,3 +234,5 @@ final step = GMath.tau / 8;
 This often reads more directly than repeatedly writing `2 * pi` when the concept is “one complete turn.”
 
 `dart:math` remains perfectly valid. `GMath` simply keeps the most common creative-coding constants/helpers close to the rest of GraphX.
+
+> **Go deeper:** [Math Is Fun's Interactive Unit Circle](https://www.mathsisfun.com/algebra/trig-interactive-unit-circle.html) lets you drag the angle and watch sine/cosine change live. [BetterExplained's intuitive trigonometry guide](https://betterexplained.com/articles/intuitive-trigonometry/) is a friendly next read if you want the idea to click before memorizing more formulas.

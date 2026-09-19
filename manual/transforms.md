@@ -183,3 +183,5 @@ The card keeps its own local position inside `group`, while the group's position
 This is what lets a complex scene stay understandable. A wheel can rotate inside a car while the whole car moves. A hand can rotate around an arm while the character moves across the screen. Each piece only needs to know about the space it lives in.
 
 That leads naturally to [Coordinate spaces](#coordinate-spaces) — how GraphX translates a point from one part of the tree into another.
+
+> **Go deeper:** 3Blue1Brown's [Linear transformations and matrices](https://www.3blue1brown.com/lessons/linear-transformations/) is a visual way to understand matrices as *moving space*, rather than as mysterious grids of numbers. That mental picture maps beautifully onto 2D scene transforms.

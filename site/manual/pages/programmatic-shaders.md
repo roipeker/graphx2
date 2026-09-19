@@ -165,3 +165,5 @@ programmable rectangle     → GShaderNode
 A shader earns its complexity when the visual is genuinely procedural or needs pixel math the higher-level primitives cannot express cleanly.
 
 That keeps the fun part of shaders fun instead of making every button a graphics-programming project.
+
+> **Go deeper:** [The Book of Shaders](https://thebookofshaders.com/) is a gentle, interactive path into fragment shaders. Its [Shaping Functions](https://thebookofshaders.com/05/) chapter is especially relevant after GraphX interpolation/easing because it turns tiny math functions directly into visible pixel behavior.

@@ -247,3 +247,5 @@ time → normalized progress → optional easing → interpolated value
 ```
 
 Then a higher-level motion/tween API—whether GraphX core or an ecosystem package—becomes much easier to understand because it is automating something you already recognize.
+
+> **Go play with easing:** [Easings.net](https://easings.net/) puts the common easing families side-by-side so you can *see* the motion shape before choosing one. Flutter's `Curves` names will feel very familiar after a few minutes there.

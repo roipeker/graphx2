@@ -152,3 +152,5 @@ x += speed * delta;
 is likely all you need.
 
 Fixed stepping earns its complexity when the simulation itself benefits from a stable numerical timestep—physics, collisions, lockstep logic, or systems where reproducibility matters.
+
+> **Go deeper:** Glenn Fiedler's classic [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/) is more technical than this chapter, but it is one of the clearest explanations of fixed stepping, catch-up, interpolation, and the spiral of death.
