@@ -118,7 +118,85 @@ The new texture still refers to the same underlying `ui.Image`; it simply descri
 
 GraphX also keeps frame metadata for trimmed and rotated atlas entries, so a `GImage` can recover the intended logical bounds rather than treating the packed rectangle as the whole object.
 
-You do not need that machinery for ordinary PNGs. It becomes useful once many visual assets need to share a backing texture efficiently.
+### `GTextureAtlas` gives those regions names
+
+GraphX core also has a format-agnostic atlas container:
+
+```dart
+final atlas = GTextureAtlas(
+  pages: [pageTexture],
+  textures: {
+    'player/idle': idleTexture,
+    'player/run-1': run1Texture,
+    'player/run-2': run2Texture,
+  },
+);
+```
+
+Look up a named region:
+
+```dart
+final playerTexture = atlas['player/idle'];
+```
+
+or safely:
+
+```dart
+final maybeTexture = atlas.find('player/idle');
+```
+
+The named entries are texture **views**. They may point at one atlas page or several pages, and each view can already contain trim/rotation/frame metadata.
+
+`GTextureAtlas` deliberately does not understand TexturePacker JSON, Starling XML, Aseprite tags, or any other packer-specific file format. Decoder/helper packages can parse those formats and populate this small common container.
+
+That keeps packer conventions out of GraphX core while giving render code one predictable result.
+
+### Build a frame sequence from atlas names
+
+If several named regions form an animation:
+
+```dart
+final run = atlas.sequence(
+  [
+    'player/run-1',
+    'player/run-2',
+  ],
+  frameDuration: const Duration(milliseconds: 90),
+);
+```
+
+The returned `GTextureSequence` borrows those atlas textures; it does not duplicate the backing image pixels.
+
+Naming conventions and animation tags remain the decoder/application's decision. The atlas primitive only needs an explicit ordered list.
+
+### Atlas ownership stays explicit
+
+Named atlas entries are borrowed texture views whose lifetime follows their backing page/image.
+
+By default:
+
+```dart
+GTextureAtlas(
+  pages: pages,
+  textures: textures,
+)
+```
+
+does **not** dispose the page textures when the atlas wrapper is disposed.
+
+If the atlas should own its backing pages:
+
+```dart
+final atlas = GTextureAtlas(
+  pages: pages,
+  textures: textures,
+  ownsPages: true,
+);
+```
+
+then disposing the atlas also disposes those page textures.
+
+You do not need any of this machinery for ordinary PNGs. It becomes useful once many visual assets need named shared backing regions efficiently.
 
 ### Does an atlas automatically make GraphX faster?
 

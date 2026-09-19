@@ -147,3 +147,95 @@ portal.snapshot() → Flutter portal subtree
 ```
 
 That symmetry is intentional: once the capture is pixels, the rest of GraphX can treat it as an ordinary texture.
+
+## Capture the complete `GraphXView`
+
+A node snapshot captures one GraphX subtree. Sometimes you want the final hosted composition instead:
+
+```dart
+final texture = await stage.snapshot();
+```
+
+`stage.snapshot()` captures what the attached `GraphXView` produces as a whole:
+
+```text
+behind portals
+      ↓
+GraphX canvas content
+      ↓
+front portals
+```
+
+That makes it the right level for things such as a share/export image of the complete GraphX surface when portals are part of what the user sees.
+
+Unlike `node.snapshot()`, this API requires a stage currently attached to a real `GraphXView` that has completed layout/paint. It is a host capture, not an offstage renderer.
+
+## Stage snapshot coordinates are GraphXView-local
+
+Capture the complete surface:
+
+```dart
+final texture = await stage.snapshot();
+```
+
+or one stage-local rectangle:
+
+```dart
+final texture = await stage.snapshot(
+  area: GRect(40, 30, 320, 180),
+  scale: 2,
+);
+```
+
+`area` uses GraphXView/stage logical coordinates and is clipped to the actual hosted view.
+
+As with node snapshots, `scale` controls backing-pixel density while the returned texture keeps logical size information.
+
+## A transform can reframe the capture
+
+`stage.snapshot()` also accepts a `GMatrix2`:
+
+```dart
+final transform = GMatrix2();
+transform.setValues(
+  0.5,
+  0,
+  0,
+  0.5,
+  0,
+  0,
+);
+
+final texture = await stage.snapshot(
+  transform: transform,
+);
+```
+
+The transform maps stage coordinates into snapshot coordinates before the final texture is produced. This can be useful when export code needs to compensate for an existing world/camera transform rather than manually moving the live scene.
+
+A non-identity transform requires an additional raster pass, so use it because the output needs reframing—not as a free default.
+
+## Platform views can make a hosted snapshot impossible
+
+The final `GraphXView` snapshot relies on Flutter being able to rasterize the composed layer tree.
+
+Some platform-view layers are not rasterizable through that path. In that case `stage.snapshot()` throws rather than silently returning an incomplete image.
+
+That limitation belongs to the host composition, not to GraphX node snapshots.
+
+## Three snapshot levels, three different questions
+
+```text
+node.snapshot()
+  → render this GraphX subtree into new pixels
+
+portal.snapshot()
+  → render this Flutter portal subtree into new pixels
+
+stage.snapshot()
+  → capture the final hosted GraphXView composition
+```
+
+All three return owned `GTexture` values, and all three make the caller responsible for disposing the captured texture when it is finished.
+
+Choosing the level first keeps screenshot/export code much simpler.
