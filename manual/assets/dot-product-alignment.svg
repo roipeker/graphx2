@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="430" viewBox="0 0 1000 430" role="img" aria-labelledby="title desc">
+  <title id="title">Dot product as directional agreement</title>
+  <desc id="desc">Three panels show unit vectors pointing in the same direction with dot one, perpendicular with dot zero, and opposite with dot minus one.</desc>
+  <rect width="1000" height="430" rx="28" fill="#f5f3ed"/>
+  <text x="48" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="31" font-weight="700" fill="#1d1d1f">One number says how much two directions agree.</text>
+
+  <g transform="translate(70 120)">
+    <rect x="0" y="0" width="250" height="240" rx="20" fill="#ebe8df"/>
+    <circle cx="125" cy="115" r="6" fill="#1d1d1f"/>
+    <line x1="125" y1="115" x2="215" y2="115" stroke="#2f6d80" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="215,115 197,104 197,126" fill="#2f6d80"/>
+    <line x1="125" y1="115" x2="205" y2="115" stroke="#c15f2d" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="205,115 189,106 189,124" fill="#c15f2d"/>
+    <text x="125" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#403d38">same direction</text>
+    <text x="125" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" font-weight="700" fill="#1d1d1f">dot = 1</text>
+  </g>
+
+  <g transform="translate(375 120)">
+    <rect x="0" y="0" width="250" height="240" rx="20" fill="#ebe8df"/>
+    <circle cx="125" cy="115" r="6" fill="#1d1d1f"/>
+    <line x1="125" y1="115" x2="210" y2="115" stroke="#2f6d80" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="210,115 192,104 192,126" fill="#2f6d80"/>
+    <line x1="125" y1="115" x2="125" y2="35" stroke="#c15f2d" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="125,35 114,53 136,53" fill="#c15f2d"/>
+    <text x="125" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#403d38">perpendicular</text>
+    <text x="125" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" font-weight="700" fill="#1d1d1f">dot = 0</text>
+  </g>
+
+  <g transform="translate(680 120)">
+    <rect x="0" y="0" width="250" height="240" rx="20" fill="#ebe8df"/>
+    <circle cx="125" cy="115" r="6" fill="#1d1d1f"/>
+    <line x1="125" y1="115" x2="210" y2="115" stroke="#2f6d80" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="210,115 192,104 192,126" fill="#2f6d80"/>
+    <line x1="125" y1="115" x2="40" y2="115" stroke="#c15f2d" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="40,115 58,104 58,126" fill="#c15f2d"/>
+    <text x="125" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#403d38">opposite</text>
+    <text x="125" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" font-weight="700" fill="#1d1d1f">dot = −1</text>
+  </g>
+</svg>

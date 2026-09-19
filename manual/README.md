@@ -95,5 +95,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## Creative coding toolbox
 
 - [Why Pythagoras keeps showing up](pythagoras-in-graphics.md)
+- [Mapping one range into another](mapping-ranges.md)
+- [Dot products without the scary name](dot-products.md)
 
 The manual will grow alongside working examples. A feature should be easy to explain, easy to try, and easy to find here.
