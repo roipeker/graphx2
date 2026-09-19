@@ -33,7 +33,7 @@ const _schemaCapabilities = <String>{
 
 void main() {
   test('getInfo advertises every registered inspector operation domain', () {
-    final debugDirectory = Directory('${_packageRoot().path}/lib/src/debug');
+    final debugDirectory = Directory('${_packageRoot().path}/lib/src/debug/inspection');
     final registeredOperations = <String>{};
     final registrationPattern = RegExp(
       r"registerExtension\(\s*'\$_prefix\.([A-Za-z0-9]+)'",
@@ -41,9 +41,7 @@ void main() {
     );
 
     for (final entity in debugDirectory.listSync()) {
-      if (entity is! File ||
-          !entity.path.endsWith('.dart') ||
-          !entity.uri.pathSegments.last.startsWith('inspection')) {
+      if (entity is! File || !entity.path.endsWith('.dart')) {
         continue;
       }
       final source = entity.readAsStringSync();
@@ -62,7 +60,7 @@ void main() {
     );
 
     final inspectionSource = File(
-      '${debugDirectory.path}/inspection.dart',
+      '${debugDirectory.path}/runtime.dart',
     ).readAsStringSync();
     final capabilitiesBlock = RegExp(
       r"'capabilities': const <String>\[(.*?)\]",
