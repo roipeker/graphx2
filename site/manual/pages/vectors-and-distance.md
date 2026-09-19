@@ -10,6 +10,8 @@ In 2D:
 
 Those two numbers can mean **direction**, **velocity**, **acceleration**, or simply “how far from here to there.” The math is the same; the meaning comes from how you use it.
 
+> **Why not `Vec2()` everywhere?** You will notice this manual often keeps vector math as plain `x` / `y`, `dx` / `dy`, or `velocityX` / `velocityY`. That is partly pedagogical—the arithmetic stays visible instead of disappearing behind methods—and partly GraphX lineage. A lot of Flash/ActionScript creative-coding code used this wonderfully direct scalar style, and GraphX still feels at home there. Wrapping two numbers in an object is not automatically clearer. `GPoint` is available when a reusable mutable point/container helps, and a richer vector abstraction can earn its place once code repeatedly needs operations such as normalization, dot products, reflection, or projection. For `x += velocityX * delta`, plain variables are often exactly enough.
+
 ## From one point to another
 
 Suppose a ship is here:
