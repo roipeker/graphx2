@@ -117,9 +117,9 @@ That is a meaningful difference from normal Flutter `RenderBox` hit testing. Flu
 GraphX can keep those concerns separate:
 
 ```text
-visual bounds:     16 × 16
+rendered artwork:  16 × 16
 pointer hit area:  44 × 44
-visual bounds:      still 16 × 16
+canonical bounds:   still 16 × 16
 ```
 
 That separation is especially handy in a free-form scene because the hit-test math can describe exactly the interaction region you want, including space beyond the artwork. Ancestor clips still apply: a hit area cannot escape a branch that is explicitly clipped away.
