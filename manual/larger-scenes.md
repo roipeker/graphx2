@@ -34,7 +34,7 @@ Then Flutter creates that root for the view:
 ```dart
 GraphXView(
   root: GameScene.new,
-)
+);
 ```
 
 Nothing fundamental changed. `GameScene` is still the root of the same kind of scene tree we have already been using.
@@ -65,22 +65,35 @@ GraphXView(
 
 Use the form that makes the scene easier to understand.
 
-The callback form is excellent for examples, small visual pieces, prototypes, and scenes that naturally fit in one place. A `GRoot` subclass becomes useful when the scene wants its own lifecycle or has enough behavior to deserve a home of its own.
+The callback form is excellent for examples, small visual pieces, prototypes, and scenes that naturally fit in one place. It is also useful for mostly static retained scenes: build the geometry once, then let GraphX keep and render it without recreating the drawing on every Flutter paint pass.
 
-## A root has a lifecycle
+For Flutter developers, that can make `GraphXView.scene(...)` an interesting alternative to reaching immediately for `CustomPainter` when the visual wants retained objects, transforms, or interaction rather than a purely paint-time API.
 
-Once you have a root class, GraphX gives it a few useful moments to respond to.
+A `GRoot` subclass becomes useful when the scene has enough state and recurring behavior that named methods and overrides make the code easier to organize.
 
-`attached()` runs when the root is attached to a usable stage:
+## Lifecycle belongs to nodes
+
+`attached()` and `detached()` are not special root-only hooks. They belong to `GNode`.
+
+Any node can respond when it crosses the stage attachment boundary:
 
 ```dart
-@override
-void attached() {
-  // Build or connect the scene here.
+class Player extends GNode {
+  @override
+  void attached() {
+    // The node now belongs to an attached stage.
+  }
+
+  @override
+  void detached() {
+    // The node is leaving that stage.
+  }
 }
 ```
 
-If the viewport changes, `resize()` is available too:
+If you used the original GraphX, this is the same broad idea as the old added-to-stage / removed-from-stage lifecycle, expressed with the shorter `attached()` and `detached()` hooks in GraphX².
+
+`GRoot` adds a few root-specific hooks on top of that node lifecycle. In particular, it can respond to viewport changes:
 
 ```dart
 @override
@@ -89,9 +102,29 @@ void resize(double width, double height) {
 }
 ```
 
-There is also `detached()` for cleanup tied to attachment.
+and to host-environment changes through `environmentChanged()`. It also receives `reassemble()` when the retained scene is kept through Flutter hot reload.
 
-We will cover lifecycle properly later. The important thing here is simply that a larger scene does not need to invent its own place for this work.
+We will cover lifecycle and frame updates properly later. The useful distinction here is that a class-based scene can express those moments as overrides instead of wiring every behavior through callbacks.
+
+## Callback scenes have signals
+
+The callback form still has access to the same stage behavior. GraphX exposes signals for the moments that are convenient to consume from a closure:
+
+```dart
+GraphXView.scene((root) {
+  root.onResize.add((size) {
+    // React to a viewport change.
+  });
+
+  root.onUpdate.add((delta) {
+    // React to a frame update when you need one.
+  });
+});
+```
+
+There are also signals for environment changes and, on the stage, later update phases, Flutter synchronization, inherited Flutter dependencies, reassembly, and disposal.
+
+Those signals are not exclusive to callback scenes. A class-based root can use them too. The difference is mostly one of style: **callbacks are convenient when the whole scene fits comfortably in one place; overrides tend to read better once behavior belongs to a named type.**
 
 ## `GraphXView` has a few useful handles
 
@@ -109,7 +142,7 @@ final controller = GraphXController<GameScene>();
 GraphXView(
   root: GameScene.new,
   controller: controller,
-)
+);
 ```
 
 Once attached, `controller.root` is the actual `GameScene` instance.
@@ -124,10 +157,14 @@ That is useful when a Flutter control needs to tell a scene to do something with
 GraphXView(
   root: GameScene.new,
   value: gameState,
-)
+);
 ```
 
-The root can consume Flutter synchronization when that data or inherited Flutter dependencies change. We will give that its own example in the Flutter integration chapter; there is no need to use it for ordinary scene state.
+This matters because a GraphX scene is retained. Rebuilding the surrounding Flutter widget does not mean GraphX should throw away the scene tree and build it again.
+
+Instead, the existing scene can consume Flutter synchronization when `value` or inherited Flutter dependencies change. Callback scenes can listen through `root.stage.signals.onFlutterSync`; class-based scenes can organize the same synchronization wherever it makes sense for the root.
+
+We will give this a proper example in the Flutter integration chapter. For now, the useful mental model is: **Flutter can rebuild around a GraphX scene while the GraphX scene itself stays alive.**
 
 ### Config
 
@@ -140,7 +177,7 @@ GraphXView(
     keyboard: true,
     autofocus: true,
   ),
-)
+);
 ```
 
 The current options are deliberately small:
@@ -161,6 +198,6 @@ There is one useful distinction already built in: the class-based `GraphXView` d
 
 You do not need to design the final architecture before drawing the first circle.
 
-Start with the callback when it makes the idea obvious. Move to a root class when the scene starts asking for one.
+Start with the callback when it makes the idea obvious. Keep it when the scene remains pleasantly small. Move to a root class when state, lifecycle overrides, or named behavior make the scene easier to understand that way.
 
 The scene model stays the same either way, which means learning the simple form is not throwaway knowledge. It is the same GraphX, just with a different place to organize the work.
