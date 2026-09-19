@@ -141,9 +141,13 @@ function chapterNavigation(link) {
     const arrow = isPrevious ? '←' : '→';
     const title = target.textContent.trim();
     const href = target.getAttribute('href');
-    return `<a class="chapter-nav-link ${direction}" href="${escapeAttribute(href)}">`
-      + `<span class="chapter-nav-label">${isPrevious ? `${arrow} ${label}` : `${label} ${arrow}`}</span>`
+    const copy = `<span class="chapter-nav-copy">`
+      + `<span class="chapter-nav-label">${label}</span>`
       + `<strong>${escapeHtml(title)}</strong>`
+      + '</span>';
+    const arrowMark = `<span class="chapter-nav-arrow" aria-hidden="true">${arrow}</span>`;
+    return `<a class="chapter-nav-link ${direction}" href="${escapeAttribute(href)}">`
+      + (isPrevious ? arrowMark + copy : copy + arrowMark)
       + '</a>';
   };
 
