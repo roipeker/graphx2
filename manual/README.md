@@ -23,8 +23,8 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Shapes and graphics](shapes-and-graphics.md)
 - [Fills and strokes](fills-and-strokes.md)
 - [Paths](paths.md)
-- Images and textures
-- Text
+- [Images and textures](images-and-textures.md)
+- [Text](text.md)
 
 ## Interaction
 
