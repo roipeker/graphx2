@@ -94,6 +94,18 @@ That is useful for `2x`/high-density assets and generated captures where backing
 
 Spritesheets and texture atlases pack many images into one larger image.
 
+The idea has a long history in 2D graphics. Early consoles did not use modern GPU texture atlases, but they were already built around reusing compact sprite and tile graphics instead of storing a separate full image for every thing on screen. Classic 8-bit platformers are an easy mental picture: a character was assembled or animated from a small collection of reusable graphic patterns.
+
+Later, bitmap engines made that idea more literal with **sprite sheets**: several animation frames arranged inside one image. GPU-era 2D engines pushed it further into **texture atlases**, packing many unrelated sprites into one backing texture so renderers could avoid changing texture state as often and make batching easier.
+
+Flash developers saw this pattern become especially important once Stage3D and engines such as Starling moved 2D content onto the GPU. The same idea became standard in mobile games and other real-time 2D engines: pack related graphics together, keep one backing texture around, and describe the individual pieces with rectangles and metadata.
+
+![An original retro sprite sheet with four animation frames](assets/retro-sprite-sheet.svg)
+
+*This is a modern illustration of the idea, not an NES hardware format. Each outlined frame can be treated as a region of the same backing image.*
+
+A regular **sprite sheet** often uses predictable cells or manually arranged frames. A **texture atlas** is usually more general: sprites may be tightly packed, trimmed, or even rotated to waste less space, with metadata describing how to reconstruct their intended geometry.
+
 A `GTexture` can describe just one region of that backing image:
 
 ```dart
@@ -107,6 +119,18 @@ The new texture still refers to the same underlying `ui.Image`; it simply descri
 GraphX also keeps frame metadata for trimmed and rotated atlas entries, so a `GImage` can recover the intended logical bounds rather than treating the packed rectangle as the whole object.
 
 You do not need that machinery for ordinary PNGs. It becomes useful once many visual assets need to share a backing texture efficiently.
+
+### Does an atlas automatically make GraphX faster?
+
+Not by itself.
+
+Historically, texture atlases have been a major rendering optimization because many GPU renderers can draw more sprites together when they share one texture, avoiding expensive texture switches and enabling larger batches.
+
+GraphX²'s current Canvas renderer still paints each `GImage` through Flutter's canvas image APIs. Putting several `GImage` nodes on the same atlas does **not** magically collapse them into one draw call today.
+
+The atlas is still useful: the nodes can share one backing `ui.Image`, asset packaging is compact, and trimmed/rotated frame metadata lets many sprites live efficiently in the same source image. It also preserves a representation that a future GPU/batched renderer can exploit without changing the scene model.
+
+That distinction is worth remembering: **an atlas is a useful data layout; batching is a renderer optimization built on top of it.**
 
 ## Filtering
 

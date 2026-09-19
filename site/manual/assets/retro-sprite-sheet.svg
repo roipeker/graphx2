@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+<title id="title">Retro sprite sheet and texture regions</title>
+<desc id="desc">An original four-frame pixel character showing idle, two run frames, and jump, arranged in a regular sprite sheet grid.</desc>
+<rect width="960" height="360" rx="24" fill="#171717"/>
+<text x="48" y="48" fill="#f5f5f2" font-family="system-ui, sans-serif" font-size="22" font-weight="700">A sprite sheet: one image, several frames</text>
+<text x="48" y="78" fill="#92928d" font-family="system-ui, sans-serif" font-size="14">Original retro example — each 32×32 cell can become its own GTexture region.</text>
+<g transform="translate(48 110)" shape-rendering="crispEdges">
+  <rect width="800" height="160" rx="8" fill="#222" stroke="#3a3a3a"/>
+  <g stroke="#393939" stroke-width="1">
+    <path d="M0 40H800M0 80H800M0 120H800"/>
+    <path d="M40 0V160M80 0V160M120 0V160M160 0V160M200 0V160M240 0V160M280 0V160M320 0V160M360 0V160M400 0V160M440 0V160M480 0V160M520 0V160M560 0V160M600 0V160M640 0V160M680 0V160M720 0V160M760 0V160"/>
+  </g>
+  <g fill="none" stroke="#777" stroke-width="2">
+    <rect x="0" y="0" width="200" height="160"/>
+    <rect x="200" y="0" width="200" height="160"/>
+    <rect x="400" y="0" width="200" height="160"/>
+    <rect x="600" y="0" width="200" height="160"/>
+  </g>
+  <!-- idle -->
+  <g transform="translate(64 26)">
+    <rect x="24" y="0" width="48" height="16" fill="#e6b35c"/>
+    <rect x="16" y="16" width="64" height="32" fill="#d96b45"/>
+    <rect x="24" y="48" width="48" height="40" fill="#5b8dd8"/>
+    <rect x="8" y="48" width="16" height="32" fill="#e6b35c"/>
+    <rect x="72" y="48" width="16" height="32" fill="#e6b35c"/>
+    <rect x="24" y="88" width="16" height="24" fill="#f0f0e8"/>
+    <rect x="56" y="88" width="16" height="24" fill="#f0f0e8"/>
+  </g>
+  <!-- run 1 -->
+  <g transform="translate(264 26)">
+    <rect x="24" y="0" width="48" height="16" fill="#e6b35c"/>
+    <rect x="16" y="16" width="64" height="32" fill="#d96b45"/>
+    <rect x="24" y="48" width="48" height="40" fill="#5b8dd8"/>
+    <rect x="0" y="48" width="24" height="16" fill="#e6b35c"/>
+    <rect x="72" y="64" width="24" height="16" fill="#e6b35c"/>
+    <rect x="16" y="88" width="32" height="16" fill="#f0f0e8"/>
+    <rect x="64" y="88" width="24" height="24" fill="#f0f0e8"/>
+  </g>
+  <!-- run 2 -->
+  <g transform="translate(464 26)">
+    <rect x="24" y="0" width="48" height="16" fill="#e6b35c"/>
+    <rect x="16" y="16" width="64" height="32" fill="#d96b45"/>
+    <rect x="24" y="48" width="48" height="40" fill="#5b8dd8"/>
+    <rect x="8" y="64" width="24" height="16" fill="#e6b35c"/>
+    <rect x="72" y="48" width="24" height="16" fill="#e6b35c"/>
+    <rect x="8" y="88" width="24" height="24" fill="#f0f0e8"/>
+    <rect x="48" y="88" width="32" height="16" fill="#f0f0e8"/>
+  </g>
+  <!-- jump -->
+  <g transform="translate(664 12)">
+    <rect x="24" y="0" width="48" height="16" fill="#e6b35c"/>
+    <rect x="16" y="16" width="64" height="32" fill="#d96b45"/>
+    <rect x="24" y="48" width="48" height="40" fill="#5b8dd8"/>
+    <rect x="0" y="40" width="24" height="16" fill="#e6b35c"/>
+    <rect x="72" y="40" width="24" height="16" fill="#e6b35c"/>
+    <rect x="8" y="88" width="32" height="16" fill="#f0f0e8"/>
+    <rect x="56" y="88" width="32" height="16" fill="#f0f0e8"/>
+  </g>
+</g>
+<g font-family="system-ui, sans-serif" font-size="14" fill="#c6c5bf">
+  <text x="128" y="304" text-anchor="middle">idle</text>
+  <text x="328" y="304" text-anchor="middle">run 1</text>
+  <text x="528" y="304" text-anchor="middle">run 2</text>
+  <text x="728" y="304" text-anchor="middle">jump</text>
+</g>
+<path d="M866 118v140" stroke="#444" stroke-width="1"/>
+<text x="888" y="138" fill="#8f8f89" font-family="system-ui, sans-serif" font-size="12">same</text>
+<text x="888" y="156" fill="#8f8f89" font-family="system-ui, sans-serif" font-size="12">backing</text>
+<text x="888" y="174" fill="#8f8f89" font-family="system-ui, sans-serif" font-size="12">image</text>
+</svg>
