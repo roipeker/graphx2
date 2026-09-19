@@ -64,9 +64,9 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 ## Going further
 
-- Multiple views
-- Diagnostics
-- Performance
-- Extensions
+- [Multiple views](multiple-views.md)
+- [Diagnostics](diagnostics.md)
+- [Performance](performance.md)
+- [Extensions](extensions.md)
 
 The manual will grow alongside working examples. A feature should be easy to explain, easy to try, and easy to find here.
