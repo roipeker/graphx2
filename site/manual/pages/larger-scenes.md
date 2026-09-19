@@ -192,7 +192,9 @@ The current options are deliberately small:
 
 Most scenes should start with the defaults.
 
-There is one useful distinction already built in: the class-based `GraphXView` defaults to retaining its scene during hot reload, while `GraphXView.scene(...)` defaults to restarting its callback scene. Those defaults match the usual reason you picked each form in the first place.
+There is one useful distinction already built in for development: during Flutter hot reload, the class-based `GraphXView` defaults to retaining its scene, while `GraphXView.scene(...)` defaults to restarting its callback scene. Those defaults match the usual reason you picked each form in the first place.
+
+This only affects hot reload in development/debug sessions. It does not change normal runtime or release behavior.
 
 ## Start simple, grow when it helps
 
