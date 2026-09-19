@@ -1,0 +1,160 @@
+# Interpolation
+
+You have a value here. You want it over there.
+
+Interpolation answers the wonderfully practical question:
+
+> what is the value somewhere between the two?
+
+## `lerp` means “linear interpolation”
+
+GraphX exposes the tiny formula through `GMath`:
+
+```dart
+final x = GMath.lerp(100, 300, 0.5);
+```
+
+The result is `200`.
+
+The third value, usually called `t`, describes progress:
+
+```text
+t = 0.0  → start
+t = 0.5  → halfway
+t = 1.0  → end
+```
+
+So:
+
+```dart
+GMath.lerp(a, b, t)
+```
+
+really means:
+
+```text
+a + (b - a) × t
+```
+
+## Turn elapsed time into progress
+
+Suppose a card should move from x=80 to x=360 in 0.6 seconds.
+
+```dart
+double elapsed = 0;
+final duration = 0.6;
+final fromX = 80.0;
+final toX = 360.0;
+
+@override
+void update(double delta) {
+  elapsed += delta;
+
+  final t = GMath.clamp(elapsed / duration);
+  x = GMath.lerp(fromX, toX, t);
+
+  if (t >= 1.0) {
+    updatesEnabled = false;
+  }
+}
+```
+
+There are two ideas hiding in there:
+
+```text
+elapsed / duration  → normalize time into 0..1
+lerp(start, end, t) → map 0..1 into the value range
+```
+
+That pattern appears everywhere in animation.
+
+## Linear motion is intentionally boring
+
+A linear interpolation changes at a constant rate.
+
+That is perfect for some things and robotic for others.
+
+We can bend the progress value before passing it to `lerp`.
+
+A tiny smoothstep curve is:
+
+```dart
+final eased = t * t * (3 - 2 * t);
+final x = GMath.lerp(fromX, toX, eased);
+```
+
+The object starts gently, moves faster in the middle, and settles gently at the end.
+
+The endpoints did not change. Only the mapping from **time → progress** changed.
+
+That is the central idea behind easing functions.
+
+## Clamp when progress should stop at the endpoints
+
+`GMath.lerp()` itself happily accepts values outside `0..1`:
+
+```dart
+GMath.lerp(0, 100, 1.2); // 120
+```
+
+Sometimes extrapolation is exactly what you want.
+
+When it is not:
+
+```dart
+GMath.lerpClamped(0, 100, t);
+```
+
+clamps progress before interpolating.
+
+## `invLerp` asks the opposite question
+
+If `lerp` asks:
+
+> where is 30% between A and B?
+
+then `invLerp` asks:
+
+> what percentage is this value between A and B?
+
+```dart
+final t = GMath.invLerp(100, 300, 160);
+```
+
+`t` is `0.3`.
+
+That is handy for sliders, scroll progress, normalizing sensor values, mapping a position into a color gradient, or turning any arbitrary range back into the familiar `0..1` space.
+
+## Angles have a trap at the wrap point
+
+Suppose one angle is 350° and another is 10°.
+
+A naïve numerical lerp sees a 340° difference and rotates the long way around.
+
+GraphX can interpolate the shortest angular path:
+
+```dart
+final angle = GMath.lerpAngle(
+  GMath.radians(350),
+  GMath.radians(10),
+  t,
+);
+```
+
+`lerpAngle()` uses normalized angular difference so the motion crosses through 0° instead of spinning almost a full revolution backwards.
+
+That tiny detail matters constantly in steering, turrets, dials, cameras, and rotating UI.
+
+## Interpolation is not a tween system
+
+These helpers are math primitives. They do not own time, schedule updates, cancel animations, sequence timelines, or decide lifecycle for you.
+
+That is deliberate in this chapter.
+
+First learn the reusable idea:
+
+```text
+time → normalized progress → optional easing → interpolated value
+```
+
+Then a higher-level motion/tween API—whether GraphX core or an ecosystem package—becomes much easier to understand because it is automating something you already recognize.

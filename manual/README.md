@@ -19,6 +19,12 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Visibility and activity](visibility-and-activity.md)
 - [Lifecycle and the stage](lifecycle-and-stage.md)
 
+## Time & motion
+
+- [Frame updates](frame-updates.md)
+- [Delta time and motion](delta-time-and-motion.md)
+- [Interpolation](interpolation.md)
+
 ## Drawing
 
 - [Shapes and graphics](shapes-and-graphics.md)
