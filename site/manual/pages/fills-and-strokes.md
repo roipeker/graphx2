@@ -94,6 +94,135 @@ shape.graphics
     .endFill();
 ```
 
-There are matching tools for gradient strokes and lower-level shader work too.
+By default, GraphX resolves that gradient against the retained path bounds. The default linear gradient runs from the center toward the right edge of that box.
 
-Those options are worth exploring when a drawing needs them. A solid `Colors.red` is still a perfectly good place to begin.
+So if the geometry changes size, the gradient naturally follows the geometry rather than staying pinned to some unrelated global rectangle.
+
+## Control the gradient box when the artwork needs one shared space
+
+Sometimes several shapes should use the same gradient coordinate box:
+
+```dart
+shape.graphics
+    .beginGradientFill(
+      GGradientType.linear,
+      [Colors.orange, Colors.deepPurple],
+      gradientBox: const Rect.fromLTWH(
+        0,
+        0,
+        300,
+        120,
+      ),
+    )
+    .drawCircle(60, 60, 50)
+    .drawCircle(220, 60, 50)
+    .endFill();
+```
+
+Now both pieces sample the same local gradient box instead of each batch deriving its gradient only from its own geometry bounds.
+
+The box is expressed in the `GGraphics` node's local drawing coordinates—the same coordinate system used by `drawCircle()`, `drawRect()`, `moveTo()`, and friends.
+
+## Stops describe where colors land
+
+```dart
+shape.graphics.beginGradientFill(
+  GGradientType.linear,
+  [
+    Colors.black,
+    Colors.cyan,
+    Colors.white,
+  ],
+  ratios: [0.0, 0.35, 1.0],
+);
+```
+
+Those normalized `0..1` values say where each color lands along the gradient.
+
+That should look familiar after [Mapping one range into another](#mapping-one-range-into-another): normalized progress is useful all over graphics because many visual systems can share the same compact `0..1` language.
+
+## Linear, radial, and sweep are the same retained idea
+
+```dart
+GGradientType.linear
+GGradientType.radial
+GGradientType.sweep
+```
+
+all stay retained as part of the graphics style.
+
+For a radial gradient, `begin` becomes the center alignment and `end` can act as the focal alignment. `radius` and `focalRadius` control the radial geometry.
+
+For a sweep gradient, the start/end angles describe the angular range:
+
+```dart
+shape.graphics.beginGradientFill(
+  GGradientType.sweep,
+  [Colors.red, Colors.yellow, Colors.blue],
+  sweepStartAngle: 0,
+  sweepEndAngle: GMath.tau,
+);
+```
+
+The angle vocabulary is the same one used by node rotation and [Angles, sine, and cosine](#angles-sine-and-cosine).
+
+## Gradient strokes reuse the same model
+
+Start the stroke first:
+
+```dart
+shape.graphics
+    .lineStyle(8, Colors.white)
+    .lineGradientStyle(
+      GGradientType.linear,
+      [Colors.pink, Colors.blue],
+    )
+    .moveTo(20, 40)
+    .lineTo(280, 40)
+    .endStroke();
+```
+
+`lineGradientStyle()` deliberately requires an active `lineStyle()` because it changes the brush of that retained stroke rather than creating a separate stroke width/cap/join definition.
+
+## A low-level paint shader is still Flutter's shader
+
+`GPaintShader` is a typedef for `dart:ui.Shader`.
+
+So if Flutter/Canvas code already produced a native gradient/image shader, GraphX can retain it directly:
+
+```dart
+final shader = GGradient.linear(
+  const Offset(0, 0),
+  const Offset(200, 0),
+  [Colors.purple, Colors.cyan],
+);
+
+shape.graphics
+    .beginPaintShaderFill(shader)
+    .drawRect(0, 0, 200, 80)
+    .endFill();
+```
+
+`GGradient.linear()`, `.radial()`, and `.sweep()` are small backend-neutral constructors for those common native Canvas shaders.
+
+That is different from the programmable `GShaderInstance` API in [Programmable shaders](#programmable-shaders). If you already have a GraphX fragment-shader instance, use:
+
+```dart
+shape.graphics
+    .beginShaderFill(shaderInstance)
+    .drawRect(0, 0, 200, 80)
+    .endFill();
+```
+
+Uniform/sampler mutations on that retained shader instance request repaint without rebuilding the path geometry.
+
+The hierarchy is therefore:
+
+```text
+solid color       → beginFill()
+retained gradient → beginGradientFill()
+native ui.Shader  → beginPaintShaderFill()
+GShaderInstance   → beginShaderFill()
+```
+
+Use the highest-level form that already describes the visual you want. A solid `Colors.red` is still a perfectly good place to begin.
