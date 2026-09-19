@@ -55,12 +55,12 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 ## Flutter + GraphX
 
-- GraphXView
+- [GraphXView](graphx-view.md)
 - [Building larger scenes](larger-scenes.md)
-- GRuntime
-- Sharing a runtime
-- Flutter widgets inside GraphX
-- Environment and accessibility
+- [GRuntime](runtime.md)
+- [Sharing a runtime](sharing-a-runtime.md)
+- [Flutter widgets inside GraphX](flutter-widgets-inside-graphx.md)
+- [Environment and accessibility](environment-and-accessibility.md)
 
 ## Going further
 
