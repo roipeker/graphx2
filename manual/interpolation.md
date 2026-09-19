@@ -128,6 +128,56 @@ The endpoints did not change. Only the mapping from **time → progress** change
 
 That is the central idea behind easing functions.
 
+## Flutter curves plug straight in
+
+GraphX does not need to duplicate Flutter's easing catalog.
+
+Flutter already ships a large set of `Curve`s:
+
+```dart
+import 'package:flutter/animation.dart';
+
+final eased = Curves.easeOutCubic.transform(t);
+final x = GMath.lerp(fromX, toX, eased);
+```
+
+The composition is clean:
+
+```text
+elapsed time
+    ↓
+normalize to t = 0..1
+    ↓
+Flutter Curve.transform(t)
+    ↓
+GMath.lerp(start, end, easedT)
+```
+
+That means familiar Flutter curves such as:
+
+```dart
+Curves.easeInOut
+Curves.easeOutCubic
+Curves.fastOutSlowIn
+Curves.bounceOut
+Curves.elasticOut
+```
+
+work perfectly well in GraphX motion code.
+
+Some curves intentionally overshoot beyond `0..1`—`elasticOut`, for example. `GMath.lerp()` also permits extrapolation, so that overshoot naturally becomes motion beyond the endpoint before settling back.
+
+The input to `Curve.transform()` should still be normalized to `0..1`:
+
+```dart
+final t = GMath.clamp(elapsed / duration);
+final eased = Curves.elasticOut.transform(t);
+```
+
+There is therefore no need for GraphX core to clone every Flutter easing under new names just to animate retained nodes.
+
+A future higher-level GraphX motion package can automate timing, cancellation, repeats, timelines, springs, and property binding while still building on these same small pieces: normalized progress, Flutter curves where they fit, and GraphX math/scene state where it adds value.
+
 ## Clamp when progress should stop at the endpoints
 
 `GMath.lerp()` itself happily accepts values outside `0..1`:
