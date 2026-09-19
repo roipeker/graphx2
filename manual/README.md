@@ -28,7 +28,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 ## Interaction
 
-- Pointer input
+- [Pointer input](pointer-input.md)
 - Hover and capture
 - Gestures
 - Keyboard
