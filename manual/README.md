@@ -37,8 +37,11 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Paths](paths.md)
 - [Bézier curves](bezier-curves.md)
 - [Images and textures](images-and-textures.md)
+- [Image batches](image-batches.md)
 - [Text](text.md)
+- [Icons and defaults](icons-and-defaults.md)
 - [Custom nodes](custom-nodes.md)
+- [Programmable shaders](programmatic-shaders.md)
 
 ## Interaction
 
@@ -81,6 +84,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Multiple views](multiple-views.md)
 - [Diagnostics](diagnostics.md)
 - [Performance](performance.md)
+- [Viewport culling](viewport-culling.md)
 - [Extensions](extensions.md)
 
 The manual will grow alongside working examples. A feature should be easy to explain, easy to try, and easy to find here.
