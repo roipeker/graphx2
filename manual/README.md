@@ -40,10 +40,10 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 - [The shared asset store](shared-asset-store.md)
 - [Flutter assets](flutter-assets.md)
-- Memory assets
-- Network assets
-- Sharing assets between scenes
-- Custom URL loading
+- [Memory assets](memory-assets.md)
+- [Network assets](network-assets.md)
+- [Sharing assets between scenes](sharing-assets-between-scenes.md)
+- [Custom URL loading](custom-url-loading.md)
 
 ## Composition
 

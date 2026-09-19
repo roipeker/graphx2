@@ -126,7 +126,20 @@ await stage.assets.remove('level-1');
 await stage.assets.clear();
 ```
 
-The store disposes disposable cached values it owns when those entries leave the cache.
+The store disposes cached GraphX resources it owns, such as owned textures and texture sequences, when those entries leave the cache.
+
+There is an ownership consequence when you opt out of caching. A call such as:
+
+```dart
+final texture = await stage.assets.texture(
+  'images/player.png',
+  cache: false,
+);
+```
+
+returns a decoded owned texture that the asset store does not retain. If nothing else takes ownership of that uncached disposable resource, the caller is responsible for disposing it when finished.
+
+So `cache` is not only a performance switch; for decoded GraphX resources it also decides whether the runtime store becomes their lifetime owner.
 
 ## Several views can share one cache
 
