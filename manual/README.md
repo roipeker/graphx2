@@ -78,6 +78,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## Flutter + GraphX
 
 - [GraphXView](graphx-view.md)
+- [GPoint or Offset?](geometry-interop.md)
 - [Building larger scenes](larger-scenes.md)
 - [GRuntime](runtime.md)
 - [Sharing a runtime](sharing-a-runtime.md)

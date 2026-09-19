@@ -161,7 +161,7 @@ final point = GPoint();
 point.set(20, 40);
 ```
 
-It is intentionally useful for output/reuse paths such as coordinate transforms without forcing every temporary point to allocate a Flutter `Offset`.
+It is intentionally useful for output/reuse paths such as coordinate transforms without forcing every temporary point to allocate a Flutter `Offset`. [GPoint or Offset?](#gpoint-or-offset) explains that engine/Flutter geometry boundary directly.
 
 But GraphX does not pretend `GPoint` is a complete physics-vector framework.
 
