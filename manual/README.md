@@ -25,6 +25,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Paths](paths.md)
 - [Images and textures](images-and-textures.md)
 - [Text](text.md)
+- [Custom nodes](custom-nodes.md)
 
 ## Interaction
 

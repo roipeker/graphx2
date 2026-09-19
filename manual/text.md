@@ -56,6 +56,46 @@ TextStyle + string  →  ui.Paragraph  →  GText node
 
 Flutter still does the hard text shaping. GraphX gives the paragraph a persistent place in the scene.
 
+## A text object is still a node
+
+There is one architectural detail worth noticing here: `GText` is not a leaf renderable attached to some separate scene node. It **is** a `GNode`.
+
+The same is true of `GImage`, `GShape`, and the other built-in visuals. They inherit the normal node transform, lifecycle, input, visibility, and child hierarchy instead of living beside it as a separate render component.
+
+That means even a text node can have children:
+
+```dart
+final label = root.addChild(
+  GText(
+    'LIVE',
+    style: const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+    ),
+  ),
+);
+
+final dot = label.addChild(GShape());
+dot.graphics
+    .beginFill(Colors.red)
+    .drawCircle(0, 0, 4)
+    .endFill();
+
+dot.setPosition(
+  label.textWidth + 8,
+  label.textHeight * 0.5,
+);
+```
+
+Move, rotate, fade, or hide `label` and the dot follows because it is genuinely part of that node's subtree.
+
+GraphX² originally explored a more separated model where a node could own a distinct view/renderable component. The final API stayed closer to the GraphX1/display-list inheritance idea: visual types extend the scene node directly.
+
+There is one GraphX² twist to that lineage. In classic Flash, not every display object was a container. In GraphX², every `GNode` is container-capable, so an image or text node can still own descendants when that relationship is useful.
+
+We will use that same idea in [Custom nodes](#custom-nodes), where a normal `GNode` becomes a new renderable type without creating a second hierarchy.
+
 ## Natural width or a text box
 
 By default, text uses its natural width:
