@@ -38,8 +38,8 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 ## Assets
 
-- The shared asset store
-- Flutter assets
+- [The shared asset store](shared-asset-store.md)
+- [Flutter assets](flutter-assets.md)
 - Memory assets
 - Network assets
 - Sharing assets between scenes
