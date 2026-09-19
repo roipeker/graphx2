@@ -1,12 +1,36 @@
 # Pointer input
 
-A scene becomes much more interesting once the things inside it can respond directly to you.
+Flutter gets the pointer to the GraphX surface. GraphX decides which retained object it belongs to.
 
-GraphX keeps pointer input attached to the scene model: the node you draw and move can also be the node that receives taps, presses, movement, and scrolling.
+That division is useful to understand because GraphX is not replacing Flutter's platform input stack. It takes Flutter pointer events and routes them through the scene you already built.
 
-## Start with a tap
+## From Flutter `PointerEvent` to a GraphX node
 
-You have already seen the simplest version:
+At the `GraphXView` boundary, Flutter supplies events such as `PointerDownEvent`, `PointerMoveEvent`, `PointerUpEvent`, `PointerCancelEvent`, `PointerHoverEvent`, and `PointerScrollEvent`.
+
+Trackpad pan/zoom arrives through Flutter's `PointerPanZoomStartEvent`, `PointerPanZoomUpdateEvent`, and `PointerPanZoomEndEvent` too.
+
+GraphX converts the Flutter position into coordinates local to the GraphX surface and carries across the information that matters: pointer id, device kind, movement delta, buttons, scrolling, and timestamp.
+
+From there, GraphX takes over the scene-specific work:
+
+```text
+Flutter PointerEvent
+        ↓
+GraphXView surface coordinates
+        ↓
+scene hit test
+        ↓
+GNodePointerEvent
+        ↓
+target node → parent → parent …
+```
+
+So Flutter knows that a touch, mouse, stylus, or trackpad event happened. GraphX knows which transformed node in your retained hierarchy should receive it.
+
+## Tap the object, not the canvas
+
+For the common case, interaction lives directly on the node:
 
 ```dart
 card.pointer.onTap.add((event) {
@@ -14,13 +38,9 @@ card.pointer.onTap.add((event) {
 });
 ```
 
-`onTap` is a convenience signal synthesized from the underlying press sequence. GraphX allows a small amount of pointer movement before deciding that a press stopped being a tap.
+`onTap` is synthesized from the press sequence with a small movement tolerance. You do not need to manually compare down/up positions for an ordinary tap.
 
-For buttons, cards, icons, and small interactive objects, that is often all you need.
-
-## Pointer signals live on the node
-
-A node exposes its pointer behavior through `pointer`:
+The same pointer surface exposes the lower-level routed signals when you need them:
 
 ```dart
 card.pointer.onDown.add((event) {
@@ -32,22 +52,35 @@ card.pointer.onUp.add((event) {
 });
 ```
 
-The main routed signals are:
+The main signals are `onDown`, `onMove`, `onUp`, `onCancel`, `onScroll`, and `onTap`. Hover adds `onEnter` and `onExit`, which we will use in the next chapter.
 
-- `onDown`
-- `onMove`
-- `onUp`
-- `onCancel`
-- `onScroll`
-- `onTap`
+GraphX also keeps pointer hit testing demand-driven: adding pointer interest to a node is what makes that branch relevant to routed pointer work. A scene full of decorative nodes does not need to behave like a scene full of controls.
 
-Hover-specific `onEnter` and `onExit` are there too, but we will give hover and capture their own chapter.
+## Two pointer surfaces answer different questions
 
-The signal only exists when you ask for it, and GraphX tracks pointer interest through the scene rather than forcing every node into hit-testing work all the time.
+`node.pointer` asks:
 
-## Stage coordinates versus local coordinates
+> Did the pointer interact with this object or its routed hierarchy?
 
-The `x` and `y` on a `GNodePointerEvent` are the raw GraphX stage-surface coordinates for that pointer event:
+`stage.pointer` asks:
+
+> What is the pointer doing over the GraphX surface at all?
+
+The stage-wide manager exposes state independently of a particular hit target:
+
+```dart
+final pointer = root.stage.pointer;
+
+print(pointer.x);
+print(pointer.y);
+print(pointer.isDown);
+```
+
+That is a better fit for camera navigation, diagnostics, global cursor state, multitouch bookkeeping, or trackpad pan/zoom. Node pointer signals are the better fit when scene geometry should decide who receives the event.
+
+## Coordinates arrive in stage space
+
+A routed `GNodePointerEvent` keeps its `x` and `y` in GraphX stage-surface coordinates:
 
 ```dart
 card.pointer.onDown.add((event) {
@@ -56,13 +89,9 @@ card.pointer.onDown.add((event) {
 });
 ```
 
-Sometimes that is exactly what you want—for example, when controlling a camera or comparing two objects in a common stage space.
+That common coordinate space is useful for things such as camera movement or comparing multiple objects.
 
-Often, though, the useful question is more local:
-
-> Where did the pointer land inside this object?
-
-Use `localPosition()` for that:
+But when the question is *where did this land inside the card?*, convert through the routed event:
 
 ```dart
 card.pointer.onDown.add((event) {
@@ -74,36 +103,20 @@ card.pointer.onDown.add((event) {
 });
 ```
 
-Now `(0, 0)` means the card's own local origin, regardless of where the card sits in the scene or how its parents are transformed.
+Now `(0, 0)` is the card's own origin even if the card is rotated, scaled, nested under transformed parents, or viewed through a non-trivial interaction mapping.
 
-This is related to the conversions from [Coordinate spaces](#coordinate-spaces), but pointer events use the same interaction-space mapping that GraphX used for hit testing. That becomes important later when render views or projected/custom spaces enter the picture.
+This is the pointer-side version of [Coordinate spaces](#coordinate-spaces). `localPosition()` deliberately follows the same interaction-space mapping used by GraphX hit testing.
 
-## The event remembers the target
+## The target survives bubbling
 
-Every routed node event has a `target`:
-
-```dart
-card.pointer.onDown.add((event) {
-  print(event.target);
-});
-```
-
-That is the node GraphX actually hit.
-
-This becomes useful once interaction bubbles through a hierarchy.
-
-## Events bubble through parents
-
-Suppose an icon lives inside a button:
+Imagine a button made from a background and an icon:
 
 ```text
 button
 └── icon
 ```
 
-If the icon is the pointer target, GraphX dispatches the routed event to the icon and then continues upward through its parents.
-
-That means a parent can listen for interaction coming from its descendants:
+If the icon is hit, the event starts there and bubbles upward through the node hierarchy. A listener on the button can receive the same event:
 
 ```dart
 button.pointer.onTap.add((event) {
@@ -111,43 +124,37 @@ button.pointer.onTap.add((event) {
 });
 ```
 
-If the icon was hit, `event.target` remains the icon even while the button's listener is running.
+`event.target` still points to the icon because that is what GraphX actually hit.
 
-This is useful for composite scene objects because a parent can own behavior without every visual child needing to duplicate the same listener.
+This lets a parent own behavior for a composite object without duplicating listeners on every child. In the next chapter we will also see `pointer.children = false`, which changes that relationship and makes the parent itself the target.
 
-Later we will look at `pointer.children`, which can deliberately make a composite parent become the pointer target instead of its individual descendants.
+## A press is a sequence, not one event
 
-## Down, move, up, and cancel belong together
-
-For interactions more involved than a tap, it is useful to think in terms of a press sequence:
+A pointer press can travel through several states:
 
 ```dart
 card.pointer.onDown.add((event) {
-  // A pointer started pressing this object.
+  // Press began on this target.
 });
 
 card.pointer.onMove.add((event) {
-  // The active pointer moved.
+  // That pointer moved.
 });
 
 card.pointer.onUp.add((event) {
-  // The press finished normally.
+  // It ended normally.
 });
 
 card.pointer.onCancel.add((event) {
-  // The platform cancelled the sequence.
+  // The host cancelled the sequence.
 });
 ```
 
-GraphX keeps track of the pointer that started the press so movement and release can stay associated with the same interaction even when the pointer moves away from the original hit geometry.
+GraphX remembers which target received the down event, so move/up do not suddenly jump to another object just because the pointer leaves the original geometry. That capture behavior is important enough to examine properly in [Hover and capture](#hover-and-capture).
 
-That automatic press capture is important for drags and sliders, so we will examine it properly in the next chapter instead of hiding the behavior inside this introduction.
+## Mouse, touch, stylus, trackpad
 
-## More than a mouse
-
-GraphX uses pointer events rather than mouse-only events because the same scene may run on desktop, mobile, tablet, web, or another pointer-capable device.
-
-Each event includes a device `kind` and pointer id:
+The device distinction comes from Flutter's `PointerDeviceKind`; GraphX converts it to `GPointerDeviceKind` rather than inventing its own platform detector.
 
 ```dart
 card.pointer.onDown.add((event) {
@@ -156,34 +163,16 @@ card.pointer.onDown.add((event) {
 });
 ```
 
-The kind can distinguish mouse, touch, stylus, trackpad, and related inputs. The pointer id lets separate touches remain separate during multitouch interaction.
+The kind can be mouse, touch, stylus, inverted stylus, trackpad, or unknown. The pointer id distinguishes simultaneous contacts, so two touches can remain two independent sequences.
 
-You do not need special touch code just to make a node tappable.
+Scrolling also stays explicit, and trackpad pan/zoom has dedicated stage signals rather than being disguised as mouse movement.
 
-## Node input and stage input are different tools
+The result is one GraphX pointer model across Flutter's supported input devices, while still preserving the device information when your interaction actually cares about it.
 
-`node.pointer` answers questions about interaction with a particular scene object.
+## Hit testing follows the scene
 
-`stage.pointer` is the stage-wide pointer manager:
+GraphX resolves node input against the retained hierarchy, not against a separate rectangle tree.
 
-```dart
-final pointer = root.stage.pointer;
+Move a node, rotate it, scale it, or nest it under transformed parents and its interaction follows those transforms. Hide or deactivate a branch and it leaves pointer routing with the rest of that branch.
 
-print(pointer.x);
-print(pointer.y);
-print(pointer.isDown);
-```
-
-Use the node surface when geometry and hierarchy should decide what receives the event. Use the stage surface when you care about the pointer independently of a particular hit target—for example, camera controls, diagnostic overlays, or global input state.
-
-That separation keeps low-level input available without making every interaction manually rediscover which node was under the pointer.
-
-## Visible geometry is the starting point
-
-By default, GraphX resolves pointer hits from scene geometry and hierarchy.
-
-That means transforms matter automatically. If a node moves, scales, rotates, or lives under transformed parents, the pointer system follows the same scene relationships.
-
-And as we saw in [Visibility and activity](#visibility-and-activity), a hidden or inactive branch does not participate in pointer routing.
-
-The defaults cover a lot, but interaction sometimes wants geometry different from rendering. The next chapter will look at hover, automatic capture, composite targets, custom hit areas, and cursors—the tools that let pointer behavior become more deliberate without changing what the scene looks like.
+Sometimes the artwork and the best interaction geometry are different. That is where hover, capture, composite targeting, custom hit areas, and cursors come in next.
