@@ -4,7 +4,7 @@ Sooner or later, one object needs to know where another object is.
 
 A button wants to point at a character. A particle should start at the tip of a moving wand. A drag that began inside one container needs to make sense inside another.
 
-That is when coordinate spaces stop sounding abstract and become useful.
+That is where coordinate spaces stop being theory and start answering practical questions.
 
 ## Every parent creates a little world
 
@@ -45,7 +45,7 @@ That distinction matters when GraphX is itself positioned somewhere inside a Flu
 
 ## Global back to local
 
-The opposite conversion is just as useful.
+The conversion works in the other direction too.
 
 A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space:
 
@@ -165,7 +165,7 @@ The same idea exists for `GSize`/`Size`, `GRect`/`Rect`, and `GBounds`/`Rect`.
 
 So `GPoint` is not there because Flutter's `Offset` is inadequate. It exists because a retained graphics engine benefits from mutable, allocation-aware scratch geometry while still interoperating cleanly with Flutter values.
 
-## A useful way to think about it
+## Ask two questions
 
 You do not need to mentally multiply matrices every time two objects need to talk.
 

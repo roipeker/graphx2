@@ -4,7 +4,7 @@ Text in GraphX is a scene object too.
 
 You can place it, rotate it, scale it, group it with other nodes, and measure it without turning it into a Flutter widget.
 
-## Start with `GText`
+## `GText` is retained paragraph text
 
 ```dart
 final label = root.addChild(
@@ -22,7 +22,7 @@ label.setPosition(40, 60);
 
 If that `TextStyle` looks familiar, it should.
 
-`GTextStyle` is simply an alias for Flutter's `TextStyle`, so the typography knowledge you already have from Flutter carries over directly.
+`GTextStyle` is an alias for Flutter's `TextStyle`, so the typography knowledge you already have from Flutter carries over directly.
 
 This works too:
 
@@ -211,7 +211,7 @@ If later you assign plain `text`, the node leaves rich-text mode and becomes an 
 
 ## Text still belongs to the scene
 
-The main thing to keep in mind is that paragraph layout and scene placement are separate.
+Paragraph layout and scene placement are separate concerns.
 
 `GText` figures out the geometry of its text. GraphX then places that geometry through the same node transform system used by everything else:
 

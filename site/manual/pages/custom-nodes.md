@@ -2,7 +2,7 @@
 
 GraphX comes with shapes, text, images, icons, shaders, and other visual nodes, but eventually a scene may want something more specific.
 
-The important architectural idea is that you do not need to create a second render-object tree to do that.
+You do not need a second render-object tree to do that.
 
 A custom visual can still be a normal `GNode`.
 
@@ -65,7 +65,7 @@ The painter receives a `GRenderContext`. Its `canvas` is the same Flutter `Canva
 
 The node itself still participates in the normal scene transform. Move or rotate `grid` and GraphX applies that node transform before your painter runs.
 
-## When `GCanvasNode` is useful
+## Use Canvas when the drawing is truly procedural
 
 Think of it as a low-level fallback for drawing that is easiest to express directly with Canvas:
 
@@ -136,7 +136,7 @@ class CrosshairNode extends GNode {
 }
 ```
 
-There are three important pieces here.
+Three pieces make this a real GraphX visual.
 
 `setPaintSelf(true)` tells GraphX that this node has pixels of its own to paint.
 
@@ -191,13 +191,13 @@ We will revisit invalidation and performance when the manual reaches caching and
 
 ## Which level should you use?
 
-A useful progression is:
+Choose the smallest rendering level that fits:
 
 - use `GShape` when retained vector geometry describes the visual well;
 - use `GImage` / `GText` when the built-in visual already matches the job;
 - use `GCanvasNode` for one-off direct Canvas drawing;
 - subclass `GNode` when the visual deserves reusable behavior, intrinsic bounds, or its own small API.
 
-The important part is that all four choices stay inside the same node hierarchy.
+All four choices stay inside the same node hierarchy.
 
 That is why custom rendering in GraphX can remain small: you are extending the scene model, not building another one beside it.

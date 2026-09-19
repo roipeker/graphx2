@@ -1,6 +1,6 @@
 # Images and textures
 
-Vector drawing is useful, but sooner or later you want to put actual pixels in the scene.
+Sooner or later, a scene needs actual pixels instead of vector geometry.
 
 In GraphX, it helps to separate three ideas:
 
@@ -23,7 +23,7 @@ image.setPosition(120, 80);
 
 The texture supplies the pixels. The node supplies the place those pixels live in the scene.
 
-## So what is a texture?
+## A texture is a view of image data
 
 Underneath, Flutter renders decoded image data as `dart:ui.Image`.
 
@@ -36,7 +36,7 @@ ui.Image  →  GTexture  →  GImage
 pixels       image view    scene node
 ```
 
-This separation is useful because the same texture can be shared by more than one scene node:
+The separation matters because several scene nodes can share the same texture:
 
 ```dart
 final a = root.addChild(GImage(texture));
@@ -74,7 +74,7 @@ GraphXView.scene((root) {
 
 The `isDisposed` check matters because loading is asynchronous. The Flutter view may have gone away before the image finishes decoding.
 
-We will spend more time on `GAssets` later. It can load from Flutter bundles, memory, URLs, `ImageProvider`, and shared runtimes. For now, the important idea is simply that loading and displaying are separate concerns.
+We will spend more time on `GAssets` later. It can load from Flutter bundles, memory, URLs, `ImageProvider`, and shared runtimes. For now, keep loading and displaying as separate concerns.
 
 ## Logical size and high-resolution assets
 

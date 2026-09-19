@@ -2,9 +2,9 @@
 
 A blank scene is not very exciting, so let's give it something to do.
 
-We will draw a small card, place it on screen, and make it react when you tap it. Along the way you will already touch a few of the ideas that make GraphX useful.
+We will draw a card, place it on screen, and make it react to a tap. That small example already exercises the core GraphX model.
 
-## Start with a place to draw
+## Give Flutter a GraphX surface
 
 GraphX lives inside Flutter through `GraphXView`.
 
@@ -20,7 +20,7 @@ The `root` is the top of the GraphX scene. Everything we add will eventually liv
 
 For now, think of it as an empty scene waiting for something to happen.
 
-## Add something
+## Put a shape in the scene
 
 Let's start with a shape:
 
@@ -110,7 +110,7 @@ GraphXView.scene((root) {
 
 We created a node, drew into it, positioned it, and gave it an interaction. Those ideas will keep showing up as scenes become more interesting.
 
-## What just happened?
+## One object, three jobs
 
 There are already a few relationships hiding inside that example.
 

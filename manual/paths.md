@@ -4,7 +4,7 @@ Primitive shapes are convenient until you want a shape that is not already on th
 
 Then it is time to move the pen yourself.
 
-## Start somewhere
+## Move the pen before drawing
 
 A path normally begins with `moveTo()`:
 
@@ -61,7 +61,7 @@ shape.graphics
 
 ultimately build the same kind of path geometry you may already know from Flutter `Canvas` drawing. GraphX keeps that path around as retained scene geometry instead of asking you to recreate it every paint pass.
 
-This is also useful in the other direction: if you already have a Dart `Path`, you can draw it directly into `GGraphics`:
+Existing Dart `Path` geometry works in the other direction too: you can draw it directly into `GGraphics`:
 
 ```dart
 final path = Path();

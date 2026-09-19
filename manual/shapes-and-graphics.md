@@ -81,7 +81,7 @@ shape.graphics
 
 This is ordinary method chaining, not Dart cascade syntax. The fluent API is intentional: a short drawing often reads better as one sequence.
 
-## Draw more than one thing
+## One `GShape` can hold several drawings
 
 A single `GShape` can hold more than one piece of geometry:
 
@@ -99,7 +99,7 @@ Now both circles belong to the same shape and share the same node transform.
 
 If the pieces need to move or react independently, that is usually a sign they should be separate nodes instead.
 
-## Start over when you need to
+## `clear()` removes the retained drawing
 
 `clear()` removes the retained drawing:
 

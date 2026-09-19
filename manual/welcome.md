@@ -25,7 +25,7 @@ GraphXView.scene((root) {
 
 That is the basic idea behind most of GraphX.
 
-## A familiar way to think
+## If scene graphs already feel familiar
 
 If you ever worked with Flash's display list, or with a scene library such as PixiJS, some of this will feel familiar. Objects live in a tree. Parents carry their children. Transforms flow down through the scene. You change properties directly and see the result.
 
@@ -61,7 +61,7 @@ That means you can use Flutter where widgets make sense and GraphX where a scene
 
 One important difference is that GraphX does not run Flutter-style layout inside the scene. You place and transform nodes directly. That tradeoff is important enough to deserve its own short chapter: [Scenes are not layouts](#scenes-are-not-layouts).
 
-## Where to go next
+## Read forward or jump in
 
 The next chapters build this up gradually: first the scene tree and transforms, then drawing, images, input, assets, and composition.
 

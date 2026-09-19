@@ -126,7 +126,7 @@ There are also signals for environment changes and, on the stage, later update p
 
 Those signals are not exclusive to callback scenes. A class-based root can use them too. The difference is mostly one of style: **callbacks are convenient when the whole scene fits comfortably in one place; overrides tend to read better once behavior belongs to a named type.**
 
-## `GraphXView` has a few useful handles
+## Flutter can keep handles to a retained scene
 
 Both forms of `GraphXView` can take a `controller`, a `value`, and a `config`.
 
@@ -220,11 +220,11 @@ This is a safety guard, not a target frame rate. GraphX is not trying to run at 
 
 It is also not the same thing as a fixed-timestep simulation. When GraphX clamps a very late frame, the excess time is not automatically replayed through several hidden updates. For ordinary visual motion that guardrail is often exactly what you want. For deterministic physics or more demanding simulations, we will later look at fixed stepping, accumulated time, and interpolation as separate techniques.
 
-There is one useful distinction already built in for development: during Flutter hot reload, the class-based `GraphXView` defaults to retaining its scene, while `GraphXView.scene(...)` defaults to restarting its callback scene. Those defaults match the usual reason you picked each form in the first place.
+During development, the two forms also make different hot-reload choices: class-based `GraphXView` retains its scene by default, while `GraphXView.scene(...)` restarts its callback scene. Those defaults match the usual reason you picked each form in the first place.
 
 This only affects hot reload in development/debug sessions. It does not change normal runtime or release behavior.
 
-## Start simple, grow when it helps
+## Let the scene earn its class
 
 You do not need to design the final architecture before drawing the first circle.
 

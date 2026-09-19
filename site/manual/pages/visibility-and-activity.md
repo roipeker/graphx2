@@ -20,7 +20,7 @@ The node is still in the scene tree. Its parent has not changed, its children ar
 panel.visible = true;
 ```
 
-This becomes especially useful when the hidden thing is not just one node but an entire branch.
+The difference becomes more obvious when the hidden thing is an entire branch rather than one node.
 
 A scene hierarchy can get fairly deep. A panel may contain text, icons, effects, controls, and more nested groups below it. If that whole branch is temporarily off screen, setting the parent to `visible = false` lets GraphX skip rendering and pointer hit testing for the branch without tearing the hierarchy apart.
 
@@ -58,7 +58,7 @@ panel.active = true;
 
 This is useful for scene objects that are temporarily out of play rather than merely hidden.
 
-If the mention of an update callback feels a little early, that is fine. GraphX has a frame-update model for things that need to change over time, and we will come back to it later. The useful distinction here is simply that `active` reaches further than `visible`.
+The update callback may feel early here; GraphX has a frame-update model that we will cover later. For now, the distinction is that `active` reaches further than `visible`.
 
 One subtle point: child update callbacks are registered independently. Making a parent inactive hides its rendered/input branch, but it does not silently rewrite every child's `active` property for you.
 
@@ -80,7 +80,7 @@ There is another alpha detail we will deliberately postpone. Normal inherited al
 
 If you mean "the user should not be able to interact with this," `visible` or `pointer.enabled = false` is clearer than relying on `alpha = 0`.
 
-## A useful rule of thumb
+## Choose the switch that matches the intent
 
 Think of the three controls like this:
 

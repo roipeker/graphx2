@@ -100,7 +100,7 @@ Column(
 
 Flutter lays out the application. GraphX handles the scene inside the space Flutter gave it.
 
-That boundary is useful rather than awkward.
+That boundary is deliberate.
 
 Later we will also see ways for Flutter widgets and GraphX scenes to meet more closely, including portals and shared Flutter environment state.
 
@@ -120,7 +120,7 @@ icon.setPosition(12, 12);
 
 Sometimes it is a responsive arrangement based on the stage size. Later it may be physics, trigonometry, path following, constraints, or a layout helper built specifically for the kind of scene you are making.
 
-## A useful mental split
+## Layout or direct placement?
 
 When deciding whether something belongs in Flutter or GraphX, this question is often enough:
 

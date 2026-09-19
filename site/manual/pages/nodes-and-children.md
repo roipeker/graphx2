@@ -114,7 +114,7 @@ label.removeFromParent();
 
 The relationship changes; the node itself is still the same object.
 
-## Why the tree matters
+## Parent once, move the group
 
 The scene tree is not just organization. It is how GraphX understands relationships.
 
@@ -122,6 +122,6 @@ Transforms flow through it. Visibility and alpha can affect a whole branch. Inpu
 
 You do not need to memorize that list yet.
 
-The useful idea is smaller: **if a few things belong together, give them a parent.**
+The rule is small: **if a few things belong together, give them a parent.**
 
 From here we can start looking at position, scale, rotation, pivot, and the coordinate spaces created by those relationships.

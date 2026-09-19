@@ -6,7 +6,7 @@ Is this group on screen? How wide is this label and icon together? Where is the 
 
 That box is a node's bounds.
 
-## The simple version
+## `localBounds` includes the subtree
 
 For most scene work, start with `localBounds`:
 
@@ -72,7 +72,7 @@ An empty node can have empty bounds. That is normal; a plain `GNode` with no vis
 
 ## Bounds describe geometry, not visibility
 
-One detail is worth knowing early: bounds are about the scene's geometry, not whether a branch happens to be painted right now.
+Bounds describe scene geometry, not whether a branch happens to be painted right now.
 
 If you hide a child with `visible = false`, its geometry still belongs to the scene tree and can still contribute to its parent's bounds.
 
@@ -80,10 +80,10 @@ That makes bounds stable as a geometric description instead of changing simply b
 
 When what you really want is "is this participating right now?", [Visibility and activity](#visibility-and-activity) answer a different question.
 
-## Why you will see bounds again
+## Bounds become building blocks
 
 Bounds quietly support a lot of higher-level features: pivot alignment, hit areas, viewport culling, focus navigation, filters, caches, snapshots, and inspection tools.
 
 You usually do not need to manage them yourself. GraphX keeps the retained bounds state up to date as the scene changes.
 
-The useful skill is simply knowing which box you are asking for: **this node, this subtree, and in which coordinate space?**
+The question to ask is: **this node, this subtree, and in which coordinate space?**
