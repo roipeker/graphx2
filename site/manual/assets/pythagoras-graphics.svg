@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Pythagoras in screen coordinates</title>
+  <desc id="desc">A point moves horizontally by dx and vertically by dy. The diagonal between start and target is the distance, computed from the square root of dx squared plus dy squared.</desc>
+  <rect width="960" height="560" rx="28" fill="#f5f3ed"/>
+  <text x="52" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="31" font-weight="700" fill="#1d1d1f">Move right. Move down. The diagonal is the real distance.</text>
+  <text x="52" y="102" font-family="system-ui, -apple-system, sans-serif" font-size="21" fill="#5c5852">The same tiny triangle hides inside distance, velocity, collision, normalization, and proximity checks.</text>
+
+  <g transform="translate(110 160)">
+    <circle cx="0" cy="0" r="10" fill="#1d1d1f"/>
+    <circle cx="500" cy="260" r="10" fill="#1d1d1f"/>
+    <line x1="0" y1="0" x2="500" y2="0" stroke="#2f6d80" stroke-width="6" stroke-linecap="round"/>
+    <line x1="500" y1="0" x2="500" y2="260" stroke="#c15f2d" stroke-width="6" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="500" y2="260" stroke="#1d1d1f" stroke-width="7" stroke-linecap="round"/>
+    <rect x="468" y="0" width="32" height="32" fill="none" stroke="#77736b" stroke-width="3"/>
+
+    <text x="236" y="-18" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="650" fill="#2f6d80">dx</text>
+    <text x="520" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="650" fill="#c15f2d">dy</text>
+    <text x="210" y="165" transform="rotate(27 210 165)" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#1d1d1f">distance</text>
+    <text x="-18" y="-22" font-family="system-ui, -apple-system, sans-serif" font-size="19" fill="#5c5852">start</text>
+    <text x="515" y="292" font-family="system-ui, -apple-system, sans-serif" font-size="19" fill="#5c5852">target</text>
+  </g>
+
+  <g transform="translate(690 205)">
+    <rect x="0" y="0" width="220" height="210" rx="18" fill="#ebe8df"/>
+    <text x="24" y="45" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" fill="#1d1d1f">dx² + dy²</text>
+    <text x="24" y="82" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" fill="#1d1d1f">= distance²</text>
+    <text x="24" y="132" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#5c5852">so:</text>
+    <text x="24" y="170" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" font-weight="700" fill="#1d1d1f">hypo(dx, dy)</text>
+  </g>
+</svg>

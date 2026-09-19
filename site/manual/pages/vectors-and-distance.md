@@ -60,7 +60,7 @@ sqrt(dx² + dy²)
 
 If `dx = 3` and `dy = 4`, the length is 5.
 
-That old 3-4-5 triangle turns out to be everywhere in graphics.
+That old 3-4-5 triangle turns out to be everywhere in graphics. [Why Pythagoras keeps showing up](#why-pythagoras-keeps-showing-up) collects the same idea across distance, speed, normalization, diagonal movement, and collision.
 
 Distance between two scene points is the length of the vector between them.
 

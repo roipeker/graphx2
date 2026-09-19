@@ -41,6 +41,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Bézier curves](bezier-curves.md)
 - [Following a path](path-following.md)
 - [Images and textures](images-and-textures.md)
+- [Animated images](animated-images.md)
 - [Image batches](image-batches.md)
 - [Text](text.md)
 - [Icons and defaults](icons-and-defaults.md)
@@ -90,5 +91,9 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Performance](performance.md)
 - [Viewport culling](viewport-culling.md)
 - [Extensions](extensions.md)
+
+## Creative coding toolbox
+
+- [Why Pythagoras keeps showing up](pythagoras-in-graphics.md)
 
 The manual will grow alongside working examples. A feature should be easy to explain, easy to try, and easy to find here.

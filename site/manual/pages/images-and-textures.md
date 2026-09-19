@@ -224,22 +224,10 @@ There is no universal best choice; it depends on the artwork and how it is being
 
 ## Animated images
 
-GraphX also has `GTextureSequence` and `GAnimatedImage` for timed frame sequences.
+GraphX also has `GTextureSequence` and `GAnimatedImage` for timed frame sequences. A decoded GIF/WebP, atlas animation, or manually-authored clip can all use the same playback model.
 
-A decoded GIF or WebP can become a texture sequence, but the format is intentionally general enough for atlas animations or manually-authored frame clips too.
+[Animated images](#animated-images) covers frame timing, looping, atlas sequences, playback signals, speed, and ownership.
 
-```dart
-final sequence = await root.stage.assets.textureSequence(
-  'images/loader.gif',
-);
-if (root.isDisposed) return;
-
-final loader = GAnimatedImage(sequence);
-loader.play();
-root.addChild(loader);
-```
-
-`GAnimatedImage` is still just a node. Playback changes which texture is rendered over time; transforms, hierarchy, alpha, visibility, and interaction continue to work in the usual GraphX way.
 
 The [Assets](#the-shared-asset-store) chapters go deeper into loading, caching, ownership, shared runtimes, and network images. Here the distinction is smaller:
 
