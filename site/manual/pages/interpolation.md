@@ -36,6 +36,45 @@ really means:
 a + (b - a) × t
 ```
 
+## Flutter already has `lerpDouble()`
+
+It does, and using it is perfectly valid:
+
+```dart
+import 'dart:ui' as ui;
+
+final x = ui.lerpDouble(100, 300, 0.5)!;
+```
+
+GraphX is not trying to replace Flutter's interpolation utility.
+
+`dart:ui.lerpDouble()` is a general Flutter primitive. It accepts nullable `num?` endpoints and returns `double?`, which is useful in framework APIs where `null` can participate in interpolation.
+
+`GMath.lerp()` is deliberately narrower:
+
+```dart
+double → double
+```
+
+and lives beside the scene-math helpers that tend to be used with it:
+
+```text
+clamp / invLerp / lerpClamped
+lerpAngle / lerpCyclic
+radians / degrees / wrapAngle
+sin / cos / atan2 / hypo
+```
+
+That is the main reason this manual usually writes:
+
+```dart
+GMath.lerp(...)
+```
+
+The `GMath.` prefix makes a compact creative-coding toolbox discoverable from one place, and examples can move from interpolation to angle wrapping or distance math without changing mathematical vocabulary/imports.
+
+If you are already in Flutter-centric code and `ui.lerpDouble()` reads more naturally, use it. For ordinary finite non-null scalar interpolation, both express the same idea. Their edge-case contracts are not identical—particularly around nullable values and non-finite numbers—so GraphX does not claim `GMath.lerp()` is simply an alias.
+
 ## Turn elapsed time into progress
 
 Suppose a card should move from x=80 to x=360 in 0.6 seconds.
