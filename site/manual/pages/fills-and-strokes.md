@@ -58,7 +58,7 @@ shape.graphics
 
 Now the drawing behaves much more like picking up a pen: choose the line, move to a point, draw to the next one.
 
-[Paths](#paths) takes that idea further.
+[Paths](#paths) takes that geometry further, while [Dashed and patterned lines](#dashed-and-patterned-lines) shows how a stroke itself can become retained repeating geometry.
 
 ## Changing style starts a new drawing group
 
