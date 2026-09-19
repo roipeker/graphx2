@@ -47,14 +47,14 @@ That distinction matters when GraphX is itself positioned somewhere inside a Flu
 
 The opposite conversion is just as useful.
 
-A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space. GraphX also exposes the more explicit aliases `stageX` and `stageY` when naming the coordinate space makes the code easier to read:
+A common source of stage coordinates is the GraphX pointer manager. Its `x` and `y` values describe the current pointer position in the stage's coordinate space:
 
 ```dart
 final pointer = root.stage.pointer;
 
 final local = button.globalToLocal(
-  pointer.stageX,
-  pointer.stageY,
+  pointer.x,
+  pointer.y,
 );
 
 if (local != null) {
@@ -62,8 +62,6 @@ if (local != null) {
   print(local.y);
 }
 ```
-
-`pointer.stageX` and `pointer.stageY` are aliases for the shorter `pointer.x` and `pointer.y`. Use whichever version makes the surrounding code clearer.
 
 Now the pointer position, which started in stage coordinates, is translated into `button`'s local space.
 

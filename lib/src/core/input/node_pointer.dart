@@ -195,13 +195,6 @@ final class GNodePointerEvent {
   GPointerDeviceKind get kind => source.kind;
   double get x => source.x;
   double get y => source.y;
-
-  /// Stage-space alias for [x].
-  double get stageX => x;
-
-  /// Stage-space alias for [y].
-  double get stageY => y;
-
   double get deltaX => source.deltaX;
   double get deltaY => source.deltaY;
   int get button => source.button;
