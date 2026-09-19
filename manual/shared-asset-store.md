@@ -162,6 +162,6 @@ Now two stages can request the same cached texture and converge on the same runt
 
 The provider does not own/dispose the runtime for you. The code that created a shared `GRuntime` is responsible for its lifetime.
 
-We will return to runtime sharing in its own chapter. For now, keep the ownership chain in mind:
+[Sharing a runtime](#sharing-a-runtime) shows the Flutter-side setup. Keep the ownership chain in mind:
 
 **nodes use assets; stages expose assets; runtimes own assets.**

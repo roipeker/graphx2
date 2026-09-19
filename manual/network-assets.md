@@ -43,7 +43,7 @@ If you do not provide a custom URL loader, GraphX lazily uses a `package:http` c
 
 Non-2xx responses fail the load. The client is closed when the asset store is disposed.
 
-That default is enough for public images and simple APIs. Authentication, custom headers, signed URLs, offline fixtures, retries, or a different networking stack belong in the custom loader covered later.
+That default is enough for public images and simple APIs. Authentication, custom headers, signed URLs, offline fixtures, retries, or a different networking stack belong in [Custom URL loading](#custom-url-loading).
 
 ## Web still obeys browser CORS
 

@@ -137,7 +137,7 @@ This matters because a GraphX scene is retained. Rebuilding the surrounding Flut
 
 Instead, the existing scene can consume Flutter synchronization when `value` or inherited Flutter dependencies change. Callback scenes can listen through `root.stage.signals.onFlutterSync`; class-based scenes can organize the same synchronization wherever it makes sense for the root.
 
-We will give this a proper example in the Flutter integration chapter. For now, the useful mental model is: **Flutter can rebuild around a GraphX scene while the GraphX scene itself stays alive.**
+[GraphXView](#graphxview) shows the full bridge. The mental model is: **Flutter can rebuild around a GraphX scene while the GraphX scene itself stays alive.**
 
 ### Config
 

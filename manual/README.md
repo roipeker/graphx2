@@ -18,6 +18,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Bounds](bounds.md)
 - [Visibility and activity](visibility-and-activity.md)
 - [Lifecycle and the stage](lifecycle-and-stage.md)
+- [Signals](signals.md)
 
 ## Time & motion
 
@@ -54,9 +55,11 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 ## Composition
 
 - [Alpha and blending](alpha-and-blending.md)
+- [Color transforms](color-transforms.md)
 - [Masks](masks.md)
 - [Filters](filters.md)
 - [Caching](caching.md)
+- [Snapshots](snapshots.md)
 - [Portals](portals.md)
 
 ## Flutter + GraphX

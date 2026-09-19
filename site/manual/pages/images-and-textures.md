@@ -74,7 +74,7 @@ GraphXView.scene((root) {
 
 The `isDisposed` check matters because loading is asynchronous. The Flutter view may have gone away before the image finishes decoding.
 
-We will spend more time on `GAssets` later. It can load from Flutter bundles, memory, URLs, `ImageProvider`, and shared runtimes. For now, keep loading and displaying as separate concerns.
+[The shared asset store](#the-shared-asset-store) and the chapters after it cover bundle, memory, URL, `ImageProvider`, caching, and shared-runtime loading. Here, keep loading and displaying as separate concerns.
 
 ## Logical size and high-resolution assets
 
@@ -163,6 +163,6 @@ root.addChild(loader);
 
 `GAnimatedImage` is still just a node. Playback changes which texture is rendered over time; transforms, hierarchy, alpha, visibility, and interaction continue to work in the usual GraphX way.
 
-Later, the asset chapters will go deeper into loading, caching, ownership, shared runtimes, and network images. Here the important distinction is smaller:
+The [Assets](#the-shared-asset-store) chapters go deeper into loading, caching, ownership, shared runtimes, and network images. Here the distinction is smaller:
 
 **`GTexture` is reusable image data; `GImage` is the thing that lives in your scene.**

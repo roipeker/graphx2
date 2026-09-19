@@ -58,7 +58,7 @@ panel.active = true;
 
 This is useful for scene objects that are temporarily out of play rather than merely hidden.
 
-The update callback may feel early here; GraphX has a frame-update model that we will cover later. For now, the distinction is that `active` reaches further than `visible`.
+The update callback may feel early here; [Frame updates](#frame-updates) explains the loop in detail. The distinction here is that `active` reaches further than `visible`.
 
 One subtle point: child update callbacks are registered independently. Making a parent inactive hides its rendered/input branch, but it does not silently rewrite every child's `active` property for you.
 

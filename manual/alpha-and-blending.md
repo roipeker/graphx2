@@ -156,4 +156,4 @@ isolated layer alpha
 fade the finished subtree once
 ```
 
-Later, the performance chapter can put real numbers around those choices. For now, if two overlapping children look unexpectedly darker while fading, you already know where to look.
+[Performance](#performance) goes deeper into measuring those choices. For now, if two overlapping children look unexpectedly darker while fading, you already know where to look.
