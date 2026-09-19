@@ -18,7 +18,7 @@ GMath.tau
 
 which is `2π` (about `6.28318`).
 
-> **Why `tau`?** The symbol `τ` (tau) is commonly used by people who prefer naming the full-turn circle constant directly: circumference divided by radius, which is `2π`. Bob Palais argued for this full-turn constant in *π Is Wrong!* (2001), and Michael Hartl's [Tau Manifesto](https://www.tauday.com/tau-manifesto) popularized the symbol `τ` in 2010. In GraphX, `GMath.tau` is simply a readable way to say **one complete turn in radians**.
+> **Why `tau`?** `τ` (tau) names the full-turn circle constant: circumference divided by radius, so `τ = 2π ≈ 6.283185…`. Bob Palais argued for using the full-turn constant in *π Is Wrong!* (2001), and Michael Hartl's [Tau Manifesto](https://www.tauday.com/tau-manifesto) popularized the symbol `τ` in 2010. Hartl chose `tau` partly because it echoes **turn**; he also notes the Greek root *tornos* (lathe/turning). In GraphX, `GMath.tau` is simply a readable way to say **one complete turn in radians**.
 
 Half a turn:
 
