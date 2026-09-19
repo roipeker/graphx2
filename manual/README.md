@@ -26,6 +26,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Delta time and motion](delta-time-and-motion.md)
 - [Interpolation](interpolation.md)
 - [Angles, sine, and cosine](angles-sine-and-cosine.md)
+- [Vectors and distance](vectors-and-distance.md)
 - [Fixed-step simulation](fixed-step-simulation.md)
 - [Springs and damping](springs-and-damping.md)
 
@@ -34,6 +35,7 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Shapes and graphics](shapes-and-graphics.md)
 - [Fills and strokes](fills-and-strokes.md)
 - [Paths](paths.md)
+- [Bézier curves](bezier-curves.md)
 - [Images and textures](images-and-textures.md)
 - [Text](text.md)
 - [Custom nodes](custom-nodes.md)

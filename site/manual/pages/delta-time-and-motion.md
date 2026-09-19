@@ -80,7 +80,7 @@ void update(double delta) {
 
 Now velocity is a 2D direction and speed rolled into two numbers.
 
-Later we can introduce proper vector helpers and ask questions such as “how fast?” or “which direction?” without manually carrying two scalars everywhere. The math is the same.
+[Vectors and distance](#vectors-and-distance) takes those two components further and shows how direction, length, and normalization fit together.
 
 ## Speed plus angle is another way to describe velocity
 

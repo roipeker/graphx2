@@ -104,7 +104,7 @@ shape.graphics
     );
 ```
 
-If Bézier control points do not feel intuitive yet, that is completely fine. They are much easier to understand when you can see and drag them, so we will eventually give curves their own visual lesson.
+If Bézier control points do not feel intuitive yet, [Bézier curves](#bezier-curves) gives them their own visual lesson and connects the curve math back to interpolation.
 
 ## Arcs and polygons
 
