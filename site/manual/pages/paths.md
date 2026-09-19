@@ -46,6 +46,40 @@ shape.graphics
 
 This is probably the most literal version of the pen analogy in `GGraphics`.
 
+## Underneath, it is Dart's `Path`
+
+GraphX does not invent a separate vector-path format here. The retained geometry inside `GGraphics` is built on Flutter/Dart's native `Path` from `dart:ui`.
+
+That means calls such as:
+
+```dart
+shape.graphics
+    .moveTo(20, 20)
+    .lineTo(140, 20)
+    .curveTo(100, 0, 180, 100);
+```
+
+ultimately build the same kind of path geometry you may already know from Flutter `Canvas` drawing. GraphX keeps that path around as retained scene geometry instead of asking you to recreate it every paint pass.
+
+This is also useful in the other direction: if you already have a Dart `Path`, you can draw it directly into `GGraphics`:
+
+```dart
+final path = Path();
+path.moveTo(0, 0);
+path.lineTo(80, 0);
+path.lineTo(40, 70);
+path.close();
+
+shape.graphics
+    .beginFill(Colors.orange)
+    .drawPath(path)
+    .endFill();
+```
+
+`drawPath()` adds the supplied `Path` into GraphX's retained graphics geometry. So existing Flutter path-building knowledge carries over naturally.
+
+One detail worth keeping in mind: GraphX may split a drawing into multiple retained batches when styles change, and each batch owns its own native `Path`. You normally do not need to think about those batches unless you are profiling or inspecting graphics internals.
+
 ## Curves
 
 Straight lines only get us so far.
