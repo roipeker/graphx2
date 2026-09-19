@@ -147,6 +147,6 @@ may travel a shorter or longer piece of the curve than:
 t = 0.7 → 0.8
 ```
 
-That distinction introduces arc length, sampling, tangents, and path-following—all useful topics, but separate from understanding the curve itself.
+That distinction introduces arc length, sampling, and tangents. [Following a path](#following-a-path) uses Flutter's native `PathMetric` API to turn those ideas into constant-speed motion and orientation.
 
-For now, if you can look at the control handles and predict roughly how the curve will bend, the important mental model is already in place.
+If you can look at the control handles and predict roughly how the curve will bend, the important Bézier mental model is already in place.
