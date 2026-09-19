@@ -23,7 +23,7 @@ GNode
 
 That keeps transforms, children, lifecycle, input, visibility, bounds, and rendering attached to the same object.
 
-It is related to the old GraphX/Flash display-list inheritance style, but GraphX² deliberately makes the base node container-capable. A text node, image node, or custom visual can still own children.
+It is related to the old GraphX/Flash display-list inheritance style, but GraphX² makes the base node container-capable. A text node, image node, or custom visual can therefore own children unless a specialized node type deliberately defines a different boundary.
 
 For small custom drawing there are two useful levels: `GCanvasNode` and a real `GNode` subclass.
 

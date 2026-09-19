@@ -47,11 +47,11 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 
 ## Composition
 
-- Alpha and blending
-- Masks
-- Filters
-- Caching
-- Portals
+- [Alpha and blending](alpha-and-blending.md)
+- [Masks](masks.md)
+- [Filters](filters.md)
+- [Caching](caching.md)
+- [Portals](portals.md)
 
 ## Flutter + GraphX
 

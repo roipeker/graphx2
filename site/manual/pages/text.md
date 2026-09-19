@@ -92,7 +92,7 @@ Move, rotate, fade, or hide `label` and the dot follows because it is genuinely 
 
 GraphX² originally explored a more separated model where a node could own a distinct view/renderable component. The final API stayed closer to the GraphX1/display-list inheritance idea: visual types extend the scene node directly.
 
-There is one GraphX² twist to that lineage. In classic Flash, not every display object was a container. In GraphX², every `GNode` is container-capable, so an image or text node can still own descendants when that relationship is useful.
+There is one GraphX² twist to that lineage. In classic Flash, not every display object was a container. In GraphX², ordinary visual nodes inherit the container-capable `GNode` API, so an image or text node can still own descendants when that relationship is useful. Specialized node types may deliberately restrict children when they bridge to a different hierarchy.
 
 We will use that same idea in [Custom nodes](#custom-nodes), where a normal `GNode` becomes a new renderable type without creating a second hierarchy.
 
