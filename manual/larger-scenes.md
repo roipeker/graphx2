@@ -184,13 +184,41 @@ The current options are deliberately small:
 
 - `reloadMode` — retain the current scene during hot reload, or restart it.
 - `repaintBoundary` — whether the GraphX surface is its own Flutter repaint boundary.
-- `maxDelta` — clamps unusually large frame deltas.
+- `maxDelta` — limits how much elapsed time one update is allowed to receive.
 - `pointer` — enables pointer input from the Flutter surface.
 - `hitTestBehavior` — claim the whole view or only interactive GraphX content.
 - `keyboard` — capture raw keyboard input.
 - `autofocus` — request Flutter focus when the surface attaches.
 
 Most scenes should start with the defaults.
+
+### Why `maxDelta` exists
+
+Frame time is not always well behaved.
+
+A debugger can pause the app. A browser tab can disappear into the background. A device can stall for a moment. When the next frame finally arrives, the real elapsed time may be much larger than the roughly 16 ms you expected at 60 fps.
+
+If motion code blindly consumes that entire delay at once, a simple update such as:
+
+```dart
+ball.x += velocityX * delta;
+```
+
+can suddenly move the ball a huge distance. Physics and numerical simulations can suffer even more: collisions can be skipped, springs can overshoot badly, and integration becomes less stable as the timestep grows.
+
+`maxDelta` puts a ceiling on the `delta` GraphX delivers to the update cycle:
+
+```dart
+const GraphXConfig(
+  maxDelta: 1 / 15,
+);
+```
+
+The default `1 / 15` means a single update receives at most about 66.7 ms, even if considerably more real time passed between frames.
+
+This is a safety guard, not a target frame rate. GraphX is not trying to run at 15 fps.
+
+It is also not the same thing as a fixed-timestep simulation. When GraphX clamps a very late frame, the excess time is not automatically replayed through several hidden updates. For ordinary visual motion that guardrail is often exactly what you want. For deterministic physics or more demanding simulations, we will later look at fixed stepping, accumulated time, and interpolation as separate techniques.
 
 There is one useful distinction already built in for development: during Flutter hot reload, the class-based `GraphXView` defaults to retaining its scene, while `GraphXView.scene(...)` defaults to restarting its callback scene. Those defaults match the usual reason you picked each form in the first place.
 
