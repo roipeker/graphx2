@@ -88,7 +88,7 @@ For tiny interactions it is also common to add a little rotation at a time:
 card.rotation += 0.15;
 ```
 
-Radians can feel strange if you first learned angles in degrees. We will give them a proper visual explanation later. For now, `math.pi` is half a turn and `math.pi * 2` is one complete turn.
+Radians can feel strange if you first learned angles in degrees. [Angles, sine, and cosine](#angles-sine-and-cosine) gives them a visual explanation. For now, `math.pi` is half a turn and `math.pi * 2` is one complete turn.
 
 ## The point things turn around
 

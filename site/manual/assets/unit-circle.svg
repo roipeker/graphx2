@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Unit circle showing cosine and sine</title>
+  <desc id="desc">A point on a circle at an angle from the positive x axis. Its horizontal coordinate is cosine and its vertical coordinate is sine.</desc>
+  <rect width="960" height="560" rx="28" fill="#f5f3ed"/>
+  <g transform="translate(475 285)">
+    <circle cx="0" cy="0" r="190" fill="none" stroke="#1d1d1f" stroke-width="3"/>
+    <line x1="-250" y1="0" x2="250" y2="0" stroke="#9b978e" stroke-width="2"/>
+    <line x1="0" y1="-235" x2="0" y2="235" stroke="#9b978e" stroke-width="2"/>
+    <line x1="0" y1="0" x2="146" y2="-122" stroke="#1d1d1f" stroke-width="5" stroke-linecap="round"/>
+    <line x1="146" y1="-122" x2="146" y2="0" stroke="#c15f2d" stroke-width="4" stroke-dasharray="8 8"/>
+    <line x1="0" y1="0" x2="146" y2="0" stroke="#2f6d80" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="146" cy="-122" r="10" fill="#1d1d1f"/>
+    <path d="M 58 0 A 58 58 0 0 0 44 -37" fill="none" stroke="#6f6b63" stroke-width="3"/>
+    <text x="68" y="-27" font-family="system-ui, -apple-system, sans-serif" font-size="26" fill="#403d38">θ</text>
+    <text x="61" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="650" fill="#2f6d80">cos(θ)</text>
+    <text x="163" y="-55" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="650" fill="#c15f2d">sin(θ)</text>
+    <text x="158" y="-140" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#403d38">(cos θ, sin θ)</text>
+    <text x="220" y="-14" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#77736b">+x</text>
+    <text x="15" y="-215" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#77736b">−y on screen</text>
+  </g>
+  <text x="48" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="31" font-weight="700" fill="#1d1d1f">One angle gives you two useful numbers.</text>
+  <text x="48" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#5c5852">cosine = horizontal component · sine = vertical component</text>
+</svg>

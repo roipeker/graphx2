@@ -103,7 +103,7 @@ y += velocityY * delta;
 
 This is where trigonometry stops being a school diagram and becomes “send this object 30 degrees across the screen.”
 
-We will give sine/cosine their own visual treatment later rather than burying them inside a motion chapter.
+[Angles, sine, and cosine](#angles-sine-and-cosine) gives that direction math its own visual treatment.
 
 ## Acceleration changes velocity
 

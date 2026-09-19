@@ -191,7 +191,7 @@ The default `1 / 15` means a single update receives at most about 66.7 ms, even 
 
 This is a safety guard, not a target frame rate. GraphX is not trying to run at 15 fps.
 
-It is also not the same thing as a fixed-timestep simulation. When GraphX clamps a very late frame, the excess time is not automatically replayed through several hidden updates. For ordinary visual motion that guardrail is often exactly what you want. For deterministic physics or more demanding simulations, we will later look at fixed stepping, accumulated time, and interpolation as separate techniques.
+It is also not the same thing as a fixed-timestep simulation. When GraphX clamps a very late frame, the excess time is not automatically replayed through several hidden updates. For ordinary visual motion that guardrail is often exactly what you want. [Fixed-step simulation](#fixed-step-simulation) covers accumulated time, fixed simulation steps, and optional render interpolation as a separate technique.
 
 During development, the two forms also make different hot-reload choices: class-based `GraphXView` retains its scene by default, while `GraphXView.scene(...)` restarts its callback scene. Those defaults match the usual reason you picked each form in the first place.
 

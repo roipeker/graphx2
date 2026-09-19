@@ -76,7 +76,7 @@ That matters for input. A transparent interactive node can still receive pointer
 
 Flutter has a similar gotcha with `Opacity(opacity: 0)`: painting something transparently does not automatically make its hit-testing disappear.
 
-There is another alpha detail we will deliberately postpone. Normal inherited alpha and applying opacity to a whole composited subtree are not always visually equivalent, especially when children overlap. GraphX can isolate a branch into a layer when true group-style compositing is required, which also has a rendering cost. That difference is much easier to understand with a picture, so we will revisit it properly in the compositing chapters.
+There is another alpha detail worth separating from visibility. Normal inherited alpha and applying opacity to a whole composited subtree are not always visually equivalent, especially when children overlap. [Alpha and blending](#alpha-and-blending) shows why GraphX sometimes isolates a branch into a layer and what that costs.
 
 If you mean "the user should not be able to interact with this," `visible` or `pointer.enabled = false` is clearer than relying on `alpha = 0`.
 

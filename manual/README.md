@@ -25,6 +25,9 @@ The manual is meant to be read in two ways. You can start at the beginning and l
 - [Frame updates](frame-updates.md)
 - [Delta time and motion](delta-time-and-motion.md)
 - [Interpolation](interpolation.md)
+- [Angles, sine, and cosine](angles-sine-and-cosine.md)
+- [Fixed-step simulation](fixed-step-simulation.md)
+- [Springs and damping](springs-and-damping.md)
 
 ## Drawing
 
