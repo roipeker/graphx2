@@ -85,6 +85,63 @@ source pixels
 
 You do not have to push the same color change into every descendant manually.
 
+## Resolved paint state is not the same as compositing a subtree
+
+There are two very different ways a renderer can apply color/alpha state.
+
+The cheap/direct idea is:
+
+```text
+parent alpha + color transform
+          ↓
+resolve inherited render state
+          ↓
+each primitive paints with that state
+```
+
+GraphX prefers this path when the renderable can consume the state directly.
+
+For example, graphics, images, image batches, and shader nodes can apply inherited alpha/color filtering through their own paint submission. The subtree does **not** need to become a temporary image merely because a parent has a tint or alpha multiplier.
+
+That is different from:
+
+```text
+render complete subtree normally
+          ↓
+store it in an offscreen layer
+          ↓
+apply opacity / filter to the finished pixels
+          ↓
+composite that layer back
+```
+
+The second operation needs `Canvas.saveLayer()` semantics because the effect is being applied to a finished group of pixels rather than to each primitive as it draws.
+
+That distinction is critical for both appearance and cost.
+
+## Some primitives need a bounded fallback layer
+
+Not every Flutter rendering primitive exposes a way to inject GraphX's inherited paint state directly.
+
+`GText`, for example, is backed by an already-built `ui.Paragraph`. When inherited alpha/color-transform state needs to affect that paragraph, GraphX wraps just the paragraph bounds in a small render-state layer and applies the state on restore.
+
+`GIcon` has the same kind of fallback because it also relies on retained text/glyph rendering.
+
+So the rule is not:
+
+```text
+GColorTransform never uses saveLayer()
+```
+
+It is:
+
+```text
+apply inherited state directly when the primitive supports it
+otherwise isolate the smallest practical bounds as a fallback
+```
+
+That is much cheaper than automatically compositing an entire parent subtree just because some inherited color state exists.
+
 ## Alpha and color are related but separate
 
 Ordinary node alpha still exists:
@@ -151,11 +208,11 @@ Most hand-written scene code will be clearer with `tint`, `colorize`, or a `GCol
 
 ## This is not the same as a color-matrix filter
 
-A node color transform is an inherited per-channel transform and can stay on the ordinary rendering path.
+A node color transform is inherited render state. GraphX combines parent/local transforms and, where possible, pushes the resolved result into each primitive's own paint path.
 
 `GColorMatrixFilter` is more general: every output channel may depend on every input channel through a full 4×5 matrix.
 
-That power makes it a post-processing filter, which means subtree isolation.
+More importantly, it is a **post-processing filter over the node subtree**. GraphX therefore needs the subtree as pixels first, which means isolation/compositing rather than merely resolving inherited state into primitive paints.
 
 Use the smaller tool when the smaller tool expresses the effect:
 

@@ -38,15 +38,31 @@ The same idea appears in render masks, pointer-interest tracking, semantics, and
 
 Masks, filters, non-default node blending, and explicit `GCompositeMode.layer` need isolated pixel composition.
 
-That is not “bad.” It is how those effects work.
+Flutter's `Canvas.saveLayer()` means roughly:
 
-But if a scene suddenly gains hundreds of isolated layers, diagnostics can show it:
+```text
+allocate/use an offscreen render target
+        ↓
+paint the isolated content into it
+        ↓
+apply restore-time alpha/filter/blend state
+        ↓
+composite it back into the destination
+```
+
+That extra offscreen work and possible render-target switching is why Flutter explicitly recommends using `saveLayer()` thoughtfully. The cost is especially relevant when the layer is large, repeated many times, or changing every frame.
+
+That does not mean every alpha or color transform in GraphX incurs this cost. GraphX tries to resolve inherited alpha/color state into primitive paints directly. A layer is used when group semantics actually require finished subtree pixels, or as a bounded fallback for a renderable that cannot consume the inherited paint state itself.
+
+If a scene suddenly gains many isolated layers, diagnostics can show it:
 
 ```dart
 stage.stats.render.saveLayers.value
 ```
 
-Then you can decide whether every layer is actually buying a visible result.
+That counter includes GraphX's explicit composition/effect layers and bounded render-state fallbacks, so it is useful evidence when investigating a visual change that suddenly became more expensive.
+
+> **Go deeper:** Flutter's [Performance best practices](https://docs.flutter.dev/perf/best-practices#use-savelayer-thoughtfully) explains why `saveLayer()` can be expensive at the engine/GPU level and how to profile it.
 
 ## Cache expensive stable pixels
 

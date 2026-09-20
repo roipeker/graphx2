@@ -30,7 +30,13 @@ then the child paints with an effective alpha of:
 
 There is no public `worldAlpha` property to keep synchronized. GraphX calculates the inherited value while rendering.
 
-For most scene objects this is exactly what you want: it is simple, predictable, and avoids an offscreen layer.
+For most scene objects this is exactly what you want: it is simple, predictable, and avoids compositing the whole subtree into an offscreen layer.
+
+The important renderer idea is **resolved state**. GraphX carries the effective alpha down the tree and lets each renderable apply it as close to the actual draw call as possible.
+
+That is similar to Flutter's own performance guidance: applying opacity directly to primitive paints/images can be cheaper than wrapping a group in an `Opacity`-style offscreen composition.
+
+There is one practical caveat. Some native Flutter primitives cannot consume GraphX's inherited render state directly after they have been built. `GText`/`GIcon` are examples, so GraphX may use a tightly-bounded `saveLayer()` fallback around that one renderable. That is still different from isolating an entire node subtree for group compositing.
 
 ## Overlap reveals the difference
 
@@ -85,7 +91,9 @@ The layer isolates that node's local alpha. Alpha inherited from ancestors still
 
 This is closer to putting the whole group in Photoshop and lowering the layer opacity.
 
-It costs more because `Canvas.saveLayer()` creates an isolated compositing surface, so `layer` should be a visual choice rather than a reflex.
+It costs more because `Canvas.saveLayer()` creates an isolated compositing surface. Flutter's rendering guidance treats `saveLayer()` as an expensive operation because it needs an offscreen buffer and may cause a GPU render-target switch before that buffer is composited back.
+
+The exact cost varies by backend, device, layer size, and effect. The useful rule is not “layers are bad”; it is **do not ask for group compositing when primitive-level inherited state already gives the picture you want**.
 
 ## `auto` is usually the right mode
 
