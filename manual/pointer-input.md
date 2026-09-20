@@ -217,7 +217,7 @@ pointer.onPanZoomUpdate.add((gesture) {
 
 This maps directly onto an editor/world camera: two-finger pan moves the retained world, pinch changes its scale, and trackpad rotation can rotate the same transform when the application wants that gesture.
 
-The transform above uses `world`'s own pivot as the zoom/rotation origin. A camera that keeps the exact point under the fingers stationary needs one more coordinate-space step; we will handle that when render views/cameras get their own chapter.
+The transform above uses `world`'s own pivot as the zoom/rotation origin. A camera that keeps the exact point under the fingers stationary needs one more coordinate-space step; [Multiple views](#multiple-views) explains the render-view transform that a higher-level camera can drive.
 
 The state also exposes `panDeltaX/Y`, `scaleDelta`, and `rotationDelta`. Those are accumulated for the current GraphX frame and reset at frame teardown. They are useful when consuming input once per frame; the cumulative gesture values above are clearer when mutating directly from each `onPanZoomUpdate` signal.
 

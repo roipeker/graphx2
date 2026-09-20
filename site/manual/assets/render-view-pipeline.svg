@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="430" viewBox="0 0 1040 430" role="img" aria-labelledby="title desc">
+  <title id="title">GraphX render view pipeline</title>
+  <desc id="desc">The retained stage world is mapped through a render-view transform into viewport-local coordinates, then clipped and placed into a viewport rectangle on the stage surface.</desc>
+  <rect width="1040" height="430" rx="28" fill="#f5f3ed"/>
+  <text x="48" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="31" font-weight="700" fill="#1d1d1f">A render view is a window onto the same retained world.</text>
+
+  <g transform="translate(48 118)">
+    <rect x="0" y="0" width="230" height="220" rx="20" fill="#ebe8df" stroke="#8d8981" stroke-width="2"/>
+    <text x="115" y="36" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#1d1d1f">Stage / world</text>
+    <circle cx="72" cy="105" r="26" fill="#2f6d80" opacity="0.9"/>
+    <rect x="126" y="78" width="60" height="48" rx="8" fill="#c15f2d" opacity="0.9"/>
+    <path d="M50 170 C90 135 145 195 190 150" fill="none" stroke="#55514a" stroke-width="4"/>
+    <text x="115" y="202" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#5c5852">authoritative node coordinates</text>
+  </g>
+
+  <g transform="translate(330 118)">
+    <rect x="0" y="0" width="190" height="220" rx="20" fill="#ebe8df" stroke="#8d8981" stroke-width="2"/>
+    <text x="95" y="36" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#1d1d1f">View transform</text>
+    <g transform="translate(95 110) rotate(-10) scale(.82)">
+      <circle cx="-38" cy="-18" r="22" fill="#2f6d80" opacity="0.9"/>
+      <rect x="10" y="-35" width="52" height="42" rx="7" fill="#c15f2d" opacity="0.9"/>
+      <path d="M-60 45 C-20 15 35 65 70 25" fill="none" stroke="#55514a" stroke-width="4"/>
+    </g>
+    <text x="95" y="190" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" fill="#403d38">world → view-local</text>
+  </g>
+
+  <g transform="translate(572 118)">
+    <rect x="0" y="0" width="190" height="220" rx="20" fill="#ebe8df" stroke="#8d8981" stroke-width="2"/>
+    <text x="95" y="36" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#1d1d1f">Viewport</text>
+    <rect x="30" y="62" width="130" height="92" rx="8" fill="#ffffff" stroke="#2f6d80" stroke-width="4"/>
+    <g transform="translate(95 109) rotate(-10) scale(.55)">
+      <circle cx="-38" cy="-18" r="22" fill="#2f6d80" opacity="0.9"/>
+      <rect x="10" y="-35" width="52" height="42" rx="7" fill="#c15f2d" opacity="0.9"/>
+      <path d="M-60 45 C-20 15 35 65 70 25" fill="none" stroke="#55514a" stroke-width="4"/>
+    </g>
+    <text x="95" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#5c5852">clip + place on surface</text>
+  </g>
+
+  <g transform="translate(814 118)">
+    <rect x="0" y="0" width="178" height="220" rx="20" fill="#ebe8df" stroke="#8d8981" stroke-width="2"/>
+    <text x="89" y="36" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#1d1d1f">Stage surface</text>
+    <rect x="22" y="58" width="134" height="120" rx="8" fill="#d8d4ca"/>
+    <rect x="42" y="78" width="94" height="72" rx="6" fill="#ffffff" stroke="#2f6d80" stroke-width="3"/>
+    <text x="89" y="202" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#5c5852">what the user sees</text>
+  </g>
+
+  <g fill="#6b675f">
+    <path d="M288 215 h28 l-10 -10 m10 10 l-10 10" fill="none" stroke="#6b675f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M530 215 h28 l-10 -10 m10 10 l-10 10" fill="none" stroke="#6b675f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M772 215 h28 l-10 -10 m10 10 l-10 10" fill="none" stroke="#6b675f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
