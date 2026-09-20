@@ -1,8 +1,8 @@
 # Nodes and children
 
-One object is easy. A card, a label, an icon — move it and you are done.
+Scene objects rarely stay single-purpose for long.
 
-Then you decide the label and icon belong to the card. Moving three things separately would work, but it would get old quickly.
+A node in a diagram may have a body, a title, connection ports, selection handles, and status decoration. Those pieces should not need independent world-position bookkeeping every time the item moves.
 
 That is what the scene tree is for.
 
@@ -10,74 +10,80 @@ That is what the scene tree is for.
 
 Every `GNode` can have children.
 
-Let's make a little badge from a parent node, a background, and a label:
+Build one diagram item from several retained parts:
 
 ```dart
-final badge = root.addChild(GNode(name: 'badge'));
+final item = root.addChild(GNode(name: 'node-17'));
 
-final background = badge.addChild(GShape());
-background.graphics
-    .beginFill(Colors.blue)
-    .drawRoundRect(0, 0, 160, 56, 18)
+final body = item.addChild(GShape());
+body.graphics
+    .beginFill(Colors.blueGrey)
+    .drawRoundRect(0, 0, 180, 96, 14)
     .endFill();
 
-final label = badge.addChild(
-  GText('GraphX'),
-);
+final title = item.addChild(GText('Input'));
+title.name = 'title';
+title.setPosition(18, 14);
+
+final outputPort = item.addChild(GShape());
+outputPort.graphics
+    .beginFill(Colors.orange)
+    .drawCircle(0, 0, 7)
+    .endFill();
+outputPort.setPosition(180, 48);
 ```
 
-The tree now looks roughly like this:
+The hierarchy is explicit:
 
 ```text
 root
-└── badge
-    ├── background
-    └── label
+└── node-17
+    ├── body
+    ├── title
+    └── outputPort
 ```
 
-There is no special container class here. `badge` is simply a node whose useful job is to keep a few related things together.
+There is no separate container widget. `item` is simply a node that establishes the local coordinate system shared by the parts of one scene object.
 
-## Move the group, not the pieces
+## Move the object once
 
-Now move the parent:
+Position the parent:
 
 ```dart
-badge.setPosition(120, 100);
+item.setPosition(320, 180);
 ```
 
-The background and label come with it.
+The title and port follow because their coordinates are local to `item`.
 
-Rotate the parent:
+Rotate the item:
 
 ```dart
-badge.rotation = 0.1;
+item.rotation = 0.1;
 ```
 
-They rotate together too.
+The whole branch rotates around the same retained transform hierarchy.
 
-A child's transform is relative to its parent. That one rule is behind a lot of useful GraphX behavior.
-
-A character can carry a name tag. A spaceship can carry engines and lights. A camera rig can carry an entire little scene. You arrange the pieces once, then move the thing they belong to.
+That is the practical value of parent/child transforms: authored relationships stay authored. A port remains on the edge of its node; a selection handle remains attached to its object; an overlay rig can carry several coordinated visuals without recomputing all of their world positions manually.
 
 ## Parents and children are ordinary objects
 
 GraphX keeps the relationship explicit:
 
 ```dart
-print(label.parent == badge); // true
-print(badge.numChildren);     // 2
+print(title.parent == item); // true
+print(item.numChildren);     // 3
 ```
 
 You can inspect the children directly:
 
 ```dart
-final first = badge.getChildAt(0);
+final first = item.getChildAt(0);
 ```
 
 Or, when you gave one a name, look it up:
 
 ```dart
-final title = badge.getChildByName('title');
+final found = item.getChildByName('title');
 ```
 
 Names are optional. They are useful when a human-readable label makes debugging or lookup easier, but you do not need to name every node in a scene.
@@ -87,10 +93,10 @@ Names are optional. They are useful when a human-readable label makes debugging 
 Being part of a group does not make a child rigid.
 
 ```dart
-label.setPosition(24, 16);
+outputPort.setPosition(180, 48);
 ```
 
-That position is local to `badge`. Move `badge`, and the label still follows. Move `label`, and you only change its place inside the badge.
+That position is local to `item`. Move `item`, and the port still follows. Move `outputPort`, and you only change where that port sits inside the diagram item.
 
 This is the first important coordinate idea in GraphX: **a node describes itself relative to its parent.**
 
@@ -101,15 +107,15 @@ We will make that much more concrete in the coordinate-space chapter. For now, t
 A node has one parent at a time. Adding it somewhere else reparents it:
 
 ```dart
-panel.addChild(label);
+otherItem.addChild(outputPort);
 ```
 
-Now `label.parent` is `panel` instead of `badge`.
+Now `outputPort.parent` is `otherItem` instead of `item`.
 
 And when something should leave the tree completely:
 
 ```dart
-label.removeFromParent();
+outputPort.removeFromParent();
 ```
 
 The relationship changes; the node itself is still the same object.

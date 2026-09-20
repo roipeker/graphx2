@@ -1,15 +1,15 @@
 # Snapshots
 
-Sometimes you want to take a retained subtree and say:
+Snapshots are useful whenever retained scene content needs to leave the live renderer as pixels: an editor thumbnail, a drag preview, an export/share image, a transition ghost, or a visual regression fixture.
 
-> give me the pixels **right now**.
+The operation is explicit:
 
-That is a snapshot.
+> render this retained content **right now** and give me an owned texture.
 
-## Turn a node into a texture
+## Turn a subtree into a texture
 
 ```dart
-final texture = await badge.snapshot();
+final texture = await selection.snapshot();
 ```
 
 The result is a fresh owned `GTexture` containing the rendered node and its descendants.
@@ -32,17 +32,17 @@ texture.dispose();
 Suppose the node itself lives at:
 
 ```dart
-badge.setPosition(300, 180);
-badge.rotation = GMath.radians(20);
+selection.setPosition(300, 180);
+selection.rotation = GMath.radians(20);
 ```
 
-Those outer scene-placement transforms are intentionally **not** baked into `badge.snapshot()`.
+Those outer scene-placement transforms are intentionally **not** baked into `selection.snapshot()`.
 
-The snapshot starts from the badge's own local coordinate system.
+The snapshot starts from the selection's own local coordinate system.
 
-Descendant transforms remain, because they are part of what the badge contains.
+Descendant transforms remain, because they are part of what the selected subtree contains.
 
-That distinction makes a snapshot reusable: moving the original badge somewhere else in the stage should not create a giant texture with 300 pixels of empty space before its artwork.
+That distinction makes a snapshot reusable: moving the live selection somewhere else in the stage should not bake unrelated world-space offset into the captured texture.
 
 ## Visual composition is preserved
 
@@ -57,7 +57,7 @@ filters
 descendant transforms/composition
 ```
 
-So a glowing, masked, colorized badge snapshots as the thing you actually see—not as its raw uncomposited ingredients.
+So a glowing, masked, colorized selection snapshots as the composed visual you actually see—not as its raw uncomposited ingredients.
 
 When `area` is omitted, GraphX uses effect bounds so outer blur/shadow pixels are not cropped away.
 
@@ -96,8 +96,8 @@ This is the same distinction we saw with texture logical size: backing pixels an
 Snapshots also work on detached trees:
 
 ```dart
-final badge = buildBadge();
-final texture = await badge.snapshot(scale: 2);
+final previewNode = buildPreviewScene();
+final texture = await previewNode.snapshot(scale: 2);
 ```
 
 GraphX renders the detached subtree without temporarily attaching it to a fake stage or firing lifecycle hooks.

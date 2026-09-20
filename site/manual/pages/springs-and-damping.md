@@ -4,7 +4,7 @@ Interpolation moves a value along a planned path.
 
 A spring behaves differently: it reacts to where the target **is now**.
 
-Drag a card. Let go. Move the target again before it settles. The spring changes course naturally because there is no prewritten timeline to finish.
+That makes springs especially useful for things such as a camera following a moving subject. The target can accelerate, reverse, or teleport to a new point; the spring simply reacts to the new error instead of cancelling and rebuilding a timeline.
 
 ## Start with the distance to the target
 
@@ -125,16 +125,7 @@ void update(double delta) {
 }
 ```
 
-That tiny system is enough for a surprising amount of interactive motion:
-
-```text
-pointer-following blobs
-camera follow
-elastic menus
-floating labels
-soft drag handles
-springy HUD elements
-```
+The same two-axis system can drive a camera rig, selection affordance, draggable inspector, or any retained object that should respond continuously to a moving target rather than follow a predetermined timeline.
 
 ## A spring can chase a moving target
 
@@ -153,16 +144,14 @@ where is the target now?
 how far away am I?
 ```
 
-So this works naturally:
+For a camera, the target can simply track the subject's current position:
 
 ```dart
-node.pointer.onMove.add((event) {
-  targetX = event.stageX;
-  targetY = event.stageY;
-});
+targetX = player.x;
+targetY = player.y;
 ```
 
-The spring never needs to cancel and restart a timeline when the pointer changes direction.
+If the player changes direction during the settle, the camera's acceleration changes on the next update. Nothing needs to cancel or restart because the spring is defined by the current distance to the target, not by an old endpoint captured at animation start.
 
 ## Stop updating once the spring is asleep
 

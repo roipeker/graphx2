@@ -1,13 +1,13 @@
 # Filters
 
-Take a text label. Add a glow. Blur the whole card. Put a shadow behind an image without teaching the image anything about shadows.
+Filters matter when the visual effect belongs to the **result of a subtree**, not to one primitive inside it.
 
-That is the point of filters: **post-process the pixels of a finished subtree.**
+Imagine a selected diagram object composed from vector geometry, a thumbnail, text, and connection markers. A glow around the final silhouette should not require every child to know how to glow. GraphX can render that branch first, then post-process the resulting pixels.
 
 ## One line can blur a whole subtree
 
 ```dart
-panel.filters = [
+selection.filters = [
   GBlurFilter(
     blurX: 6,
     blurY: 6,
@@ -15,14 +15,14 @@ panel.filters = [
 ];
 ```
 
-The panel may contain shapes, images, text, and grandchildren. The filter sees the rendered result rather than each primitive separately.
+The selection may contain shapes, images, text, nested groups, and descendants. The filter sees the rendered result rather than each primitive separately.
 
 Assigning any filter makes `GCompositeMode.auto` isolate the subtree first because there must be pixels to filter.
 
 ## Shadows and glows do not care what produced the silhouette
 
 ```dart
-card.filters = [
+selection.filters = [
   GDropShadowFilter(
     offsetX: 4,
     offsetY: 6,
@@ -33,7 +33,7 @@ card.filters = [
 ];
 ```
 
-A drop shadow is generated from the composited subtree alpha. It works the same whether the card contains vector geometry, text, an image, or all three.
+A drop shadow is generated from the composited subtree alpha. Its silhouette comes from the final branch, regardless of which children produced those pixels.
 
 GraphX currently provides:
 
@@ -75,7 +75,7 @@ final glow = GGlowFilter(
   color: Colors.cyan,
 );
 
-button.filters = [glow];
+selection.filters = [glow];
 ```
 
 Then later:

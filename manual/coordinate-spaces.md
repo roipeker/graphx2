@@ -1,35 +1,37 @@
 # Coordinate spaces
 
-Sooner or later, one object needs to know where another object is.
+Coordinate spaces become important the moment a scene has more than one transform hierarchy.
 
-A button wants to point at a character. A particle should start at the tip of a moving wand. A drag that began inside one container needs to make sense inside another.
+A common editor setup is a pannable/zoomable `world` containing scene objects, plus a root-level HUD containing tooltips, guides, or selection UI. A point that is simple inside the world may need to be displayed or manipulated in the overlay.
 
-That is where coordinate spaces stop being theory and start answering practical questions.
+That is where coordinate conversion stops being matrix theory and becomes ordinary scene plumbing.
 
 ## Every parent creates a little world
 
 In [Nodes and children](#nodes-and-children), we saw that a child's position is relative to its parent.
 
 ```dart
-final panel = root.addChild(GNode());
-final button = panel.addChild(GShape());
+final world = root.addChild(GNode());
+final hud = root.addChild(GNode());
+final object = world.addChild(GShape());
 
-panel.setPosition(200, 100);
-button.setPosition(40, 30);
+world.setPosition(200, 100);
+world.scale = 1.5;
+object.setPosition(40, 30);
 ```
 
-For `button`, `(40, 30)` is perfectly meaningful. It means 40 across and 30 down inside `panel`.
+For `object`, `(40, 30)` is perfectly meaningful: it is the object's position inside the transformed world.
 
-But the root sees that same point somewhere else because `panel` itself has moved.
+The root sees the same point somewhere else because the world itself has been translated and scaled.
 
 Both answers can be correct. They are simply describing the point in different coordinate spaces.
 
 ## Local to global
 
-Suppose we want to know where the button's own origin ends up in the GraphX stage:
+Suppose we want to know where the object's own origin ends up in the GraphX stage:
 
 ```dart
-final point = button.localToGlobal(0, 0);
+final point = object.localToGlobal(0, 0);
 
 print(point.x);
 print(point.y);
@@ -52,7 +54,7 @@ A common source of stage coordinates is the GraphX pointer manager. Its `x` and 
 ```dart
 final pointer = root.stage.pointer;
 
-final local = button.globalToLocal(
+final local = object.globalToLocal(
   pointer.x,
   pointer.y,
 );
@@ -63,9 +65,9 @@ if (local != null) {
 }
 ```
 
-Now the pointer position, which started in stage coordinates, is translated into `button`'s local space.
+Now the pointer position, which started in stage coordinates, is translated into `object`'s local space.
 
-That lets you ask questions such as: **where is the pointer relative to this object?** A point at `(0, 0)` would be exactly on the button's own origin; `(20, 10)` would be 20 across and 10 down in the button's local coordinate system.
+That lets you ask questions such as: **where is the pointer relative to this object?** A point at `(0, 0)` would be exactly on its local origin; `(20, 10)` would be 20 across and 10 down in that object's own coordinate system.
 
 The result can be `null` when the transform cannot be inverted — for example, if a scale collapses an axis completely.
 
@@ -76,20 +78,18 @@ Most ordinary transforms are invertible, so this is usually something you simply
 Going through global coordinates yourself would work, but GraphX can translate directly between two nodes on the same stage:
 
 ```dart
-final pointInHud = player.localToNode(
+final pointInHud = object.localToNode(
   hud,
-  20,
-  0,
+  180,
+  48,
 );
 ```
 
 Read that as:
 
-> Where is the point `(20, 0)` from `player` when described in `hud`'s coordinate space?
+> Where is this local anchor on `object` when described in `hud` coordinates?
 
-That question turns up constantly in visual work.
-
-Maybe `(20, 0)` is the end of a character's arm. Maybe it is the muzzle of a ship. Maybe it is the anchor for a tooltip. The hierarchy can be completely different on each side; GraphX follows the transforms for you.
+Now a root-level tooltip, connector preview, or alignment guide can follow something inside a deeply transformed world without duplicating the camera/world transform math in application code.
 
 ## Points and movement are slightly different
 
@@ -98,8 +98,8 @@ A point has a position. A movement does not.
 If you are translating a direction or delta — perhaps a drag amount — use the delta form:
 
 ```dart
-final dragInPanel = card.localDeltaToNode(
-  panel,
+final dragInWorld = hud.localDeltaToNode(
+  world,
   deltaX,
   deltaY,
 );
