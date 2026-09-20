@@ -1,16 +1,16 @@
 # Frame updates
 
-A static scene should not burn CPU just because it exists.
+Flutter developers already know the basic rule from `Ticker`/`AnimationController`: if nothing is animating, there is no reason to keep scheduling animation frames.
 
-GraphX only keeps asking Flutter for animation frames while something in the stage actually needs continuous updates.
+GraphX follows the same principle at the scene level. A retained scene can stay visible while the stage stops requesting continuous ticks; updates resume when some node/system actually needs time again.
 
 ## A node opts into the frame loop
 
 `GNode` has an update hook, but it is dormant by default:
 
 ```dart
-class Spinner extends GNode {
-  Spinner() {
+class RadarSweep extends GNode {
+  RadarSweep() {
     updatesEnabled = true;
   }
 
@@ -19,14 +19,16 @@ class Spinner extends GNode {
     rotation += delta;
   }
 }
+
+final sweep = root.addChild(RadarSweep());
 ```
 
-Once the node belongs to an attached stage, enabling updates registers it with that stage's updater list.
+Once `sweep` belongs to the attached stage, enabling updates registers it with that stage's updater list.
 
 Disable it again when the object no longer needs time:
 
 ```dart
-spinner.updatesEnabled = false;
+sweep.updatesEnabled = false;
 ```
 
 If no node updater or stage update signal remains active, GraphX can stop its continuous tick scheduling.
@@ -38,13 +40,13 @@ The picture can stay on screen without an animation loop running underneath it.
 An active updater participates in the stage loop:
 
 ```dart
-spinner.active = true;
+sweep.active = true;
 ```
 
 Deactivate the node:
 
 ```dart
-spinner.active = false;
+sweep.active = false;
 ```
 
 and GraphX removes **that node** from update execution until it becomes active again.
@@ -59,10 +61,10 @@ For a small callback scene:
 
 ```dart
 GraphXView.scene((root) {
-  final dot = root.addChild(GShape());
+  final world = root.addChild(GNode());
 
   root.onUpdate.add((delta) {
-    dot.rotation += delta;
+    world.rotation += delta * 0.1;
   });
 });
 ```
@@ -71,7 +73,7 @@ GraphXView.scene((root) {
 
 Adding a listener keeps the stage ticking continuously for as long as that listener remains active.
 
-That makes callback mode genuinely useful for small motion experiments: there is no class to create just to rotate one object.
+That makes callback mode genuinely useful for small motion experiments: there is no class to create just to run a small scene-wide experiment.
 
 ## Node updates run before stage update signals
 

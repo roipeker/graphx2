@@ -1,23 +1,23 @@
 # Bounds
 
-Sometimes you do not need the exact shape of an object. You just need to know the box it occupies.
+Bounds are the cheap geometric answer to questions that do not need the exact path.
 
-Is this group on screen? How wide is this label and icon together? Where is the center of this branch? Does one region overlap another?
+An editor wants a selection rectangle around a whole diagram item. A culler wants to reject an offscreen branch. A hit-test helper needs a quick broad-phase box before doing something more exact.
 
-That box is a node's bounds.
+All three are asking for some version of: **what rectangle contains this geometry in the coordinate space I care about?**
 
 ## `localBounds` includes the subtree
 
 For most scene work, start with `localBounds`:
 
 ```dart
-final bounds = panel.localBounds;
+final bounds = item.localBounds;
 
 print(bounds.width);
 print(bounds.height);
 ```
 
-These bounds are expressed in `panel`'s own coordinate space and include the visual geometry of its descendants.
+These bounds are expressed in `item`'s own coordinate space and include the visual geometry of its descendants.
 
 So if a child sits 200 pixels to the right, the parent's local bounds grow to include it.
 
@@ -40,12 +40,14 @@ That distinction becomes useful for layout code and custom nodes where "my geome
 Bounds can also be described relative to another node on the same stage:
 
 ```dart
-final boundsInRoot = card.getBounds(root);
+final boundsInRoot = item.getBounds(root);
 ```
 
 GraphX follows the transforms through the hierarchy and gives you an axis-aligned `GBounds` in the target node's coordinate space.
 
-That pairs naturally with the ideas from [Coordinate spaces](#coordinate-spaces): the geometry is the same, but the numbers depend on the space you ask the question in.
+If you remember Flash's `DisplayObject.getBounds(targetCoordinateSpace)`, this is the same family of question. In Flutter terms it is closer to asking a `RenderBox` about paint/layout geometry after converting between render-object coordinate spaces.
+
+The geometry is the same; the numbers depend on the space you ask the question in.
 
 ## Reading a `GBounds`
 

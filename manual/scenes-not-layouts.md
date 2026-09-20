@@ -30,15 +30,15 @@ and let Flutter work out the position.
 
 ## GraphX gives you a space
 
-A GraphX node does not ask its parent where it should be laid out.
+A GraphX node does not negotiate a size/position with its parent the way a widget does.
 
 You put it somewhere:
 
 ```dart
-card.setPosition(180, 160);
+marker.setPosition(180, 160);
 ```
 
-If you are thinking in Flutter widgets, the closest everyday analogy is something like `Positioned(left: 180, top: 160)` inside a `Stack`.
+If you are thinking in Flutter widgets, the closest everyday analogy is `Positioned(left: 180, top: 160)` inside a `Stack`, or a `Transform.translate` applied after layout.
 
 The important difference is that `Positioned` participates in Flutter layout. `setPosition()` changes the transform of an object that already lives in the GraphX scene. There is no layout negotiation around it.
 
@@ -55,7 +55,7 @@ Suppose you want something centered in a GraphX view.
 You may simply calculate it:
 
 ```dart
-card.setPosition(
+marker.setPosition(
   root.stage.width / 2,
   root.stage.height / 2,
 );
@@ -64,20 +64,20 @@ card.setPosition(
 If the view can resize, respond to that too:
 
 ```dart
-void centerCard() {
-  card.setPosition(
+void centerMarker() {
+  marker.setPosition(
     root.stage.width / 2,
     root.stage.height / 2,
   );
 }
 
-centerCard();
-root.onResize.add((_) => centerCard());
+centerMarker();
+root.onResize.add((_) => centerMarker());
 ```
 
 That is more explicit than Flutter's `Center` widget.
 
-For a game, diagram, editor, particle system, animated composition, or other visual scene, that explicitness is often exactly what you want. The position is a number you own and can animate, simulate, constrain, or derive however you like.
+For an editor handle, map marker, game object, particle emitter, or animated composition, that explicitness is often the point. Position is scene state you can animate, simulate, constrain, or derive—not the output of a layout negotiation you have to work around.
 
 ## Use Flutter where Flutter is better
 

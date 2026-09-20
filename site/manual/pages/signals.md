@@ -1,10 +1,10 @@
 # Signals
 
-GraphX uses signals for the moments when **more than one piece of code may care that something happened**.
+A retained engine has events that several systems may want to observe at once: pointer input, resize, focus changes, frame updates, animation completion.
 
-Pointer down. Resize. Focus changed. A frame advanced. A texture animation completed.
+GraphX uses `GSignal` as a small **synchronous multicast** primitive for those events.
 
-Instead of giving each event one callback slot, GraphX exposes a small synchronous multicast primitive: `GSignal`.
+If you know Flash/AS3, it fills some of the territory of `EventDispatcher` without wrapping everything in one generic event type. If you know Dart streams, the big difference is timing: a `GSignal` is immediate and synchronous rather than an asynchronous stream abstraction.
 
 ## A signal can have several listeners
 
@@ -68,7 +68,7 @@ return to caller
 
 If a listener throws, the exception propagates normally.
 
-Use `Future`, streams, isolates, or whatever asynchronous mechanism actually fits the problem when the work itself is asynchronous. A `GSignal` is intentionally just an immediate event fan-out.
+Use `Future`/streams/isolate messaging when the work itself is asynchronous. `GSignal` is for the engine-style case where dispatch should happen now, in registration order, before the caller continues.
 
 ## The subscription is your exact removal handle
 

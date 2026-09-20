@@ -1,108 +1,175 @@
 # Extensions
 
-Most GraphX applications should import one library:
+Most people using GraphX should never need this chapter.
+
+An application normally imports:
 
 ```dart
 import 'package:graphx/graphx.dart';
 ```
 
-That is the application API.
+That gives you the scene tree, drawing, input, assets, views, filters, portals, and the rest of the normal engine API.
 
-But a rendering engine eventually attracts packages that need to go deeper: custom cameras, 2.5D projection, alternative hosts, format runtimes, custom input bridges, tooling.
+`graphx_extension.dart` exists for a different job: **building packages that plug into GraphX itself.**
 
-Those packages should not reach into `lib/src/`.
+## Think package integration, not application code
 
-## The supported lower-level surface has its own library
+Imagine you are writing a GraphX package that provides a projected 2.5D scene, a custom Flutter host, or a specialized input bridge.
 
-Extension authors can import:
+At some point the package may need to participate in engine work that an ordinary scene never touches:
+
+```text
+paint an existing GraphX subtree from a specialized renderer
+feed platform input into GraphX's canonical routing
+map interaction coordinates through a custom projection
+host a stage somewhere other than GraphXView
+```
+
+Those are extension problems.
+
+A normal game, visualization, editor, or UI built *with* GraphX does not become an extension merely because it is large or sophisticated.
+
+## `graphx_extension.dart` is the supported advanced surface
+
+A package author can opt into:
 
 ```dart
 import 'package:graphx/graphx_extension.dart';
 ```
 
-That library re-exports the normal GraphX API plus a small set of supported lower-level contracts.
+It includes the normal GraphX API plus a deliberately small set of lower-level contracts intended for integration packages.
 
-The separation is intentional:
+The split is similar in spirit to Flutter having ordinary widget APIs and deeper rendering/platform APIs: you only reach for the lower layer when the thing you are building actually participates in that layer.
+
+GraphX keeps three public entry points with different audiences:
 
 ```text
 graphx.dart
-  normal application code
+  build scenes and applications
 
 graphx_extension.dart
-  package authors / custom hosts / rendering integrations
+  build packages that integrate with GraphX internals at supported seams
 
 graphx_debug.dart
-  diagnostics / tracing / tooling
+  tracing, diagnostics, inspection/tooling
 ```
 
-A package can therefore need more engine access without turning private implementation files into accidental public API.
+The important part is that all three are still **public package libraries**.
 
-## A custom host can drive a stage without `GraphXView`
+## Example: host GraphX without `GraphXView`
 
-`GStageHost` is the host-side scheduling contract:
+`GraphXView` is the normal Flutter host. It schedules updates, paints the stage, forwards platform input, updates the cursor, and connects the retained engine to Flutter's lifecycle.
+
+A package building a different host boundary needs to provide those responsibilities itself.
+
+`GStageHost` is the supported contract for that side of the engine:
 
 ```text
-schedule an update tick
-schedule paint
+schedule an update
+schedule a paint
 update the platform cursor
 ```
 
-`GInputHostDispatch` lets that host feed pointer/key/pan-zoom events into the same canonical input pipeline used by `GraphXView`.
+`GInputHostDispatch` feeds pointer, key, and pan/zoom events into the same GraphX input pipeline used by `GraphXView`.
 
-That is enough for a package to build a different host boundary without duplicating GraphX node routing logic.
+So a custom host package does not have to copy GraphX hit testing or invent a parallel event router. It supplies the platform/host side and then hands canonical events back to the engine.
 
-It is an advanced API; normal Flutter applications should keep using `GraphXView`.
+If you are simply embedding GraphX in a Flutter screen, none of this is necessary—use `GraphXView`.
 
-## Projection packages can own a render boundary without owning another scene tree
+## Example: project a GraphX subtree through another renderer
 
-`GCanvasSubtreePainter` can paint an existing GraphX subtree inside an active `GRenderContext`.
+A 2.5D package may want to decide projection and ordering itself while still letting the existing GraphX subtree render normally.
 
-A package implementing projected 2.5D planes, for example, can decide ordering/projection and then ask GraphX to paint the actual retained subtree:
+That is what `GCanvasSubtreePainter` is for.
+
+Conceptually:
 
 ```text
-extension package chooses projection/order
-             ↓
+package decides projection / order
+              ↓
 GCanvasSubtreePainter
-             ↓
-existing GraphX nodes render normally
+              ↓
+existing GraphX subtree paints with its normal masks,
+filters, caches, alpha, children, etc.
 ```
 
-The nodes keep their alpha, filters, masks, caches, and descendants.
+The package owns the extra projection logic without cloning GraphX's retained rendering model.
 
-That preserves one of the core architectural rules: an advanced renderer should not quietly create a second competing scene graph.
+That matters because the alternative—converting every GraphX node into a second private render tree—would create two sources of truth for transforms, composition, and lifecycle.
 
-## Interaction projections can teach hit testing the same geometry
+## Custom projection also has to agree with interaction
 
-`GInteractionCoordinateMapper` exists for retained nodes whose visual projection cannot be represented by the normal affine `localMatrix` alone.
+If visuals are projected somewhere different from their ordinary affine node transform, pointer/focus geometry needs the same mapping or interaction will no longer line up with what the user sees.
 
-A specialized node can map interaction coordinates to/from its parent projection, and GraphX pointer/focus/semantic geometry can follow that mapping.
+`GInteractionCoordinateMapper` gives a specialized node/package a supported way to map coordinates through that projection.
 
-When that projected geometry changes, `invalidateInteractionGeometry()` tells the engine to reconcile dependent interaction state such as hover.
-
-Again, this is extension-author territory—not something a normal button should ever need.
-
-## Stage extensions are also part of the growth model
-
-Earlier we saw features such as:
+When the projection changes:
 
 ```dart
-stage.focus
-stage.renderViews
-stage.hitTest(...)
+invalidateInteractionGeometry();
 ```
 
-present themselves naturally through Dart extension APIs.
+lets GraphX reconcile dependent state such as hover.
 
-External packages can use the same language mechanism to add focused stage/node APIs around their own state, rather than requiring GraphX core to become a giant registry of every package that may ever exist.
+The useful idea is broader than the API name:
 
-That is an important part of keeping the foundation small while still allowing a larger ecosystem to grow around it.
+> **visual geometry and interaction geometry must describe the same world.**
 
-## Private `src/` imports are the line not to cross
+The extension surface gives packages a place to keep those two sides in sync.
 
-If a package needs something that is only available through GraphX private implementation files, that is not permission to import them.
+## Dart extensions are another ecosystem tool
 
-It is an API-friction signal.
+A GraphX package does not need core to contain every future feature.
 
-The healthier path is to identify the narrow capability the package actually needs and decide whether it belongs in `graphx.dart`, `graphx_extension.dart`, `graphx_debug.dart`, or nowhere public at all.
+Dart extension APIs let a package add focused vocabulary around GraphX types:
 
-A small supported boundary is much easier to evolve than an ecosystem coupled to implementation details.
+```dart
+stage.camera2d
+node.somePackageFeature
+```
+
+without adding storage/fields to every `GStage` or `GNode` in core.
+
+GraphX itself already uses this style for optional features such as stage focus/render-view APIs.
+
+This is especially useful for ecosystem packages whose state only exists when that package is installed and used.
+
+## Why not import `package:graphx/src/...`?
+
+In Dart packages, `lib/src/` conventionally contains implementation files rather than the supported package surface.
+
+You *can* sometimes force an import such as:
+
+```dart
+import 'package:graphx/src/something_internal.dart';
+```
+
+but your package is then coupled to a file/class that GraphX is free to reorganize while preserving the public API.
+
+A future refactor could move that implementation without being a public breaking change, and your package would break anyway.
+
+That is the practical reason to stop at the public libraries:
+
+```text
+need ordinary engine behavior
+  → graphx.dart
+
+need a supported lower-level integration seam
+  → graphx_extension.dart
+
+need diagnostics/tooling
+  → graphx_debug.dart
+
+need something none of those expose
+  → treat it as a missing integration capability and discuss/add a public seam
+```
+
+The last case is a design conversation for GraphX/package maintainers, not something an application developer should have to work around with private imports.
+
+## The short version
+
+If you are building **with GraphX**, import `graphx.dart`.
+
+If you are building something that plugs **into GraphX itself**, inspect `graphx_extension.dart`.
+
+If neither public surface can express the integration cleanly, that is the point where the engine/package API should be improved instead of reaching into `src/`.

@@ -1,10 +1,12 @@
 # Welcome to GraphX
 
-GraphX is a 2D scene framework for Flutter.
+GraphX is a retained 2D scene framework that lives inside Flutter.
 
-It is made for the parts of an app that are easier to think about as objects in a scene: interactive graphics, playful interfaces, visual tools, games, diagrams, editors, and custom experiences that do not naturally fit a widget tree.
+If you have used Flash's display list, PixiJS containers, SpriteKit nodes, or another scene graph, the family resemblance is immediate: objects stay alive in a tree, parents carry transforms, and you change the scene by changing the objects themselves.
 
-You create objects, add them to the scene, change their properties, and react to input.
+If your background is mostly Flutter, the closest contrast is `CustomPainter`. A painter gives you a canvas and asks you to draw the frame. GraphX keeps the scene objects, hierarchy, transforms, bounds, input state, and rendering data around between frames.
+
+That makes it a good fit for the parts of an application that feel more like a **world** than a **layout**: diagrams, editors, games, interactive graphics, data visuals, playful interfaces, and custom scene-based tools.
 
 ```dart
 GraphXView.scene((root) {
@@ -23,13 +25,13 @@ GraphXView.scene((root) {
 });
 ```
 
-That is the basic idea behind most of GraphX.
+The shape you drew is the same retained object you positioned and the same object receiving input. There is no second widget representation to keep in sync.
 
-## If scene graphs already feel familiar
+## The lineage is familiar, the host is Flutter
 
-If you ever worked with Flash's display list, or with a scene library such as PixiJS, some of this will feel familiar. Objects live in a tree. Parents carry their children. Transforms flow down through the scene. You change properties directly and see the result.
+Flash called these things display objects. PixiJS uses containers/display objects. Other engines call them nodes or entities.
 
-GraphX is not trying to recreate either one. It keeps that direct scene model because it is still a very natural way to build visual software, and places it next to Flutter rather than against it.
+GraphX keeps the useful part of that lineage—a direct retained scene tree—but the host platform is still Flutter. `GraphXView` is a widget, Flutter owns the application shell, and GraphX owns the scene inside the rectangle Flutter gives it.
 
 ## Think in scenes
 
@@ -61,10 +63,10 @@ That means you can use Flutter where widgets make sense and GraphX where a scene
 
 One important difference is that GraphX does not run Flutter-style layout inside the scene. You place and transform nodes directly. That tradeoff is important enough to deserve its own short chapter: [Scenes are not layouts](#scenes-are-not-layouts).
 
-## Read forward or jump in
+## What the next chapters are trying to teach
 
-The next chapters build this up gradually: first the scene tree and transforms, then drawing, images, input, assets, and composition.
+The first part of the manual builds one mental model: **a retained object lives in a scene, not in Flutter layout**.
 
-You do not need to understand the renderer or the internal runtime to start using GraphX. The public API is the part that matters here.
+From there, transforms, coordinate spaces, bounds, input, drawing, assets, composition, and timing are all consequences of that model rather than unrelated APIs to memorize.
 
-As the manual introduces small GraphX-specific helpers such as `GMath`, `GPoint`, or the debug `trace()` API, it will also explain why they exist instead of treating them as arbitrary replacements for Dart or Flutter APIs. Usually the answer is convenience, retained-scene ergonomics, or avoiding unnecessary work in hot graphics code.
+When GraphX introduces a helper that overlaps with Flutter or Dart—`GMath` beside `dart:math`, `GPoint` beside `Offset`, `trace()` beside `print()`—the manual will call out the overlap instead of pretending the GraphX name exists in a vacuum.
