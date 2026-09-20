@@ -28,6 +28,10 @@ GraphX is built for interactive graphics, playful interfaces, visual tools, game
 
 GraphX 2 is under active development. The core is working and tested while the public API, examples, and release experience are being refined.
 
+## Ecosystem
+
+Official first-party extensions live in the separate [GraphX Packages](https://github.com/roipeker/graphx-packages) repository. Keeping the ecosystem separate lets the engine stay focused while packages such as paths, motion, camera, particles, layout, and UI can evolve together.
+
 ## Development
 
 ```bash
