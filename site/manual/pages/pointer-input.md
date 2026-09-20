@@ -28,13 +28,13 @@ target node → parent → parent …
 
 So Flutter knows that a touch, mouse, stylus, or trackpad event happened. GraphX knows which transformed node in your retained hierarchy should receive it.
 
-## Tap the object, not the canvas
+## Put interaction on the scene object that owns it
 
 For the common case, interaction lives directly on the node:
 
 ```dart
-card.pointer.onTap.add((event) {
-  card.rotation += 0.15;
+item.pointer.onTap.add((event) {
+  selectItem(item);
 });
 ```
 
@@ -43,12 +43,12 @@ card.pointer.onTap.add((event) {
 The same pointer surface exposes the lower-level routed signals when you need them:
 
 ```dart
-card.pointer.onDown.add((event) {
-  card.scale = 0.95;
+handle.pointer.onDown.add((event) {
+  beginResize(handle);
 });
 
-card.pointer.onUp.add((event) {
-  card.scale = 1.0;
+handle.pointer.onUp.add((event) {
+  commitResize();
 });
 ```
 
@@ -83,7 +83,7 @@ That is a better fit for camera navigation, diagnostics, global cursor state, mu
 A routed `GNodePointerEvent` keeps its `x` and `y` in GraphX stage-surface coordinates:
 
 ```dart
-card.pointer.onDown.add((event) {
+item.pointer.onDown.add((event) {
   print(event.x);
   print(event.y);
 });
@@ -91,11 +91,11 @@ card.pointer.onDown.add((event) {
 
 That common coordinate space is useful for things such as camera movement or comparing multiple objects.
 
-But when the question is *where did this land inside the card?*, convert through the routed event:
+But when the question is *where did this land inside the item?*, convert through the routed event:
 
 ```dart
-card.pointer.onDown.add((event) {
-  final local = event.localPosition(card);
+item.pointer.onDown.add((event) {
+  final local = event.localPosition(item);
   if (local == null) return;
 
   print(local.x);
@@ -103,49 +103,51 @@ card.pointer.onDown.add((event) {
 });
 ```
 
-Now `(0, 0)` is the card's own origin even if the card is rotated, scaled, nested under transformed parents, or viewed through a non-trivial interaction mapping.
+Now `(0, 0)` is the item's own origin even if it is rotated, scaled, nested under transformed parents, or viewed through a non-trivial interaction mapping.
 
 This is the pointer-side version of [Coordinate spaces](#coordinate-spaces). `localPosition()` deliberately follows the same interaction-space mapping used by GraphX hit testing.
 
 ## The target survives bubbling
 
-Imagine a button made from a background and an icon:
+Reuse the diagram item from earlier:
 
 ```text
-button
-└── icon
+item
+├── body
+├── title
+└── outputPort
 ```
 
-If the icon is hit, the event starts there and bubbles upward through the node hierarchy. A listener on the button can receive the same event:
+If the pointer lands on `outputPort`, the event starts there and bubbles upward through the retained hierarchy. A listener on `item` can observe the same event:
 
 ```dart
-button.pointer.onTap.add((event) {
+item.pointer.onTap.add((event) {
   print(event.target);
 });
 ```
 
-`event.target` still points to the icon because that is what GraphX actually hit.
+`event.target` still points to `outputPort` because that is what GraphX actually hit.
 
-This lets a parent own behavior for a composite object without duplicating listeners on every child. In the next chapter we will also see `pointer.children = false`, which changes that relationship and makes the parent itself the target.
+That lets a parent coordinate behavior for a composite scene object without installing the same listener on every visual child. In the next chapter we will also see `pointer.children = false`, which deliberately collapses that distinction and makes the parent itself the target.
 
 ## A press is a sequence, not one event
 
 A pointer press can travel through several states:
 
 ```dart
-card.pointer.onDown.add((event) {
+item.pointer.onDown.add((event) {
   // Press began on this target.
 });
 
-card.pointer.onMove.add((event) {
+item.pointer.onMove.add((event) {
   // That pointer moved.
 });
 
-card.pointer.onUp.add((event) {
+item.pointer.onUp.add((event) {
   // It ended normally.
 });
 
-card.pointer.onCancel.add((event) {
+item.pointer.onCancel.add((event) {
   // The host cancelled the sequence.
 });
 ```
@@ -157,7 +159,7 @@ GraphX remembers which target received the down event, so move/up do not suddenl
 The device distinction comes from Flutter's `PointerDeviceKind`; GraphX converts it to `GPointerDeviceKind` rather than inventing its own platform detector.
 
 ```dart
-card.pointer.onDown.add((event) {
+item.pointer.onDown.add((event) {
   print(event.kind);
   print(event.pointer);
 });
@@ -213,7 +215,7 @@ pointer.onPanZoomUpdate.add((gesture) {
 });
 ```
 
-That is enough for a small map, editor surface, or visual playground: two-finger pan moves the retained world, pinch scales it, and trackpad rotation rotates it.
+This maps directly onto an editor/world camera: two-finger pan moves the retained world, pinch changes its scale, and trackpad rotation can rotate the same transform when the application wants that gesture.
 
 The transform above uses `world`'s own pivot as the zoom/rotation origin. A camera that keeps the exact point under the fingers stationary needs one more coordinate-space step; we will handle that when render views/cameras get their own chapter.
 

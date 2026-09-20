@@ -1,17 +1,15 @@
 # Caching
 
-Imagine a badge made from twelve paths, two text labels, an image, a glow, and a drop shadow.
+Consider a complex diagram object: several retained paths, a thumbnail, text, and a shadow. Its internal pixels may stay unchanged while the editor camera continuously pans and zooms the world around it.
 
-Now move the whole badge across the screen.
+Replaying every primitive on every frame can be wasted work when the subtree is visually stable.
 
-If its internal pixels are not changing, redrawing every ingredient on every frame can be wasted work.
-
-That is what the retained raster cache is for.
+That is the problem the retained raster cache is designed to solve.
 
 ## Turn a subtree into reusable pixels
 
 ```dart
-badge.cache.enabled = true;
+diagramItem.cache.enabled = true;
 ```
 
 GraphX renders the subtree into an owned texture. Once that cache is ready, the renderer can draw the cached texture instead of traversing and repainting the subtree's individual visuals.
@@ -33,8 +31,8 @@ That correctness is convenient, but rebuilding a raster cache every frame defeat
 Good cache candidate:
 
 ```text
-complex badge internals: stable
-badge x/y/rotation: changing
+diagram item pixels: stable
+item/world transform: changing
 ```
 
 Poor cache candidate:
@@ -50,14 +48,14 @@ The cache is a performance tool, not a magic “faster” switch.
 
 By default GraphX chooses a raster scale from the node's effective world scale, render-view scale, and device pixel ratio.
 
-That means a cached icon shown larger on a high-DPI screen can receive a higher-resolution backing texture instead of permanently looking like a blurry 1× screenshot.
+That means cached artwork shown larger on a high-DPI screen can receive a higher-resolution backing texture instead of permanently looking like a blurry 1× screenshot.
 
 Automatic scale is bounded by an internal memory budget, and GraphX uses hysteresis so small zoom changes do not continuously rebuild the cache.
 
 You can pin the backing resolution explicitly:
 
 ```dart
-badge.cache.scale = 2.0;
+diagramItem.cache.scale = 2.0;
 ```
 
 A fixed scale is an explicit request; use it when you actually know the resolution policy you want.
@@ -69,8 +67,8 @@ Caching normally builds asynchronously when GraphX discovers it needs the raster
 When a first-frame transition must already have the cache prepared:
 
 ```dart
-badge.cache.enabled = true;
-await badge.cache.prepare();
+diagramItem.cache.enabled = true;
+await diagramItem.cache.prepare();
 ```
 
 `prepare()` can even run while a node is detached. Without an attached stage, automatic scale starts from a neutral 1× assumption and can be promoted later after attachment.
@@ -80,13 +78,13 @@ await badge.cache.prepare();
 The cache exposes a few useful diagnostics:
 
 ```dart
-print(badge.cache.isReady);
-print(badge.cache.isDirty);
-print(badge.cache.isBuilding);
-print(badge.cache.rasterScale);
-print(badge.cache.pixelWidth);
-print(badge.cache.pixelHeight);
-print(badge.cache.captures);
+print(diagramItem.cache.isReady);
+print(diagramItem.cache.isDirty);
+print(diagramItem.cache.isBuilding);
+print(diagramItem.cache.rasterScale);
+print(diagramItem.cache.pixelWidth);
+print(diagramItem.cache.pixelHeight);
+print(diagramItem.cache.captures);
 ```
 
 Those are handy when a supposed optimization seems to keep rebuilding or uses more memory than expected.
@@ -94,13 +92,13 @@ Those are handy when a supposed optimization seems to keep rebuilding or uses mo
 Drop the retained raster without disabling the cache policy:
 
 ```dart
-badge.cache.clear();
+diagramItem.cache.clear();
 ```
 
 Or turn caching off entirely:
 
 ```dart
-badge.cache.enabled = false;
+diagramItem.cache.enabled = false;
 ```
 
 ## Filters are a classic cache win

@@ -31,23 +31,23 @@ Those two answers are allowed to disagree.
 ## Hover follows geometry, even when the mouse stands still
 
 ```dart
-card.pointer.onEnter.add((event) {
-  card.scale = 1.05;
+resizeHandle.pointer.onEnter.add((event) {
+  resizeHandle.scale = 1.15;
 });
 
-card.pointer.onExit.add((event) {
-  card.scale = 1.0;
+resizeHandle.pointer.onExit.add((event) {
+  resizeHandle.scale = 1.0;
 });
 ```
 
-If the card moves underneath a stationary mouse, GraphX can reconcile the hover target from the changed scene geometry. It does not have to wait for Flutter to deliver another physical mouse move first.
+If the handle moves underneath a stationary mouse because the selected object or camera moved, GraphX can reconcile the hover target from the changed scene geometry. It does not have to wait for Flutter to deliver another physical mouse move first.
 
 That matters in a retained scene: menus animate, editor handles move, panels slide, camera transforms change. The world may move even when the pointer does not.
 
 ## A cursor can belong to a branch
 
 ```dart
-card.pointer.cursor = GCursor.click;
+resizeHandle.pointer.cursor = GCursor.resizeH;
 ```
 
 GraphX includes the usual cursor intents—`basic`, `click`, `text`, `move`, `grab`, `grabbing`, horizontal/vertical resize, and `hidden`.
@@ -58,30 +58,31 @@ A cursor is itself pointer interest, so you do not need to install a meaningless
 
 ## Sometimes the parent is the control
 
-A button may be visually composed from several nodes:
+A diagram item may contain several independently-rendered pieces while still representing one selectable object:
 
 ```text
-button
-├── background
-├── icon
-└── label
+item
+├── body
+├── title
+├── status
+└── ports
 ```
 
-If those children are only visual pieces, exposing each one as an independent target is noise. Collapse the interaction onto the parent:
+If those descendants should contribute visible hit geometry but selection should belong to the item as a whole, collapse targeting onto the parent:
 
 ```dart
-button.pointer.children = false;
+item.pointer.children = false;
 ```
 
-Descendant visual geometry can still contribute to the hit, but `button` becomes the target.
+Descendant geometry can still contribute to the hit, but `item` becomes the routed target.
 
 ```dart
-button.pointer.onTap.add((event) {
-  // event.target is button.
+item.pointer.onTap.add((event) {
+  // event.target is item.
 });
 ```
 
-This is particularly useful for cards, list rows, draggable groups, tool buttons, and other controls whose visual hierarchy is richer than their interaction model.
+That keeps the render hierarchy expressive without forcing the interaction model to expose every decorative child as a separate control.
 
 ## Hiding and disabling are different operations
 
@@ -91,7 +92,7 @@ These three switches look similar until you ask what should remain:
 - `pointer.enabled = false` — keep rendering, skip pointer interaction for the branch;
 - `pointer.children = false` — keep descendant geometry, but treat the parent as one target.
 
-So a disabled overlay can stay visible without intercepting input, while a complex button can remain a hierarchy without exposing every decorative child.
+So a disabled overlay can stay visible without intercepting input, while a composite scene object can remain a hierarchy without exposing every decorative child.
 
 ## The easiest target is not always the visible shape
 
