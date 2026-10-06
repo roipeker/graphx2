@@ -30,14 +30,15 @@ GraphX 2 is under active development. The core is working and tested while the p
 
 ## Use GraphX
 
-GraphX 2 is not on pub.dev yet. To try it, add the public GitHub repository directly to your `pubspec.yaml`:
+GraphX 2 is not on pub.dev yet. Consume the public Git repository using Dart 3.9+ Git tag version solving:
 
 ```yaml
 dependencies:
   graphx:
     git:
       url: https://github.com/roipeker/graphx2.git
-      ref: v2.0.0-dev.2
+      tag_pattern: v{{version}}
+    version: ^2.0.0-dev.2
 ```
 
 Then run:
@@ -52,7 +53,9 @@ and import it normally:
 import 'package:graphx/graphx.dart';
 ```
 
-The version tag above is the recommended public baseline. To follow the latest development revision instead, use `ref: main`. For reproducible projects, prefer a release tag or commit SHA.
+Using `tag_pattern` lets Pub select one compatible GraphX tag across the whole dependency graph. Avoid mixing literal `ref: main` and version tags for GraphX in normal project manifests because Pub treats different Git refs as different dependency sources.
+
+For deliberate unreleased testing, keep the version-solved declaration above and use a root-level `dependency_overrides` entry pointing GraphX at `main` or a local checkout.
 
 ## Ecosystem
 
