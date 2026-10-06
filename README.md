@@ -30,7 +30,7 @@ GraphX 2 is under active development. The core is working and tested while the p
 
 ## Ecosystem
 
-Official first-party extensions live in the separate [GraphX Packages](https://github.com/roipeker/graphx-packages) repository. Keeping the ecosystem separate lets the engine stay focused while packages such as paths, motion, camera, particles, layout, and UI can evolve together.
+Official first-party extensions live in the separate [GraphX Packages](https://github.com/roipeker/graphx2-packages) repository. Keeping the ecosystem separate lets the engine stay focused while packages such as paths, motion, camera, particles, layout, and UI can evolve together.
 
 ## Development
 
