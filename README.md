@@ -28,9 +28,35 @@ GraphX is built for interactive graphics, playful interfaces, visual tools, game
 
 GraphX 2 is under active development. The core is working and tested while the public API, examples, and release experience are being refined.
 
+## Use GraphX
+
+GraphX 2 is not on pub.dev yet. To try it, add the public GitHub repository directly to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  graphx:
+    git:
+      url: https://github.com/roipeker/graphx2.git
+      ref: v2.0.0-dev.2
+```
+
+Then run:
+
+```bash
+flutter pub get
+```
+
+and import it normally:
+
+```dart
+import 'package:graphx/graphx.dart';
+```
+
+The version tag above is the recommended public baseline. To follow the latest development revision instead, use `ref: main`. For reproducible projects, prefer a release tag or commit SHA.
+
 ## Ecosystem
 
-Official first-party extensions live in the separate [GraphX Packages](https://github.com/roipeker/graphx2-packages) repository. Keeping the ecosystem separate lets the engine stay focused while packages such as paths, motion, camera, particles, layout, and UI can evolve together.
+Official first-party extensions live in the separate [GraphX 2 Packages](https://github.com/roipeker/graphx2-packages) repository. Keeping the ecosystem separate lets the engine stay focused while packages such as paths, motion, atlas, particles, and arcade physics can evolve together.
 
 ## Development
 
