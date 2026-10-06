@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-dev.2
+
+Public ecosystem baseline.
+
+- Added the Apache-2.0 license.
+- Standardized the public ecosystem repository as graphx2-packages.
+- Kept the GraphX 2 public API/runtime baseline used by the first-party packages.
+
 ## 2.0.0-dev.1
 
 Work in progress toward GraphX 2.

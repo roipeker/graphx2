@@ -1,7 +1,7 @@
 name: graphx
 description: Creative 2D scene framework for Flutter.
 repository: https://github.com/roipeker/graphx2
-version: 2.0.0-dev.1
+version: 2.0.0-dev.2
 publish_to: none
 
 environment:
